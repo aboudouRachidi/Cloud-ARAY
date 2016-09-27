@@ -1,0 +1,17 @@
+
+Connexion	
+Déconnexion	
+Création compte client	
+Modification infos compte	
+Lister mes disques	
+Créer un disque	
+Visualiser infos disque	
+Choisir tarif disque	
+Gérer le contenu	
+Renommer disque	
+Choisir services à associer	
+Gérer données (disques, tarifs,services...)	
+Visualiser disques	
+Visualiser Utilisateurs	
+Visualiser infos/fonctionnalités (client)	
+Visualiser infos/fonctionnalités (Admin)
