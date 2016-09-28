@@ -17,17 +17,60 @@ class Accueil extends Controller {
 	 */
 	public function index() {
 		$isAjax=RequestUtils::isAjax();
-		if(!$isAjax){
-			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
-		}
-		$this->loadView("main/vDefault.html");
-    	Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
-		echo Jquery::compile();
-		if(!$isAjax){
-			$this->loadView("main/vFooter.html");
+		if(Auth::isAuth()){
+			if(!$isAjax){
+				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+			}
+			$user = var_dump($_SESSION);
+			$this->loadView("main/vDefault.html");
+	    	Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+			echo Jquery::compile();
+			if(!$isAjax){
+				$this->loadView("main/vFooter.html");
+			}
+		}else{
+			if(!$isAjax){
+				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+			}
+			$this->loadView("main/vLogin.html");
+			Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+			echo Jquery::compile();
+			if(!$isAjax){
+				$this->loadView("main/vFooter.html");
+			}
 		}
 	}
 
+	/**
+	 * permet de se connecter avec le couple email/mot de passe
+	 */
+	public function connect(){
+		$isAjax=RequestUtils::isAjax();
+		if(isset($_POST['email'])&&$_POST['password']){
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			
+			$user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".$password."'");
+			$_SESSION["user"] = $user;
+			$_SESSION['KCFINDER'] = array(
+					'mail' => $user->getMail(),
+					'disabled' => true
+			);
+			$this->index();
+		}else {
+			
+			if(!$isAjax){
+				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+			}
+				$this->loadView("main/vLogin.html");
+				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+				echo Jquery::compile();
+				if(!$isAjax){
+					$this->loadView("main/vFooter.html");
+			}
+		}
+	}
+	
 	/**
 	 * Affiche la page de test
 	 */
