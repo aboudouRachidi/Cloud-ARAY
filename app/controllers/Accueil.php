@@ -72,6 +72,28 @@ class Accueil extends Controller {
 	}
 	
 	/**
+	 * permet de s'inscrire
+	 */
+	public function register(){
+		
+		if(RequestUtils::isPost()){
+			$user = new Utilisateur();
+			RequestUtils::setValuesToObject($user,$_POST);
+			if(DAO::insert($user)){
+		
+				echo $user->toString()." créé.";
+		
+			}else{
+		
+		
+		
+			}
+		}else{
+			$this->loadView("main/vLogin.html");
+		}
+	}
+	
+	/**
 	 * Affiche la page de test
 	 */
 	public function test() {
@@ -107,6 +129,7 @@ class Accueil extends Controller {
 		);
 		$this->index();
 	}
+	
 
 	public function getInfoUser(){
 		echo Auth::getInfoUser();

@@ -12,10 +12,13 @@ class Utilisateur extends Base{
 	private $id;
 	private $login="";
 	private $password="";
+	private $nom="";
+	private $prenom="";
 	private $mail="";
 	private $tel;
 	private $admin=false;
 	private $createdAt;
+	
 
 	/**
 	 * @OneToMany(mappedBy="utilisateur",className="Disque")
@@ -102,6 +105,21 @@ class Utilisateur extends Base{
 		$this->disques=$disques;
 		return $this;
 	}
+	public function getNom() {
+		return $this->nom;
+	}
+	public function setNom($nom) {
+		$this->nom = $nom;
+		return $this;
+	}
+	public function getPrenom() {
+		return $this->prenom;
+	}
+	public function setPrenom($prenom) {
+		$this->prenom = $prenom;
+		return $this;
+	}
+	
 
 
 
