@@ -8,7 +8,7 @@
 				<form action="Accueil/connect" method="POST">
 					<div class="form-group">
 						<label for="identifiant">E-mail :<span>*</span></label>
-						<input name="email" type="email" value="" placeholder="Email" class="form-control"> 
+						<input name="mail" type="email" value="" placeholder="Email" class="form-control"> 
 					</div>
 					<div class="form-group">
 						<label for="pwd">Mot de passe :<span>*</span></label>
@@ -25,6 +25,7 @@
 <!-- DIV FORM INSCRIPTION .col-md-7-->
 	<div class="col-md-7">
 		<h3>Inscription utilisateur</h3>
+		<div>#{{ message|raw }}#</div>
 			<p>Pas encore inscrit ? Inscrivez-vous dès maintenant .</p>
 			<div class="jumbotron">	
 				<form action="accueil/register" method="POST">
