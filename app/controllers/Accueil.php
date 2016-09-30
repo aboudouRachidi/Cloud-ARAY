@@ -10,7 +10,7 @@ use micro\utils\RequestUtils;
  * @package cloud.controllers
  */
 class Accueil extends Controller {
-
+	use MessagesTrait;
 	/**
 	 * Affiche la page par défaut du site
 	 * @see BaseController::index()
@@ -41,13 +41,26 @@ class Accueil extends Controller {
 		}
 	}
 
+	public function login($message){
+		$isAjax=RequestUtils::isAjax();
+		if(!$isAjax){
+			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+		}
+		$this->loadView("main/vLogin.html",array("message"=>$message));
+		Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+		echo Jquery::compile();
+		if(!$isAjax){
+			$this->loadView("main/vFooter.html");
+		}
+	}
+	
 	/**
 	 * permet de se connecter avec le couple email/mot de passe
 	 */
 	public function connect(){
 		$isAjax=RequestUtils::isAjax();
-		if(isset($_POST['email'])&&$_POST['password']){
-			$email = $_POST['email'];
+		if(isset($_POST['mail'])&&$_POST['password']){
+			$email = $_POST['mail'];
 			$password = $_POST['password'];
 			
 			$user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".$password."'");
@@ -70,6 +83,43 @@ class Accueil extends Controller {
 			}
 		}
 	}
+	/**
+	 * Verifie si le login et l'e-mail ne sont pas utilisé
+	 * @return boolean
+	 */
+	public function checkLogin(){
+		
+		if ($_POST["login"]){
+			if (DAO::getOne("Utilisateur", "login='".$_POST["login"]."' ")){
+				return true;
+			}
+			
+		}
+	}
+	/**
+	 * Verifie si l'addresse e-mail n'est pas deja utilisé
+	 */
+	public function checkMail(){
+		if ($_POST["mail"]){
+			if (DAO::getOne("Utilisateur", "mail='".$_POST["mail"]."' ")){
+				return true;
+			}
+				
+		}
+	}
+	
+	/**
+	 * Verifie si les deux mots de passes sont identiques.
+	 * @return boolean
+	 */
+	public function checkPwd(){
+		if($_POST["password"]==$_POST["confirmPassword"]){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	/**
 	 * permet de s'inscrire
@@ -77,19 +127,30 @@ class Accueil extends Controller {
 	public function register(){
 		
 		if(RequestUtils::isPost()){
-			$user = new Utilisateur();
-			RequestUtils::setValuesToObject($user,$_POST);
-			if(DAO::insert($user)){
-		
-				echo $user->toString()." créé.";
-		
+			if($this->checkMail()==false){
+			if($this->checkLogin()==false){
+			if ($this->checkPwd()==true){
+				$user = new Utilisateur();
+				RequestUtils::setValuesToObject($user,$_POST);
+				
+				if(DAO::insert($user)){
+					echo $user->toString()." créé.";
+					$this->index();
+				}else{
+					$this->index();
+				}
 			}else{
-		
-		
-		
+				$message = $this->messageWarning("Les deux mots de passes ne conrrespondent pas ...",4000,true,true);
+				$this->login(array("message"=>$message));
+				
 			}
-		}else{
-			$this->loadView("main/vLogin.html");
+				
+			}else{
+				echo "Ce login est deja utilisé...";
+			}
+			}else{
+				echo "Cette addresse e-mail est deja utilisé ...";
+			}	
 		}
 	}
 	
