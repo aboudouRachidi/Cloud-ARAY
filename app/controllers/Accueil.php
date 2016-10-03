@@ -61,20 +61,6 @@ class Accueil extends Controller {
 			}
 		}
 	}
-
-	public function login($message){
-		$isAjax=RequestUtils::isAjax();
-		if(!$isAjax){
-			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
-		}
-		
-		$this->loadView("main/vLogin.html",array("message"=>$message));
-		Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
-		echo Jquery::compile();
-		if(!$isAjax){
-			$this->loadView("main/vFooter.html");
-		}
-	}
 	
 	/**
 	 * permet de se connecter avec le couple email/mot de passe
@@ -147,6 +133,7 @@ class Accueil extends Controller {
 	 * permet de s'inscrire
 	 */
 	public function register(){
+		$isAjax=RequestUtils::isAjax();
 		
 		if(RequestUtils::isPost()){
 			if($this->checkMail()==false){
@@ -163,18 +150,40 @@ class Accueil extends Controller {
 					$this->login($message);
 				}
 			}else{
-				$message = "Les deux mots de passes ne conrrespondent pas ...";
-				$this->login($message);
+				if(!$isAjax){
+					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+				}
+				$message = $this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
+				$this->loadView("main/vLogin.html");
+				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+				echo Jquery::compile();
+				if(!$isAjax){
+					$this->loadView("main/vFooter.html");
+			}
 				
 			}
 				
 			}else{
-				$message = "Ce login est deja utilisé...";
-				$this->login($message);
+				if(!$isAjax){
+					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+				}
+				$message = $this->messageDanger("Ce login est deja utilisé...",5000);
+				$this->loadView("main/vLogin.html");
+				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+				echo Jquery::compile();
+				if(!$isAjax){
+					$this->loadView("main/vFooter.html");}
 			}
 			}else{
-				$message = "Cet adresse e-mail est deja utilisé ...";
-				$this->login($message);
+				if(!$isAjax){
+					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+				}
+				$message = $this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
+				$this->loadView("main/vLogin.html");
+				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+				echo Jquery::compile();
+				if(!$isAjax){
+					$this->loadView("main/vFooter.html");}
 			}	
 		}
 	}
