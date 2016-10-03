@@ -1,0 +1,16 @@
+<form method="post" action="Disques/updateDisque">
+<fieldset>
+<legend>Ajouter un disque</legend>
+<div class="alert alert-info">Disque : {{disque.toString()}}</div>
+<div class="form-group">
+	<input type="hidden" name="id" value= "{{disque.getId()}}">
+	<input type="text" name="nom" value="{{disque.getNom()}}" placeholder="Entrez le nom de votre disque..." class="form-control" >
+	<input type="hidden" name="idUtilisateur" value= "{{user.getId()}}">
+	<input type="hidden" name="nouveau" value= "1">
+</div>
+<div class="form-group">
+	<input type="submit" value="Valider" class="btn btn-default">
+	<a class="btn btn-default" href="{{config['siteUrl']}}disques">Annuler</a>
+</div>
+</fieldset>
+</form>
