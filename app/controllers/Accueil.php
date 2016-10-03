@@ -148,8 +148,12 @@ class Accueil extends Controller {
 	 */
 	public function register(){
 		$isAjax=RequestUtils::isAjax();
-		
+		$nom = $_POST['nom'];
+		$prenom = $_POST['prenom'];
+		$login = $_POST['login'];
+		$email = $_POST['mail'];
 		if(RequestUtils::isPost()){
+			
 			if($this->checkMail()==false){
 			if($this->checkLogin()==false){
 			if ($this->checkPwd()==true){
@@ -168,7 +172,7 @@ class Accueil extends Controller {
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
 				$message = $this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
-				$this->loadView("main/vLogin.html");
+				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
 				if(!$isAjax){
@@ -182,7 +186,7 @@ class Accueil extends Controller {
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
 				$message = $this->messageDanger("Ce login est deja utilisé...",5000);
-				$this->loadView("main/vLogin.html");
+				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
 				if(!$isAjax){
@@ -193,7 +197,7 @@ class Accueil extends Controller {
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
 				$message = $this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
-				$this->loadView("main/vLogin.html");
+				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
 				if(!$isAjax){

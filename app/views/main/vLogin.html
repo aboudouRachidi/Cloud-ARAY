@@ -33,7 +33,7 @@
 						<div class="form-group">
 							<label for="nom">Nom : </label>
 							<div class="input-group">
-								<input name="nom" type="text" value="" class="form-control"  id="inputNom" placeholder="Saisir votre Nom..." required>
+								<input name="nom" type="text" value="{% if nom is defined %}{{nom}}{% endif %}" class="form-control"  id="inputNom" placeholder="Saisir votre Nom..." required>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 						<div class="form-group">
 							<label for="prenom">Prenom : </label>
 							<div class="input-group">
-								<input name="prenom" type="text" value="" class="form-control"  id="inputPrenom" placeholder="Saisir votre Prenom..." required>
+								<input name="prenom" type="text" value="{% if prenom is defined %}{{prenom}}{% endif %}" class="form-control"  id="inputPrenom" placeholder="Saisir votre Prenom..." required>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 							</div>
 						</div>
@@ -49,7 +49,7 @@
  						<div class="form-group">
 							<label for="login">Login : </label>
 							<div class="input-group">
-								<input name="login" type="text" value="" class="form-control" id="inputLogin" placeholder="Saisir votre login..." required>
+								<input name="login" type="text" value="{% if login is defined %}{{login}}{% endif %}" class="form-control" id="inputLogin" placeholder="Saisir votre login..." required>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 							</div>
 						</div>
@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<label for="email">E-mail : </label>
 							<div class="input-group">
-								<input name="mail" type="email" value="" class="form-control" id="inputEmail" placeholder="Saisir votre Email..." required>
+								<input name="mail" type="email" value="{% if email is defined %}{{email}}{% endif %}" class="form-control" id="inputEmail" placeholder="Saisir votre Email..." required>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 							</div>
 						</div>
