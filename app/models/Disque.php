@@ -7,6 +7,8 @@ class Disque extends Base{
 	private $id;
 	private $nom;
 	private $createdAt;
+	private $nouveau;
+	private $idUtilisateur;
 
 	/**
 	 * @ManyToOne
@@ -116,4 +118,20 @@ class Disque extends Base{
 		$this->services=$services;
 		return $this;
 	}
+	public function getNouveau() {
+		return $this->nouveau;
+	}
+	public function setNouveau($nouveau) {
+		$this->nouveau = $nouveau;
+		return $this;
+	}
+	public function getIdUtilisateur() {
+		return $this->idUtilisateur;
+	}
+	public function setIdUtilisateur($idUtilisateur) {
+		$this->idUtilisateur = $idUtilisateur;
+		return $this;
+	}
+	
+	
 }
