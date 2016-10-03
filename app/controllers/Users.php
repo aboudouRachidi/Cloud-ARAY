@@ -15,6 +15,14 @@ class Users extends \_DefaultController {
 		$this->model="Utilisateur";
 	}
 
+	public function isValid(){
+		return Auth::isAdmin();
+	}
+	public function onInvalidControl(){
+		$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",3000,false);	
+		$this->forward(Accueil::class);
+		exit();
+	}
 	public function frm($id=NULL){
 		$user=$this->getInstance($id);
 		$disabled="";
@@ -32,7 +40,7 @@ class Users extends \_DefaultController {
 	 * @see _DefaultController::setValuesToObject()
 	 */
 	public function updateProfil(){
-		$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
+		//$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
 		if(RequestUtils::isPost()){
 			$className=$this->model;
 			$object=new $className();
@@ -40,11 +48,11 @@ class Users extends \_DefaultController {
 			if($_POST["id"]){
 				try{
 					DAO::update($object);
-					$msg= $this->messageSuccess("<b>Vos informations ont été mis à jour</b>",5000,true);
+					$this->messageSuccess("<b>Vos informations ont été mis à jour</b>",5000,true);
 					$this->onUpdate($object);
 					$this->profil();
 				}catch(\Exception $e){
-					$msg=new DisplayedMessage("Impossible de modifier l'instance de ".$this->model,"danger");
+					$this->messageWarning("Impossible de modifier l'instance de ".$this->model,"danger");
 				}
 			}
 		}

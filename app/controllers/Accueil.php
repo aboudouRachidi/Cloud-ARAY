@@ -21,8 +21,29 @@ class Accueil extends Controller {
 			if(!$isAjax){
 				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 			}
-			$user = var_dump($_SESSION);
-			$this->loadView("main/vDefault.html");
+			var_dump($_SESSION);
+
+			if(Auth::isAdmin()){
+				$Count = array(
+						"newUser"	=> $newUser		= DAO::count("utilisateur","nouveau = 1"),
+						"newDisk"	=> $newDisk		= DAO::count("disque","nouveau = 1"),
+						"nbUser"	=> $nbUser		= DAO::count("utilisateur"),
+						"nbDisk" 	=> $nbDisk		= DAO::count("disque"),
+						"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
+						"nbService"	=> $nbService	= DAO::count("service"),
+				);
+				var_dump($Count);
+				$this->loadView("admin/vDefault.html",
+						array(	"newUser"=>$newUser,
+								"newDisk"=>$newDisk,
+								"nbUser"=>$nbUser,
+								"nbDisk"=>$nbDisk,
+								"nbTarif"=>$nbTarif,
+								"nbService"=>$nbService,						
+				));
+			}else {
+				$this->loadView("main/vDefault.html");
+			}
 	    	Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 			echo Jquery::compile();
 			if(!$isAjax){
@@ -46,6 +67,7 @@ class Accueil extends Controller {
 		if(!$isAjax){
 			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 		}
+		
 		$this->loadView("main/vLogin.html",array("message"=>$message));
 		Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 		echo Jquery::compile();
@@ -134,22 +156,25 @@ class Accueil extends Controller {
 				RequestUtils::setValuesToObject($user,$_POST);
 				
 				if(DAO::insert($user)){
-					echo $user->toString()." créé.";
-					$this->index();
+					$message = $this->messageSuccess($user->toString()." créé.");
+					$this->login($message);
 				}else{
-					$this->index();
+					$message = $this->messageWarning("Impossible d\'inserer l\'utilisateur ".$user->toString());
+					$this->login($message);
 				}
 			}else{
-				$message = $this->messageWarning("Les deux mots de passes ne conrrespondent pas ...",4000,true,true);
-				$this->login(array("message"=>$message));
+				$message = "Les deux mots de passes ne conrrespondent pas ...";
+				$this->login($message);
 				
 			}
 				
 			}else{
-				echo "Ce login est deja utilisé...";
+				$message = "Ce login est deja utilisé...";
+				$this->login($message);
 			}
 			}else{
-				echo "Cette addresse e-mail est deja utilisé ...";
+				$message = "Cet adresse e-mail est deja utilisé ...";
+				$this->login($message);
 			}	
 		}
 	}

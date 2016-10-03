@@ -18,6 +18,7 @@ class Utilisateur extends Base{
 	private $tel;
 	private $admin=false;
 	private $createdAt;
+	private $nouveau;
 	
 
 	/**
@@ -119,6 +120,14 @@ class Utilisateur extends Base{
 		$this->prenom = $prenom;
 		return $this;
 	}
+	public function getNouveau() {
+		return $this->nouveau;
+	}
+	public function setNouveau($nouveau) {
+		$this->nouveau = $nouveau;
+		return $this;
+	}
+	
 	
 
 

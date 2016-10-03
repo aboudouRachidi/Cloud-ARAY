@@ -25,8 +25,16 @@
 <!-- DIV FORM INSCRIPTION .col-md-7-->
 	<div class="col-md-7">
 		<h3>Inscription utilisateur</h3>
-		<div>#{{ message|raw }}#</div>
 			<p>Pas encore inscrit ? Inscrivez-vous dès maintenant .</p>
+			
+			{% if message is defined %}
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+					<strong>{{ message}}</strong>
+			</div>
+			{% endif %}
 			<div class="jumbotron">	
 				<form action="accueil/register" method="POST">
 					<div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Champs requis</strong></div>
@@ -78,6 +86,7 @@
 								<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 							</div>
 						</div>
+						<input type="hidden" value="1">
 						<input type="submit" class="btn btn-primary" value="Inscription">
 				</form>
 			</div>	
