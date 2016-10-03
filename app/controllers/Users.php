@@ -15,13 +15,36 @@ class Users extends \_DefaultController {
 		$this->title="Utilisateurs";
 		$this->model="Utilisateur";
 	}
-
-	public function isValid(){
-		return Auth::isAdmin();
+	/**
+	 * Affiche la liste des instances de la class du modèle associé $model
+	 * @see BaseController::index()
+	 */
+	public function index($message=null){
+		if(Auth::isAdmin()){
+		global $config;
+		$baseHref=get_class($this);
+		if(isset($message)){
+			if(is_string($message)){
+				$message=new DisplayedMessage($message);
+			}
+			$message->setTimerInterval($this->messageTimerInterval);
+			$this->_showDisplayedMessage($message);
+		}
+		$objects=DAO::getAll($this->model);
+		$this->loadView("user/vObjects.html",array("objects"=>$objects,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
+	
+		}else {
+			$this->onInvalidControl();
+		}
 	}
+	
+	
 	public function onInvalidControl(){
+		if(Auth::isAuth()){
+			$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
+			exit();
+		}else{
 		$isAjax=RequestUtils::isAjax();
-			
 		if(!$isAjax){
 				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 			}
@@ -33,11 +56,16 @@ class Users extends \_DefaultController {
 				$this->loadView("main/vFooter.html");
 			}
 		exit();
+		}
 	}
 	public function frm($id=NULL){
+		if(Auth::isAdmin()){
 		$user=$this->getInstance($id);
 		$disabled="";
 		$this->loadView("user/vAdd.html",array("user"=>$user,"disabled"=>$disabled));
+		}else{
+			$this->onInvalidControl();
+		}
 	}
 
 	public function profil(){

@@ -71,13 +71,27 @@ class Accueil extends Controller {
 			$email = $_POST['mail'];
 			$password = $_POST['password'];
 			
-			$user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".$password."'");
+			if($user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".$password."'")){
 			$_SESSION["user"] = $user;
 			$_SESSION['KCFINDER'] = array(
 					'mail' => $user->getMail(),
 					'disabled' => true
 			);
 			$this->index();
+			}else{
+				$email = $_POST['mail'];
+				if(!$isAjax){
+					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+				}
+				$this->messageDanger("Email ou mot de passe incorrect",5000,true);
+				$this->loadView("main/vLogin.html",array("email"=>$email));
+				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+				echo Jquery::compile();
+				if(!$isAjax){
+					$this->loadView("main/vFooter.html");
+				}
+			}
+			
 		}else {
 			
 			if(!$isAjax){
