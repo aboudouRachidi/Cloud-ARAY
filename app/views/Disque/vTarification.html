@@ -1,0 +1,38 @@
+<form method="post" action="Disques/ChoixTarif">
+<fieldset>
+<legend>Choix tarification</legend>
+<div class="alert alert-info">Disque : {{disque.toString()}}</div>
+<div class="form-group">
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan=''>Choix</th>
+			<th colspan=''>Tarification</th>
+			<th colspan=''>Quota</th>
+			<th colspan=''>Cout de depassement</th>
+			<th colspan=''>Marge de depassement</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for tarif in tarifs %}
+			<tr>
+			<td><input type="radio" name="idTarif" value="{{tarif.getId()}}"></td>
+			<td>{{tarif.getPrix()}}</td>
+			<td>{{tarif.getQuota()}} {{tarif.getunite()}}</td>
+			<td>{{tarif.getCoutDepassement()}}</td>
+			<td>{{tarif.getmargeDepassement()}}</td>
+			
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+</div>
+<div class="form-group">
+	<input name="idDisque" type="hidden" value="{{disque.getId()}}">
+	<input name="date" type="hidden" value="{{date}}">
+	<input type="submit" value="Valider" class="btn btn-default">
+	
+	<a class="btn btn-default" href="{{config['siteUrl']}}disques">Annuler</a>
+</div>
+</fieldset>
+</form>

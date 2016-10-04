@@ -8,8 +8,6 @@ class Disque extends Base{
 	private $nom;
 	private $createdAt;
 	private $nouveau;
-	private $idUtilisateur;
-
 	/**
 	 * @ManyToOne
 	 * @JoinColumn(name="idUtilisateur",className="Utilisateur",nullable=false)
@@ -125,11 +123,10 @@ class Disque extends Base{
 		$this->nouveau = $nouveau;
 		return $this;
 	}
-	public function getIdUtilisateur() {
-		return $this->idUtilisateur;
-	}
-	public function setIdUtilisateur($idUtilisateur) {
-		$this->idUtilisateur = $idUtilisateur;
+
+	
+	public function  addService($service){
+		$this->service[]=$service;
 		return $this;
 	}
 	

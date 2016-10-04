@@ -57,6 +57,15 @@ class DisqueTarif extends \Base {
 		$this->startDate=$startDate;
 		return $this;
 	}
+	public function setIdDisque($idDisque) {
+		$this->idDisque = $idDisque;
+		return $this;
+	}
+	public function setIdTarif($idTarif) {
+		$this->idTarif = $idTarif;
+		return $this;
+	}
+	
 
 
 

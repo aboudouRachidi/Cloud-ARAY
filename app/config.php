@@ -11,6 +11,7 @@ return array(
 		],
 		"onStartup"=>function($action){
 		},
+		"debug"=>false,
 		"directories"=>["libraries"],
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),

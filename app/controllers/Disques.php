@@ -24,8 +24,9 @@ class Disques extends \_DefaultController {
 			$this->_showDisplayedMessage($message);
 		}
 		$objects=DAO::getAll($this->model, "idUtilisateur='".Auth::getUser()->getId()."'");
-		$this->loadView("main/vObjects.html",array("objects"=>$objects,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
+		$this->loadView("Disque/vObjects.html",array("objects"=>$objects,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
 	}
+	
 	public function addDisque ($id=NULL) {
 		//$id = $this->getInstance($id);
 		$disque = new Disque();
@@ -47,31 +48,60 @@ class Disques extends \_DefaultController {
 		$this->loadView("disque/vAdd.html",array("user"=>$user,"date"=>$date));
 		}
 		
-		public function frm($id=NULL){
-			$user=Auth::getUser();
-			$disque = $this->getInstance($id);
+	public function frm($id=NULL){
+		$user=Auth::getUser();
+		$disque = $this->getInstance($id);
 
-			$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
-		}
-public function updateDisque(){
-		
-		if(RequestUtils::isPost()){
-			$className=$this->model;
-			$object=new $className();
-			$this->setValuesToObject($object);
-			if($_POST["id"]){
-				try{
-					DAO::update($object);
-					$this->messageSuccess("<b>mis à jour</b>",5000,true);
-					$this->onUpdate($object);
-				$this->index();
-				}catch(\Exception $e){
-					$msg=new DisplayedMessage("Impossible de modifier l'instance de ".$this->model,"danger");
+		$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
+	}
+	
+	public function updateDisque(){
+			
+			if(RequestUtils::isPost()){
+				$className=$this->model;
+				$object=new $className();
+				$this->setValuesToObject($object);
+				if($_POST["id"]){
+					try{
+						DAO::update($object);
+						$this->messageSuccess("<b>mis à jour</b>",5000,true);
+						$this->onUpdate($object);
+					$this->index();
+					}catch(\Exception $e){
+						$msg=new DisplayedMessage("Impossible de modifier l'instance de ".$this->model,"danger");
+					}
 				}
 			}
 		}
+	
+	public function Tarification($id=NULL){
+		//$this->loadView("Disque/vTarification.html");
+		$date=date('Y-m-d H:i:s');
+		$disque = $this->getInstance($id);
+		$tarifs=DAO::getAll("tarif");
+		$this->loadView("Disque/vTarification.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date));
 	}
+	
+	public function ChoixTarif(){
+		
+		if(RequestUtils::isPost()){
+			$DisqueTarif=new DisqueTarif();
+			$DisqueTarif->setDisque(DAO::getOne("disque", $_POST["idDisque"]));
+			$DisqueTarif->setTarif(DAO::getOne("tarif", $_POST["idTarif"]));
+			RequestUtils::setValuesToObject($DisqueTarif,$_POST);
 
+				try{
+					DAO::insert($DisqueTarif);
+					$msg=new DisplayedMessage("Instance de ".$this->model." `{$DisqueTarif->toString()}` ajoutée");
+					$this->onAdd($DisqueTarif);
+				}catch(\Exception $e){
+					$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
+				}
+			}
+			$this->_postUpdateAction($msg);
+			
+		
+	}
 		
 	}
 
