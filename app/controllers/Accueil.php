@@ -21,7 +21,6 @@ class Accueil extends Controller {
 			if(!$isAjax){
 				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 			}
-			var_dump($_SESSION);
 
 			if(Auth::isAdmin()){
 				$Count = array(
@@ -32,7 +31,7 @@ class Accueil extends Controller {
 						"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
 						"nbService"	=> $nbService	= DAO::count("service"),
 				);
-				var_dump($Count);
+				
 				$this->loadView("admin/vDefault.html",
 						array(	"newUser"=>$newUser,
 								"newDisk"=>$newDisk,
@@ -161,17 +160,21 @@ class Accueil extends Controller {
 				RequestUtils::setValuesToObject($user,$_POST);
 				
 				if(DAO::insert($user)){
-					$message = $this->messageSuccess($user->toString()." créé.");
-					$this->login($message);
+					$this->loadView("main/vHeader.html");
+					$this->messageSuccess("Le compte de <strong>".$user->toString()."</strong> a été créer ! vous pouvez maitenant vous connecté avec vos identifiants.");
+					$this->loadView("main/vLogin.html",array("email"=>$email));
+					$this->loadView("main/vFooter.html");
 				}else{
-					$message = $this->messageWarning("Impossible d\'inserer l\'utilisateur ".$user->toString());
-					$this->login($message);
+					$this->loadView("main/vHeader.html");
+					$this->messageWarning("Impossible d\'inserer l\'utilisateur ".$user->toString());
+					$this->loadView("main/vLogin.html");
+					$this->loadView("main/vFooter.html");
 				}
 			}else{
 				if(!$isAjax){
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
-				$message = $this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
+				$this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
 				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
@@ -185,7 +188,7 @@ class Accueil extends Controller {
 				if(!$isAjax){
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
-				$message = $this->messageDanger("Ce login est deja utilisé...",5000);
+				$this->messageDanger("Ce login est deja utilisé...",5000);
 				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
@@ -196,7 +199,7 @@ class Accueil extends Controller {
 				if(!$isAjax){
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 				}
-				$message = $this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
+				$this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
 				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
