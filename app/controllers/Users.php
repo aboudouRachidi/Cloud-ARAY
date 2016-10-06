@@ -30,8 +30,8 @@ class Users extends \_DefaultController {
 			$message->setTimerInterval($this->messageTimerInterval);
 			$this->_showDisplayedMessage($message);
 		}
-		$objects=DAO::getAll($this->model);
-		$this->loadView("user/vObjects.html",array("objects"=>$objects,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
+		$users=DAO::getAll($this->model);
+		$this->loadView("user/vObjects.html",array("users"=>$users,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
 	
 		}else {
 			$this->onInvalidControl();
@@ -95,6 +95,12 @@ class Users extends \_DefaultController {
 				}
 			}
 		}
+	}
+	
+	public function vUser($id=NULL){
+		$user = $this->getInstance($id);
+		$disques = DAO::getAll("disque","idUtilisateur = ".$user->getId());
+		$this->loadView("user/vUser.html",array("user"=>$user,"disques"=>$disques));
 	}
 	
 	/* (non-PHPdoc)

@@ -40,6 +40,26 @@ class Disques extends \_DefaultController {
 		}
 	}
 	
+	public function addDir ($id=NULL) {
+		
+		$cloud = $GLOBALS["config"]["cloud"];
+		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom();
+		
+		if(!DirectoryUtils::existDir($dir)){
+			DirectoryUtils::mkDir($dir);
+			
+		}
+		
+		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom()."/".$_POST['nom'];
+			echo $pathname;
+		if(DirectoryUtils::mkDir($pathname)){
+			$this->messageSuccess(" créé.");
+			
+		}else{
+			$this->messageWarning("Impossible d'inserer le disque ");
+		}
+	}
+	
 	public function create(){
 		$user=Auth::getUser();
 		

@@ -1,11 +1,11 @@
 <table class='table table-striped'>
 	<thead><tr><th colspan='3'>{{model}}</th></tr></thead>
 		<tbody>
-		{% for object in objects %}
+		{% for user in users %}
 			<tr>
-			<td>{{object.toString()|raw}}</td>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
-			<td class='td-center'><a class='btn btn-warning btn-xs' href='{{baseHref~"/delete/"~object.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			<td><a href='{{baseHref~"/vUser/"~user.getId()}}'>{{user.toString()|raw}}</a></td>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~user.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+			<td class='td-center'><a class='btn btn-warning btn-xs' href='{{baseHref~"/delete/"~user.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
 			</tr>
 		{% endfor %}
 		</tbody>
