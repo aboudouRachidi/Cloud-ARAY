@@ -1,0 +1,22 @@
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan='1'>{{model}}</th>
+			<th colspan='1'>Description</th>
+			<th colspan='1'>Prix</th>
+
+		</tr>
+	</thead>
+		<tbody>
+		{% for object in objects %}
+			<tr>
+			<td width=20%>{{object.getNom()|raw}}</td>
+			<td>{{object.getDescription()|raw}}</td>
+			<td>{{object.getPrix()|raw}}€</td>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+			<td class='td-center'><a class='btn btn-warning btn-xs' href='{{baseHref~"/delete/"~object.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>Ajouter...</a>
