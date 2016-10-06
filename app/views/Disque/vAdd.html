@@ -1,6 +1,6 @@
-<form method="post" action="Disques/addDir">
+<form method="post" action="Disques/addDisque">
 <fieldset>
-<legend>Ajouter un disque</legend>
+<legend>Nom du disque</legend>
 <div class="alert alert-info">Disque : {{disque.toString()}}</div>
 <div class="form-group">
 	<input type="text" name="nom"  placeholder="Entrez le nom de votre disque..." class="form-control" >
@@ -8,6 +8,66 @@
 	<input type="hidden" name="createdAt" value= "{{date}}" >
 	<input type="hidden" name="nouveau" value= "1">
 </div>
+<fieldset>
+<legend>Tarif</legend>
+</fieldset>
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan=''>Choix</th>
+			<th colspan=''>Tarification</th>
+			<th colspan=''>Quota</th>
+			<th colspan=''>Cout de depassement</th>
+			<th colspan=''>Marge de depassement</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for tarif in tarifs %}
+			<tr>
+			<td><input type="radio" name="idTarif" value="{{tarif.getId()}}"></td>
+			<td>{{tarif.getPrix()}}</td>
+			<td>{{tarif.getQuota()}} {{tarif.getunite()}}</td>
+			<td>{{tarif.getCoutDepassement()}}</td>
+			<td>{{tarif.getmargeDepassement()}}</td>
+			
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+
+
+<fieldset>
+<legend>Service</legend>
+</fieldset>
+
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan=''>Choix</th>
+			<th colspan=''>Service</th>
+			<th colspan=''>Description</th>
+			<th colspan=''>Prix</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for service in services %}
+			<tr>
+			<td><input type="checkbox" name="Services[]" value="{{service.getId()}}"></td>
+			<td width=20%>{{service.getNom()}}</td>
+			<td>{{service.getDescription()}} </td>
+			<td>{{service.getPrix()}}€</td>
+			
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+
+
+
+
+
+
+
 <div class="form-group">
 	<input type="submit" value="Valider" class="btn btn-default">
 	<a class="btn btn-default" href="{{config['siteUrl']}}disques">Annuler</a>

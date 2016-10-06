@@ -29,14 +29,45 @@ class Disques extends \_DefaultController {
 	
 	public function addDisque ($id=NULL) {
 		//$id = $this->getInstance($id);
-		$disque = new Disque();
-		$disque->setUtilisateur(Auth::getUser());
-		RequestUtils::setValuesToObject($disque,$_POST);
-		if(DAO::insert($disque)){
-			$this->messageSuccess($disque->toString()." créé.");
-			$this->index();
-		}else{
-			$this->messageWarning("Impossible d'inserer le disque ".$disque->toString());
+		$cloud = $GLOBALS["config"]["cloud"];
+		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom();
+		
+		if(!DirectoryUtils::existDir($dir)){
+			DirectoryUtils::mkDir($dir);
+			}
+			
+		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom()."/".$_POST['nom'];
+		echo $pathname;
+		if(DirectoryUtils::mkDir($pathname)){
+			//insert disque
+			$disque = new Disque();
+			$disque->setUtilisateur(Auth::getUser());
+			RequestUtils::setValuesToObject($disque,$_POST);
+			foreach ($_POST['services'] as $numService){
+				$service = DAO::getOne("service", $numService);
+				$disque->addService($service);
+			}
+			if(DAO::insert($disque,true)){
+				$this->messageSuccess($disque->toString()." créé.");
+				$this->index();
+				$idDisque=$disque->getId();
+
+				//insert disque-tarif
+				$DisqueTarif=new DisqueTarif();
+				$DisqueTarif->setDisque(DAO::getOne("disque", $idDisque));
+				$DisqueTarif->setTarif(DAO::getOne("tarif", $_POST["idTarif"]));
+				RequestUtils::setValuesToObject($DisqueTarif,$_POST);				
+				if(DAO::insert($DisqueTarif)){
+				$this->messageSuccess("ok");
+				
+				}
+					
+
+				
+			}else{
+				$this->messageWarning("Impossible d'inserer le disque ".$disque->toString());
+			}
+			
 		}
 	}
 	
@@ -62,14 +93,16 @@ class Disques extends \_DefaultController {
 	
 	public function create(){
 		$user=Auth::getUser();
-		
+		$tarifs=DAO::getAll("tarif");
+		$services=DAO::getAll("Service");
 		//$disabled="";
 		$date=date('Y-m-d H:i:s');
-		$this->loadView("disque/vAdd.html",array("user"=>$user,"date"=>$date));
+		$this->loadView("disque/vAdd.html",array("services"=>$services,"tarifs"=>$tarifs,"user"=>$user,"date"=>$date));
 		}
 		
 	public function frm($id=NULL){
 		$user=Auth::getUser();
+		
 		$disque = $this->getInstance($id);
 
 		$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
@@ -99,7 +132,7 @@ class Disques extends \_DefaultController {
 		$date=date('Y-m-d H:i:s');
 		$disque = $this->getInstance($id);
 		$tarifs=DAO::getAll("tarif");
-		$this->loadView("Disque/vTarification.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date));
+		$this->loadView("Disque/vDisqueTarif.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date));
 	}
 	
 	public function ChoixTarif(){
@@ -122,6 +155,8 @@ class Disques extends \_DefaultController {
 			
 		
 	}
+	
+	
 		
 	}
 
