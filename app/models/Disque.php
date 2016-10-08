@@ -126,7 +126,7 @@ class Disque extends Base{
 
 	
 	public function  addService($service){
-		$this->service[]=$service;
+		$this->services[]=$service;
 		return $this;
 	}
 	

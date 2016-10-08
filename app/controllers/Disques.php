@@ -30,26 +30,32 @@ class Disques extends \_DefaultController {
 	public function addDisque ($id=NULL) {
 		//$id = $this->getInstance($id);
 		$cloud = $GLOBALS["config"]["cloud"];
-		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom();
+		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin();
 		
 		if(!DirectoryUtils::existDir($dir)){
 			DirectoryUtils::mkDir($dir);
 			}
 			
-		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom()."/".$_POST['nom'];
+		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
 		echo $pathname;
+		
 		if(DirectoryUtils::mkDir($pathname)){
 			//insert disque
 			$disque = new Disque();
 			$disque->setUtilisateur(Auth::getUser());
 			RequestUtils::setValuesToObject($disque,$_POST);
+
 			foreach ($_POST['services'] as $numService){
 				$service = DAO::getOne("service", $numService);
 				$disque->addService($service);
+					
 			}
+			
 			if(DAO::insert($disque,true)){
+
+				
 				$this->messageSuccess($disque->toString()." créé.");
-				$this->index();
+				//$this->index();
 				$idDisque=$disque->getId();
 
 				//insert disque-tarif

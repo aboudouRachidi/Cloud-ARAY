@@ -5,8 +5,20 @@
 			<tr>
 			<td>{{object.toString()|raw}}</td>
 			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
-			<td class='td-center'><a class='btn btn-warning btn-xs' href='{{baseHref~"/delete/"~object.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
 			</tr>
+			
+			<!-- Confirmer suppression-->
+			<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog modal-lg" role="document">
+			    <div class="modal-content alert alert-warning text-center">
+						<p>Confirmez-vous la suppression de l'objet <b>{{ object }}</b> ?&nbsp;
+							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+							<a href='{{baseHref~"/delete/"~object.getId()}}' class="btn btn-danger">Supprimer</a>
+						</p>
+			    </div>
+			  </div>
+			</div>
 		{% endfor %}
 		</tbody>
 </table>

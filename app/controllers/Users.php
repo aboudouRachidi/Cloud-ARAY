@@ -1,7 +1,7 @@
 <?php
 use micro\orm\DAO;
 use micro\utils\RequestUtils;
-use micro\js\Jquery;
+
 /**
  * Gestion des users
  * @author jcheron
@@ -44,17 +44,10 @@ class Users extends \_DefaultController {
 			$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
 			exit();
 		}else{
-		$isAjax=RequestUtils::isAjax();
-		if(!$isAjax){
-				$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
-			}
+		
 			$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
 			$this->loadView("main/vLogin.html");
-			Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
-			echo Jquery::compile();
-			if(!$isAjax){
-				$this->loadView("main/vFooter.html");
-			}
+	
 		exit();
 		}
 	}
