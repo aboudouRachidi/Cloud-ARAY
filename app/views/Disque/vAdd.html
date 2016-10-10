@@ -52,7 +52,7 @@
 		<tbody>
 		{% for service in services %}
 			<tr>
-			<td><input type="checkbox" name="services[]" value="{{service.getId()}}"></td>
+			<td><input type="checkbox" name="idServices[]" value="{{service.getId()}}"></td>
 			<td width=20%>{{service.getNom()}}</td>
 			<td>{{service.getDescription()}} </td>
 			<td>{{service.getPrix()}}€</td>

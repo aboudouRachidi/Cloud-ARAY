@@ -45,7 +45,7 @@ class Disques extends \_DefaultController {
 			$disque->setUtilisateur(Auth::getUser());
 			RequestUtils::setValuesToObject($disque,$_POST);
 
-			foreach ($_POST['services'] as $numService){
+			foreach ($_POST['idServices'] as $numService){
 				$service = DAO::getOne("service", $numService);
 				$disque->addService($service);
 					

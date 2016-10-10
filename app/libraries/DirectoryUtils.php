@@ -147,7 +147,7 @@ class DirectoryUtils {
 	
 	public static function existDir($dir){
 		$cloud = $GLOBALS["config"]["cloud"];
-		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getNom();
+		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin();
 		if(is_dir($dir)){
 			return true;
 		} else{
