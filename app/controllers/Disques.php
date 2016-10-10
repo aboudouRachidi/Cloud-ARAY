@@ -162,7 +162,21 @@ class Disques extends \_DefaultController {
 		
 	}
 	
+	public function updateService ($id=NULL){
+		$disque = $this->getInstance($id);
+		DAO::getManyToMany($disque, "services");
+		var_dump($disque);
+		$services=DAO::getAll("service");
+		$this->loadView("Disque/vDisqueService.html",array("services"=>$services,"disque"=>$disque));
+	}
 	
+	public function AjoutService(){
+		
+	}
+	
+	public function SupressionService(){
+		
+	}
 		
 	}
 

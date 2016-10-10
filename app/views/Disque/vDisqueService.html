@@ -1,0 +1,62 @@
+<form method="post" action="Disques/SupressionService">
+<div class="alert alert-info">Disque : {{disque.toString()}}</div>
+<fieldset>
+<legend>Supression Service</legend>
+<div class="form-group">
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan=''>Ajout</th>
+			<th colspan=''>Nom</th>
+			<th colspan=''>Description</th>
+			<th colspan=''>Prix</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for service in services %}
+			<tr>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			<td>{{service.getNom()}}</td>
+			<td>{{service.getDescription()}} </td>
+			<td>{{service.getPrix()}}</td>
+			
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+</div>
+</fieldset>
+</form>
+
+
+
+
+
+<form method="post" action="Disques/AjoutService">
+<fieldset>
+<legend>Ajout Service</legend>
+<div class="form-group">
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th colspan=''>Ajout</th>
+			<th colspan=''>Nom</th>
+			<th colspan=''>Description</th>
+			<th colspan=''>Prix</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for service in services %}
+			<tr>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a></td>
+			<td>{{service.getNom()}}</td>
+			<td>{{service.getDescription()}} </td>
+			<td>{{service.getPrix()}}</td>
+			
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+</div>
+</fieldset>
+</form>
