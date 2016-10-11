@@ -1,62 +1,74 @@
-<form method="post" action="Disques/SuppressionService">
+<form method="post" action="Disques/updateDisque">
 <div class="alert alert-info">Disque : {{disque.toString()}}</div>
-<fieldset>
-<legend>Supression Service</legend>
-<div class="form-group">
-<table class='table table-striped'>
-	<thead>
-		<tr>
-			<th colspan=''>Supprimer</th>
-			<th colspan=''>Nom</th>
-			<th colspan=''>Description</th>
-			<th colspan=''>Prix</th>
-		</tr>
-	</thead>
-		<tbody>
-		{% for disqueService in disqueServices %}
-			<tr>
-			<td><a class='btn btn-primary btn-xs' href='Disques/suppressionService/{{disque.getId()}}/{{disqueService.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-			<td>{{disqueService.getNom()}}</td>
-			<td>{{disqueService.getDescription()}} </td>
-			<td>{{disqueService.getPrix()}}</td>
-			
-			</tr>
-		{% endfor %}
-		</tbody>
-</table>
-</div>
-</fieldset>
-</form>
+	<div class="panel panel-primary">
+		<div class="panel-heading">Renommer disque</div>
+	  <div class="panel-body">
+		<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-hdd"></i></span>
+			<input type="text" name="nom" value="{{disque.getNom()}}" class="form-control" placeholder="Entrez le nom de votre disque..." aria-describedby="basic-addon1">
+		</div>
+	  </div>
+		<input type="hidden" name="id" value= "{{disque.getId()}}">
+		<input type="hidden" name="oldName" value= "{{disque.getNom()}}">
+		<input type="hidden" name="idUtilisateur" value= "{{user.getId()}}">
+		<input type="submit" value="Valider" class="btn btn-primary col-md-12">
+		<div class="clearfix"></div>
+	</div>
+	
+	<fieldset>
+		<legend>Suppression Service</legend>
+			<div class="form-group">
+				<table class='table table-striped'>
+					<thead>
+						<tr>
+							<th colspan=''>Supprimer</th>
+							<th colspan=''>Nom</th>
+							<th colspan=''>Description</th>
+							<th colspan=''>Prix</th>
+						</tr>
+					</thead>
+						<tbody>
+						{% for disqueService in disqueServices %}
+							<tr>
+							<td><a class='btn btn-primary btn-xs' href='Disques/suppressionService/{{disque.getId()}}/{{disqueService.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+							<td>{{disqueService.getNom()}}</td>
+							<td>{{disqueService.getDescription()}} </td>
+							<td>{{disqueService.getPrix()}}€</td>
+							
+							</tr>
+						{% endfor %}
+						</tbody>
+				</table>
+			</div>
+	</fieldset>
 
-
-
-
-
-<form method="post" action="Disques/AjoutService">
-<fieldset>
-<legend>Ajout Service</legend>
-<div class="form-group">
-<table class='table table-striped'>
-	<thead>
-		<tr>
-			<th colspan=''>Ajout</th>
-			<th colspan=''>Nom</th>
-			<th colspan=''>Description</th>
-			<th colspan=''>Prix</th>
-		</tr>
-	</thead>
-		<tbody>
-		{% for service in services %}
-			<tr>
-			<td><a class='btn btn-primary btn-xs' href='Disques/ajoutService/{{disque.getId()}}/{{service.getId()}}'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a></td>
-			<td>{{service.getNom()}}</td>
-			<td>{{service.getDescription()}} </td>
-			<td>{{service.getPrix()}}</td>
-			
-			</tr>
-		{% endfor %}
-		</tbody>
-</table>
-</div>
-</fieldset>
+	<fieldset>
+	<legend>Ajout Service</legend>
+		<div class="form-group">
+			<table class='table table-striped'>
+				<thead>
+					<tr>
+						<th colspan=''>Ajouter</th>
+						<th colspan=''>Nom</th>
+						<th colspan=''>Description</th>
+						<th colspan=''>Prix</th>
+					</tr>
+				</thead>
+					<tbody>
+					{% for service in services %}
+						<tr>
+						<td><a class='btn btn-primary btn-xs' href='Disques/ajoutService/{{disque.getId()}}/{{service.getId()}}'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a></td>
+						<td>{{service.getNom()}}</td>
+						<td>{{service.getDescription()}} </td>
+						<td>{{service.getPrix()}}€</td>
+						
+						</tr>
+					{% endfor %}
+					</tbody>
+			</table>
+		</div>
+	</fieldset>
+	<div class="form-group">
+		<a class="btn btn-default col-md-12" href="{{config['siteUrl']}}MyDisques">Annuler</a>
+	</div>
 </form>

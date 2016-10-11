@@ -1,61 +1,71 @@
-
-
-<h3>Mes Disques -> {{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom}})</h3>
-<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>Créer un disque</a>
-<table class='table table-striped'>
-
-
-		<tbody>
-		{% for object in objects %}
-			<tr>
-			<td colspan='4'>{{object.getNom|raw}} <span class="badge">{{object.getOccupation()}} {{object.getUnite()}}/{{object.getQuota()}} {{object.getUnite()}}</span></td>
-			</tr>
-			<tr> 
-			<td colspan='4'>
+<div class='container'>
+	<div class="col-md-11">
+		<div class="page-header">
+			<fieldset>
+  				<legend><i class="glyphicon glyphicon-hdd"></i> Mes Disques ->{{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom}})</legend>
+			</fieldset>
+		</div>
+	<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'><i class="glyphicon glyphicon-plus"></i> Créer un disque</a>
+			{% for object in objects %}
+			<div class="well well-sm">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button class="btn label label-info"><i class="glyphicon glyphicon-hdd"></i> {{object.getNom|raw}}<span class="badge">{{object.getOccupation()}} {{object.getUnite()}}/{{object.getQuota()}} {{object.getUnite()}}</span></button>
+				</div>	
+					
+				
 			{%if object.pourcentage()<=10%}
-			<div class="progress">
-			  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
-			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			     <b style=color:black>{{object.pourcentage()}}%</b>
-			    
-			  </div>
-			</div>
-				{%elseif object.pourcentage()>10 and object.pourcentage()<=50%}
-			<div class="progress">
-			  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    <b style=color:black>{{object.pourcentage()}}%</b>
-			    
-			  </div>
-			</div>
-					{%elseif object.pourcentage()>50 and object.pourcentage()<=80%}
-			<div class="progress">
-			  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
-			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    <b style=color:black>{{object.pourcentage()}}%</b>
-			    
-			  </div>
-			</div>
-					{%elseif object.pourcentage()>80%}
-			<div class="progress">
-			  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
-			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			     <b style=color:black>{{object.pourcentage()}}%</b>
-			    
-			  </div>
-			</div>
+			<div class="panel-body">
+				<div class="progress">
+				  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+				  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+				     <b style=color:black>{{object.pourcentage()}}%</b>
+				    
+				  </div>
+				</div>
+			</div>	
+			{%elseif object.pourcentage()>10 and object.pourcentage()<=50%}
+			<div class="panel-body">
+				<div class="progress">
+				  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+				  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+				    <b style=color:black>{{object.pourcentage()}}%</b>
+				    
+				  </div>
+				</div>
+			</div>	
+			{%elseif object.pourcentage()>50 and object.pourcentage()<=80%}
+			<div class="panel-body">
+				<div class="progress">
+				  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+				  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+				    <b style=color:black>{{object.pourcentage()}}%</b>
+				    
+				  </div>
+				</div>
+			</div>	
+			{%elseif object.pourcentage()>80%}
+			<div class="panel-body">
+				<div class="progress">
+				  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+				  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+				     <b style=color:black>{{object.pourcentage()}}%</b>
+				    
+				  </div>
+				</div>
+			</div>	
 			{%endif%}
-			</td>
-			</tr>
-			<tr>
-				<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span></a></td>
-				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/Tarification/"~object.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span></a></td>
-				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
-			</tr>
-			<tr>
-			<td colspan='4'><a class="btn btn-primary btn-sm col-md-12"> <span class="glyphicon glyphicon-folder-open"></span> Ouvrir</a></td>
-			</tr>
+		    <div class="row text-center">
+				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/updateService/{{object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span> Nouveaux servives</a></div>
+				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/Tarification/{{object.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span> Autre Tarif</a></div>
+				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/frm/{{object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier</a></div>
+				<div class="col-sm-3"><a class='btn btn-danger btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Supprimer</a></div>
+		    </div>
+			
+			
+			<div class="span9">
+				<a class="btn btn-primary btn-sm col-md-12"> <span class="glyphicon glyphicon-folder-open"></span> Ouvrir</a>
+			</div>
 			
 			<!-- Confirmer suppression-->
 			<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
@@ -67,7 +77,11 @@
 						</p>
 			    </div>
 			  </div>
-			</div>
+			</div>	
+		</div>
+		</div>
+		<br>
 		{% endfor %}
-		</tbody>
-</table>
+		<div class="clearfix"></div>
+	</div>	
+</div>

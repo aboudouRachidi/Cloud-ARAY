@@ -3,7 +3,10 @@
 <legend>Nom du disque</legend>
 <div class="alert alert-info">Disque : {{disque.toString()}}</div>
 <div class="form-group">
-	<input type="text" name="nom"  placeholder="Entrez le nom de votre disque..." class="form-control" >
+		<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-hdd"></i></span>
+			<input type="text" name="nom" class="form-control" placeholder="Entrez le nom de votre disque..." aria-describedby="basic-addon1">
+		</div>
 	<input type="hidden" name="idUtilisateur" value= "{{user.getId()}}">
 	<input type="hidden" name="createdAt" value= "{{date}}" >
 	<input type="hidden" name="nouveau" value= "1">

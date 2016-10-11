@@ -43,6 +43,10 @@ class MyDisques extends Controller{
 		$this->loadView("disque/vAdd.html",array("services"=>$services,"tarifs"=>$tarifs,"user"=>$user,"date"=>$date));
 	}
 	
+	public function tarification(){
+		$this->forward(Disques::class,"Tarification");
+	}
+	
 	/**
 	 * Supprime l'instance dont l'id est $id dans la BDD
 	 * @param int $id
