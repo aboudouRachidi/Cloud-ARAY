@@ -102,6 +102,11 @@ class Disque extends Base{
 	public function getOccupation(){
 		return round($this->getSize()/$this->getQuota()*100,2);
 	}
+	
+	public function pourcentage(){
+		$result=($this->getOccupation()*100)/$this->getQuota();
+		return round($result);
+	}
 
 	public function setDisqueTarifs($disqueTarifs) {
 		$this->disqueTarifs=$disqueTarifs;

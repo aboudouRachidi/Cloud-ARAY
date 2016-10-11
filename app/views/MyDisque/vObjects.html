@@ -1,0 +1,68 @@
+
+
+<h3>Mes Disques -> {{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom}})</h3>
+<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>Créer un disque</a>
+<table class='table table-striped'>
+
+
+		<tbody>
+		{% for object in objects %}
+			<tr>
+			<td>{{object.getNom|raw}}</td>
+			</tr>
+			<tr> 
+			<td>
+			{%if object.pourcentage()<=10%}
+			<div class="progress">
+			  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+			    {{object.pourcentage()}}%
+			    
+			  </div>
+			</div>
+				{%elseif object.pourcentage()>10 and object.pourcentage()<=50%}
+			<div class="progress">
+			  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+			    {{object.pourcentage()}}%
+			    
+			  </div>
+			</div>
+					{%elseif object.pourcentage()>50 and object.pourcentage()<=80%}
+			<div class="progress">
+			  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+			    {{object.pourcentage()}}%
+			    
+			  </div>
+			</div>
+					{%elseif object.pourcentage()>80%}
+			<div class="progress">
+			  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
+			    {{object.pourcentage()}}%
+			    
+			  </div>
+			</div>
+			{%endif%}
+			</td>
+			</tr>
+			<tr>
+				<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			
+			</tr>
+			
+			<!-- Confirmer suppression-->
+			<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog modal-lg" role="document">
+			    <div class="modal-content alert alert-warning text-center">
+						<p>Confirmez-vous la suppression de l'objet <b>{{ object }}</b> ?&nbsp;
+							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+							<a href='{{baseHref~"/delete/"~object.getId()}}' class="btn btn-danger">Supprimer</a>
+						</p>
+			    </div>
+			  </div>
+			</div>
+		{% endfor %}
+		</tbody>
+</table>
