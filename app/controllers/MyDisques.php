@@ -34,6 +34,34 @@ class MyDisques extends Controller{
 		
 	}
 	
+	public function create(){
+		$user=Auth::getUser();
+		$tarifs=DAO::getAll("tarif");
+		$services=DAO::getAll("Service");
+		//$disabled="";
+		$date=date('Y-m-d H:i:s');
+		$this->loadView("disque/vAdd.html",array("services"=>$services,"tarifs"=>$tarifs,"user"=>$user,"date"=>$date));
+	}
+	
+	/**
+	 * Supprime l'instance dont l'id est $id dans la BDD
+	 * @param int $id
+	 */
+	public function delete($id){
+		try{
+			$object=DAO::getOne($this->model, $id);
+			if($object!==NULL){
+				DAO::delete($object);
+				echo ($this->model." `{$object->toString()}` supprimé(e)");
+				$this->onDelete($object);
+			}else{
+				echo ($this->model." introuvable");
+			}
+		}catch(\Exception $e){
+			echo ("Impossible de supprimer l'instance de ".$this->model);
+		}
+		
+	}
 
 	public function finalize(){
 		if(!RequestUtils::isAjax()){

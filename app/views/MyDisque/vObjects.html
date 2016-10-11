@@ -8,15 +8,15 @@
 		<tbody>
 		{% for object in objects %}
 			<tr>
-			<td>{{object.getNom|raw}}</td>
+			<td colspan='4'>{{object.getNom|raw}} <span class="badge">{{object.getOccupation()}} {{object.getUnite()}}/{{object.getQuota()}} {{object.getUnite()}}</span></td>
 			</tr>
 			<tr> 
-			<td>
+			<td colspan='4'>
 			{%if object.pourcentage()<=10%}
 			<div class="progress">
 			  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
 			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    {{object.pourcentage()}}%
+			     <b style=color:black>{{object.pourcentage()}}%</b>
 			    
 			  </div>
 			</div>
@@ -24,7 +24,7 @@
 			<div class="progress">
 			  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
 			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    {{object.pourcentage()}}%
+			    <b style=color:black>{{object.pourcentage()}}%</b>
 			    
 			  </div>
 			</div>
@@ -32,7 +32,7 @@
 			<div class="progress">
 			  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
 			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    {{object.pourcentage()}}%
+			    <b style=color:black>{{object.pourcentage()}}%</b>
 			    
 			  </div>
 			</div>
@@ -40,7 +40,7 @@
 			<div class="progress">
 			  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
 			  aria-valuenow="{{object.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{object.getQuota()}}" style="width:{{object.pourcentage()}}%" >
-			    {{object.pourcentage()}}%
+			     <b style=color:black>{{object.pourcentage()}}%</b>
 			    
 			  </div>
 			</div>
@@ -49,7 +49,12 @@
 			</tr>
 			<tr>
 				<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-			
+				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span></a></td>
+				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/Tarification/"~object.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span></a></td>
+				<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+			</tr>
+			<tr>
+			<td colspan='4'><a class="btn btn-primary btn-sm col-md-12"> <span class="glyphicon glyphicon-folder-open"></span> Ouvrir</a></td>
 			</tr>
 			
 			<!-- Confirmer suppression-->

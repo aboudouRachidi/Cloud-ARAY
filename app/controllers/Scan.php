@@ -13,9 +13,7 @@ class Scan extends BaseController {
 
 	}
 	
-	public function show($idD){
-		
-	}
+
 
 	/**
 	 * Affiche un disque
