@@ -1,5 +1,6 @@
 <?php
 use micro\js\Jquery;
+use micro\orm\DAO;
 /**
  * Contrôleur permettant d'afficher/gérer 1 disque
  * @author jcheron
@@ -11,13 +12,19 @@ class Scan extends BaseController {
 	public function index(){
 
 	}
+	
+	public function show($idD){
+		
+	}
 
 	/**
 	 * Affiche un disque
 	 * @param int $idDisque
 	 */
 	public function show($idDisque) {
-		$diskName="Datas";
+		$disque = DAO::getOne("disque", $idDisque);
+		var_dump($disque->getNom());
+		$diskName=$disque->getNom();
 		$this->loadView("scan/vFolder.html");
 		Jquery::executeOn("#ckSelectAll", "click","$('.toDelete').prop('checked', $(this).prop('checked'));$('#btDelete').toggle($('.toDelete:checked').length>0)");
 		Jquery::executeOn("#btUpload", "click", "$('#tabsMenu a:last').tab('show');");

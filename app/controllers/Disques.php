@@ -164,18 +164,37 @@ class Disques extends \_DefaultController {
 	
 	public function updateService ($id=NULL){
 		$disque = $this->getInstance($id);
-		DAO::getManyToMany($disque, "services");
+		$disquServices = DAO::getManyToMany($disque, "services");
 		var_dump($disque);
 		$services=DAO::getAll("service");
-		$this->loadView("Disque/vDisqueService.html",array("services"=>$services,"disque"=>$disque));
+		$this->loadView("Disque/vDisqueService.html",array("services"=>$services,"disqueServices"=>$disquServices,"disque"=>$disque));
 	}
 	
-	public function AjoutService(){
-		
+	public function AjoutService($idDisk,$idServ){
+
+		$disque = DAO::getOne("disque", $idDisk);
+		$service = DAO::getOne("service", $idServ);
+		DAO::getManyToMany($disque, "services");
+		/*$idServices = array($service);
+		foreach ($disqueServices as $disqueService){
+			array_push($idServices, $disqueService);
+		}*/
+		$disque->addService($service);
+		DAO::insertOrUpdateAllManyToMany($disque);
+		$this->messageSuccess("Le service (".$service->toString().") a été ajouté pour le disque (".$disque->toString().")");
+		$this->updateService($disque->getId());
 	}
 	
-	public function SupressionService(){
-		
+	public function SuppressionService($idDisk,$idServ){
+
+		$disque = DAO::getOne("disque", $idDisk);
+		$service = DAO::getOne("service", $idServ);
+		$disqueServices = DAO::getManyToMany($disque, "services");
+		if($disque->removeService($idServ)){
+			DAO::update($disque,true);
+		}
+		$this->messageSuccess("Le service (".$service->toString().") a été supprimé pour le disque (".$disque->toString().")");
+		$this->updateService($disque->getId());
 	}
 		
 	}

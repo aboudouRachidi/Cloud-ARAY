@@ -17,7 +17,9 @@ body{
 }
 .alert {
     transition: 1s linear all;
-     opacity: 1;
+    opacity: 1;
+    font-family: cursive;
+    font-weight: bold;
 }
 .alert.ng-hide {
      opacity: 0;

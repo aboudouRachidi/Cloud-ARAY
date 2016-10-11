@@ -102,11 +102,6 @@ class Disque extends Base{
 	public function getOccupation(){
 		return round($this->getSize()/$this->getQuota()*100,2);
 	}
-	
-	public function pourcentage(){
-		$result=($this->getOccupation()*100)/$this->getQuota();
-		return round($result);
-	}
 
 	public function setDisqueTarifs($disqueTarifs) {
 		$this->disqueTarifs=$disqueTarifs;
@@ -133,6 +128,18 @@ class Disque extends Base{
 	public function  addService($service){
 		$this->services[]=$service;
 		return $this;
+	}
+	
+	public function removeService($idService){
+		$i=0;
+		foreach ($this->services as $service){
+			if($service->getId()===$idService){
+				unset($this->services[$i]);
+				return true;
+			}
+			$i++;
+		}
+		return false;
 	}
 	
 	

@@ -45,10 +45,9 @@ class Users extends \_DefaultController {
 			exit();
 		}else{
 		
-			$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
+			$this->messageDanger("Vous devez être connecté pour afficher cette page !",8000,false);
 			$this->loadView("main/vLogin.html");
-	
-		exit();
+			exit();
 		}
 	}
 	public function frm($id=NULL){
@@ -62,8 +61,12 @@ class Users extends \_DefaultController {
 	}
 
 	public function profil(){
-		$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
-		$this->loadView("user/vProfil.html",array("user"=>$user));
+		if(Auth::isAuth()){
+			$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
+			$this->loadView("user/vProfil.html",array("user"=>$user));
+		}else{
+			$this->onInvalidControl();
+		}
 	}
 	
 	/**
@@ -72,7 +75,7 @@ class Users extends \_DefaultController {
 	 * @see _DefaultController::setValuesToObject()
 	 */
 	public function updateProfil(){
-		//$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
+		//$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");	
 		if(RequestUtils::isPost()){
 			$className=$this->model;
 			$object=new $className();
@@ -80,7 +83,7 @@ class Users extends \_DefaultController {
 			if($_POST["id"]){
 				try{
 					DAO::update($object);
-					$this->messageSuccess("<b>Vos informations ont été mis à jour</b>",5000,true);
+					$this->messageSuccess("Vos informations ont été mis à jour",5000,true);
 					$this->onUpdate($object);
 					$this->profil();
 				}catch(\Exception $e){
@@ -88,6 +91,7 @@ class Users extends \_DefaultController {
 				}
 			}
 		}
+
 	}
 	
 	public function vUser($id=NULL){

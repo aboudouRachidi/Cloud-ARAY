@@ -23,23 +23,7 @@ class Accueil extends Controller {
 			}
 
 			if(Auth::isAdmin()){
-				$Count = array(
-						"newUser"	=> $newUser		= DAO::count("utilisateur","nouveau = 1"),
-						"newDisk"	=> $newDisk		= DAO::count("disque","nouveau = 1"),
-						"nbUser"	=> $nbUser		= DAO::count("utilisateur"),
-						"nbDisk" 	=> $nbDisk		= DAO::count("disque"),
-						"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
-						"nbService"	=> $nbService	= DAO::count("service"),
-				);
-				
-				$this->loadView("admin/vDefault.html",
-						array(	"newUser"=>$newUser,
-								"newDisk"=>$newDisk,
-								"nbUser"=>$nbUser,
-								"nbDisk"=>$nbDisk,
-								"nbTarif"=>$nbTarif,
-								"nbService"=>$nbService,						
-				));
+				$this->forward(Admin::class);
 			}else {
 				$this->loadView("main/vDefault.html");
 			}

@@ -1,4 +1,4 @@
-<form method="post" action="Disques/SupressionService">
+<form method="post" action="Disques/SuppressionService">
 <div class="alert alert-info">Disque : {{disque.toString()}}</div>
 <fieldset>
 <legend>Supression Service</legend>
@@ -6,19 +6,19 @@
 <table class='table table-striped'>
 	<thead>
 		<tr>
-			<th colspan=''>Ajout</th>
+			<th colspan=''>Supprimer</th>
 			<th colspan=''>Nom</th>
 			<th colspan=''>Description</th>
 			<th colspan=''>Prix</th>
 		</tr>
 	</thead>
 		<tbody>
-		{% for service in services %}
+		{% for disqueService in disqueServices %}
 			<tr>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-			<td>{{service.getNom()}}</td>
-			<td>{{service.getDescription()}} </td>
-			<td>{{service.getPrix()}}</td>
+			<td><a class='btn btn-primary btn-xs' href='Disques/suppressionService/{{disque.getId()}}/{{disqueService.getId()}}'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+			<td>{{disqueService.getNom()}}</td>
+			<td>{{disqueService.getDescription()}} </td>
+			<td>{{disqueService.getPrix()}}</td>
 			
 			</tr>
 		{% endfor %}
@@ -48,7 +48,7 @@
 		<tbody>
 		{% for service in services %}
 			<tr>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a></td>
+			<td><a class='btn btn-primary btn-xs' href='Disques/ajoutService/{{disque.getId()}}/{{service.getId()}}'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a></td>
 			<td>{{service.getNom()}}</td>
 			<td>{{service.getDescription()}} </td>
 			<td>{{service.getPrix()}}</td>
