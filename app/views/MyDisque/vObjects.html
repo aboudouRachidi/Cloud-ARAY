@@ -5,7 +5,7 @@
   				<legend><i class="glyphicon glyphicon-hdd"></i> Mes Disques ->{{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom}})</legend>
 			</fieldset>
 		</div>
-	<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'><i class="glyphicon glyphicon-plus"></i> Créer un disque</a>
+	<a class='btn btn-primary' href='Disques/frmAdd'><i class="glyphicon glyphicon-plus"></i> Créer un disque</a>
 			{% for object in objects %}
 			<div class="well well-sm">
 			<div class="panel panel-default">
@@ -56,15 +56,15 @@
 			</div>	
 			{%endif%}
 		    <div class="row text-center">
-				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/updateService/{{object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span> Nouveaux servives</a></div>
+				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/frmUpdateService/{{object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span> Nouveaux servives</a></div>
 				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/Tarification/{{object.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span> Autre Tarif</a></div>
-				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/frm/{{object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier</a></div>
+				<div class="col-sm-3"><a class='btn btn-default btn-xs' href='Disques/frmUpdate/{{object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier</a></div>
 				<div class="col-sm-3"><a class='btn btn-danger btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Supprimer</a></div>
 		    </div>
 			
 			
 			<div class="span9">
-				<a class="btn btn-primary btn-sm col-md-12"> <span class="glyphicon glyphicon-folder-open"></span> Ouvrir</a>
+				<a class="btn btn-primary btn-sm col-md-12" href="scan/show/{{object.getId()}}"> <span class="glyphicon glyphicon-folder-open"></span> Ouvrir</a>
 			</div>
 			
 			<!-- Confirmer suppression-->

@@ -28,83 +28,135 @@ class Disques extends \_DefaultController {
 	}
 	
 	public function addDisque ($id=NULL) {
-		$cloud = $GLOBALS["config"]["cloud"];
-		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin();
-		if(!DirectoryUtils::existDir($dir)){
-			DirectoryUtils::mkDir($dir);
-			}
-			
-		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
-		if(DirectoryUtils::mkDir($pathname)){
-			//insert disque
-			$disque = new Disque();
-			$disque->setUtilisateur(Auth::getUser());
-			RequestUtils::setValuesToObject($disque,$_POST);
-			foreach ($_POST['idServices'] as $numService){
-				$service = DAO::getOne("service", $numService);
-				$disque->addService($service);
-					
-			}
-			if(DAO::insert($disque,true)){
-				$this->messageSuccess($disque->toString()." créé.");
-				//$this->index();
-				$idDisque=$disque->getId();
-				//insert disque-tarif
-				$DisqueTarif=new DisqueTarif();
-				$DisqueTarif->setDisque(DAO::getOne("disque", $idDisque));
-				$DisqueTarif->setTarif(DAO::getOne("tarif", $_POST["idTarif"]));
-				RequestUtils::setValuesToObject($DisqueTarif,$_POST);				
-				if(DAO::insert($DisqueTarif)){
-					$this->messageSuccess("Le disque".$disque->toString()." a été créé");
-					$this->index();
+		$nom = $_POST['nom'];
+		if(!isset($_POST['idTarif'])){
+			$this->messageDanger("Veuillez choisir un tarif");
+			$this->frmAdd($nom);
+		}elseif (!isset($_POST['idServices'])){
+			$this->messageDanger("Veuillez choisir au moins un service et un tarif");
+			$this->frmAdd($nom);
+		}else {
+			$cloud = $GLOBALS["config"]["cloud"];
+			$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin();
+			if(!DirectoryUtils::existDir($dir)){
+				DirectoryUtils::mkDir($dir);
+				}
+				
+			$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
+			if(DirectoryUtils::mkDir($pathname)){
+				//insert disque
+				$disque = new Disque();
+				$disque->setUtilisateur(Auth::getUser());
+				RequestUtils::setValuesToObject($disque,$_POST);
+				foreach ($_POST['idServices'] as $numService){
+					$service = DAO::getOne("service", $numService);
+					$disque->addService($service);
+						
+				}
+				if(DAO::insert($disque,true)){
+					//$this->messageSuccess($disque->toString()." créé.");
+					//$this->index();
+					$idDisque=$disque->getId();
+					//insert disque-tarif
+					$DisqueTarif=new DisqueTarif();
+					$DisqueTarif->setDisque(DAO::getOne("disque", $idDisque));
+					$DisqueTarif->setTarif(DAO::getOne("tarif", $_POST["idTarif"]));
+					RequestUtils::setValuesToObject($DisqueTarif,$_POST);				
+					if(DAO::insert($DisqueTarif)){
+						$this->messageSuccess("Le disque <u>".$disque->toString()."</u> a été créé");
+						$this->forward(MyDisques::class);
+					}else{
+						$this->messageWarning("Impossible d'associer les services au disque ".$disque->toString());
+					}
 				}else{
-					$this->messageWarning("Impossible d'associer les services au disque ".$disque->toString());
+					$this->messageWarning("Impossible d'inserer le disque ".$disque->toString());
 				}
 			}else{
-				$this->messageWarning("Impossible d'inserer le disque ".$disque->toString());
-			}
-		}else{
-				$this->messageWarning("Impossible de créer le dossier du disque ".$disque->toString());
-			}
+					$this->messageWarning("Impossible de créer le dossier du disque ".$disque->toString());
+				}
+		}
 	}
-	
-	public function create(){
+	public function PaiementDisque(){
+		$prixTotal = 0;
+		$services = [];
+		$idUtilisateur = Auth::getUser()->getId();
+		if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".$idUtilisateur."'")){
+			if(isset($_POST['idTarif'])){
+				$tarif = DAO::getOne("tarif", $_POST['idTarif']);
+			}
+			if(isset($_POST['idServices'])){
+				foreach ($_POST['idServices'] as $num){
+					
+					$service = DAO::getOne("service", $num);
+					
+					$prixTotal = $prixTotal + $service->getPrix();
+						array_push($services, $service);
+					
+				}
+				$prixTotal = $prixTotal += $tarif->getPrix();
+				$date=date('Y-m-d H:i:s');
+				$nom = $_POST['nom'];
+				$this->loadView("disque/vPaiementDisque.html",array(
+						"nom"=>$nom,
+						"tarif"=>$tarif,
+						"services"=>$services,
+						"prixTotal"=>$prixTotal,
+						"date"=>$date,
+				));
+			
+			}else {
+				$this->messageDanger("Veuillez choisir au moins un service et un tarif");
+				$this->frmAdd($_POST['nom']);
+			}
+		}else {
+			$this->messageDanger("Le disque ".$_POST['nom']." existe déjà");
+			$this->frmAdd($_POST['nom']);
+		}
+	}
+	public function frmAdd($nom = NULL){
 		$user=Auth::getUser();
 		$tarifs=DAO::getAll("tarif");
 		$services=DAO::getAll("Service");
+		
 		//$disabled="";
 		$date=date('Y-m-d H:i:s');
-		$this->loadView("disque/vAdd.html",array("services"=>$services,"tarifs"=>$tarifs,"user"=>$user,"date"=>$date));
+		$this->loadView("disque/vAdd.html",array("nom"=>$nom,"services"=>$services,"tarifs"=>$tarifs,"user"=>$user,"date"=>$date));
 	}
 		
-	public function frm($id=NULL){
+	public function frmUpdate($id=NULL){
 		$user=Auth::getUser();
 		$disque = $this->getInstance($id);
 		$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
 	}
 	
 	public function updateDisque(){
+		
 		if(RequestUtils::isPost()){
 			$className=$this->model;
 			$object=new $className();
 			$this->setValuesToObject($object);
-			if($_POST["id"]){
-				try{
-					$cloud = $GLOBALS["config"]["cloud"];
-					$oldName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['oldName'];
-					$newName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
-					if(rename($oldName, $newName)){
-						DAO::update($object);
-						$this->messageSuccess("Le disque ".$_POST['oldName']." a été renommé ",5000,true);
-						$this->onUpdate($object);
-						$this->updateService($object->getId());
-					}else{
-						$this->messageDanger("Impossible de renommer le dossier");
-						$this->updateService($object->getId());
+			if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".Auth::getUser()->getId()."'")){
+				if($_POST["id"]){
+					try{
+						$cloud = $GLOBALS["config"]["cloud"];
+						$oldName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['oldName'];
+						$newName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
+						if(rename($oldName, $newName)){
+							DAO::update($object);
+							$this->messageSuccess("Le disque ".$_POST['oldName']." a été renommé ",5000,true);
+							$this->onUpdate($object);
+							$this->frmUpdateService($object->getId());
+						}else{
+							$this->messageDanger("Impossible de renommer le dossier");
+							$this->updateService($object->getId());
+						}
+					}catch(\Exception $e){
+						$this->messageDanger("Impossible de modifier l'instance de ".$this->model,"danger");
 					}
-				}catch(\Exception $e){
-					$this->messageDanger("Impossible de modifier l'instance de ".$this->model,"danger");
 				}
+			}else {
+				$this->messageDanger("Le disque ".$_POST['nom']." existe déjà");
+				$this->frmUpdateService($object->getId());
 			}
 		}
 	}
@@ -134,7 +186,7 @@ class Disques extends \_DefaultController {
 		$this->_postUpdateAction($msg);
 	}
 	
-	public function updateService ($id=NULL){
+	public function frmUpdateService ($id=NULL){
 		$disque = $this->getInstance($id);
 		$disquServices = DAO::getManyToMany($disque, "services");
 		$services=DAO::getAll("service");
@@ -149,10 +201,10 @@ class Disques extends \_DefaultController {
 			$disque->addService($service);
 			DAO::insertOrUpdateAllManyToMany($disque);
 			$this->messageSuccess("Le service <u>".$service->toString()."</u> a été ajouté pour le disque : <u>".$disque->toString()."</u>");
-			$this->updateService($disque->getId());
+			$this->frmUpdateService($disque->getId());
 		}else {
 			$this->messageDanger("Le service <u>".$service->toString()."</u> est déjà associé au disque : <u>".$disque->toString()."</u>");
-			$this->updateService($disque->getId());
+			$this->frmUpdateService($disque->getId());
 		}
 	}
 	
@@ -164,7 +216,7 @@ class Disques extends \_DefaultController {
 			DAO::update($disque,true);
 		}
 		$this->messageSuccess("Le service <u>".$service->toString()."</u> a été supprimé pour le disque : <u>".$disque->toString()."</u>");
-		$this->updateService($disque->getId());
+		$this->frmUpdateService($disque->getId());
 	}
 		
 }

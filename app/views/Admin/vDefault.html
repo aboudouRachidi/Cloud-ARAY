@@ -1,8 +1,35 @@
-	<div class="well well-lg">
-		<div id="main">
+<div class="well well-lg">
+	<div id="main">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Administration</h3>
+			</div>
+		<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+			<li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Utilisateurs</a></li>
+			<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+			<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" id="navbarDrop1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					Dropdown <span class="caret"></span>
+				</a> 
+				<ul class="dropdown-menu" aria-labelledby="navbarDrop1">
+					<li role="presentation"><a href="#mesDisques" aria-controls="mesDisques" role="tab" data-toggle="tab">Mes disques</a></li>
+					<li class=""><a href="#two">Tous les disques</a></li>
+					<li role="separator" class="divider"></li>
+					<li class=""><a href="#three">...</a></li> 
+				</ul> 
+			</li>
+		</ul>
+
+<!-- Tab panes -->
+	<div class="tab-content">
+		<!-- home administration -->
+		<div role="tabpanel" class="tab-pane fade in active" id="home">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Administration</h3>
+					<h3 class="panel-title">Tableau de bord</h3>
 				</div>
 				<div class="panel-body">
 					<div class="">
@@ -74,34 +101,81 @@
 					</div>
 				</div>
 			</div>
-
-			<fieldset>
-				<legend>Interface provisoire de test</legend>
-				<a class="btn btn-link" href="" data-ajax="">Accueil</a>
-				<a class="btn btn-default" href="Users" data-ajax="Users">Utilisateurs</a>
-				<a class="btn btn-default" href="Services" data-ajax="Services">Services</a>
-				<a class="btn btn-default" href="Disques" data-ajax="Disques">Disques</a>
-				<a class="btn btn-default" href="Tarifs" data-ajax="Tarifs">Tarifs</a>
-				<a class="btn btn-default" href="Historiques" data-ajax="Historiques">Historiques</a>
-			</fieldset>
-			<fieldset>
-				<legend>A implémenter (avec connexion Client nécessaire)</legend>
-				<a class="btn btn-primary" href="MyDisques" data-ajax="MyDisques">Mes disques <span class="label label-info">//TODO 1.1</span></a>
-				<a class="btn btn-info" href="Scan/show/1" data-ajax="Scan/show/1">Disque Datas (id=1) <span class="label label-primary">//TODO 1.2</span></a>
-				<a class="btn btn-success" href="Disques/create" data-ajax="Disques/create">Créer un disque <span class="label label-primary">//TODO 1.3</span></a>
-			</fieldset>
-			<fieldset>
-				<legend>A implémenter (avec connexion Admin nécessaire)</legend>
-				<a class="btn btn-primary" href="Admin" data-ajax="Admin">Administration <span class="label label-info">//TODO 2.1</span></a>
-				<a class="btn btn-primary" href="Admin/users" data-ajax="Admin/users">Utilisateurs <span class="label label-info">//TODO 2.2</span></a>
-				<a class="btn btn-primary" href="Admin/disques" data-ajax="Admin/disques">Disques <span class="label label-info">//TODO 2.3</span></a>
-			</fieldset>
-			<fieldset>
-				<legend>Connexion</legend>
-					<a class="btn btn-default" href="Accueil/asAdmin">Connexion en tant qu'admin</a>
-					<a class="btn btn-default" href="Accueil/asUser">Connexion en tant que client</a>
-					<a class="btn btn-warning" href="Accueil/disconnect">Déconnexion</a>
-			</fieldset>
 		</div>
-		<div id="response"></div>
+		<!-- //home administration -->
+		<!--  -->
+		<div role="tabpanel" class="tab-pane fade" id="users">
+		<table class='table table-striped'>
+			<thead><tr><th colspan='3'>Utilisateurs</th></tr></thead>
+				<tbody>
+				{% for user in users %}
+					<tr>
+					<td><a href='{{baseHref~"/vUser/"~user.getId()}}'>{{user.toString()|raw}}</a></td>
+					<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~user.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+					<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{user.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
+					</tr>
+					
+					<!-- Confirmer suppression-->
+					<div class="modal fade delete{{user.getId()}}" tabindex="-1" role="dialog">
+					  <div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content alert alert-warning text-center">
+								<p>Confirmez-vous la suppression de : <b>{{ user }}</b> ?&nbsp;
+									<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+									<a href='{{baseHref~"/delete/"~user.getId()}}' class="btn btn-danger">Supprimer</a>
+								</p>
+					    </div>
+					  </div>
+					</div>
+				{% endfor %}
+				</tbody>
+		</table>
+		</div>
+		<!--//  -->
+		<!--  -->	
+		<div role="tabpanel" class="tab-pane fade" id="messages">
+		
+		</div>
+		<!--//  -->
+		<!--  -->
+		<div role="tabpanel" class="tab-pane fade" id="settings">
+		
+		</div>
+		<!--//  -->
+		<!--  -->
+		<div role="tabpanel" class="tab-pane fade" id="mesDisques">
+		
+		</div>
+		<!--//  -->
 	</div>
+</div>
+
+		<fieldset>
+			<legend>Interface provisoire de test</legend>
+			<a class="btn btn-link" href="" data-ajax="">Accueil</a>
+			<a class="btn btn-default" href="Users" data-ajax="Users">Utilisateurs</a>
+			<a class="btn btn-default" href="Services" data-ajax="Services">Services</a>
+			<a class="btn btn-default" href="Disques" data-ajax="Disques">Disques</a>
+			<a class="btn btn-default" href="Tarifs" data-ajax="Tarifs">Tarifs</a>
+			<a class="btn btn-default" href="Historiques" data-ajax="Historiques">Historiques</a>
+		</fieldset>
+		<fieldset>
+			<legend>A implémenter (avec connexion Client nécessaire)</legend>
+			<a class="btn btn-primary" href="MyDisques" data-ajax="MyDisques">Mes disques <span class="label label-info">//TODO 1.1</span></a>
+			<a class="btn btn-info" href="Scan/show/1" data-ajax="Scan/show/1">Disque Datas (id=1) <span class="label label-primary">//TODO 1.2</span></a>
+			<a class="btn btn-success" href="Disques/frmAdd" data-ajax="Disques/frmAdd">Créer un disque <span class="label label-primary">//TODO 1.3</span></a>
+		</fieldset>
+		<fieldset>
+			<legend>A implémenter (avec connexion Admin nécessaire)</legend>
+			<a class="btn btn-primary" href="Admin" data-ajax="Admin">Administration <span class="label label-info">//TODO 2.1</span></a>
+			<a class="btn btn-primary" href="Admin/users" data-ajax="Admin/users">Utilisateurs <span class="label label-info">//TODO 2.2</span></a>
+			<a class="btn btn-primary" href="Admin/disques" data-ajax="Admin/disques">Disques <span class="label label-info">//TODO 2.3</span></a>
+		</fieldset>
+		<fieldset>
+			<legend>Connexion</legend>
+				<a class="btn btn-default" href="Accueil/asAdmin">Connexion en tant qu'admin</a>
+				<a class="btn btn-default" href="Accueil/asUser">Connexion en tant que client</a>
+				<a class="btn btn-warning" href="Accueil/disconnect">Déconnexion</a>
+		</fieldset>
+	</div>
+	<div id="response"></div>
+</div>

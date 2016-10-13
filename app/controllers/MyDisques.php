@@ -34,7 +34,7 @@ class MyDisques extends Controller{
 		
 	}
 	
-	public function create(){
+	public function frmAdd(){
 		$user=Auth::getUser();
 		$tarifs=DAO::getAll("tarif");
 		$services=DAO::getAll("Service");

@@ -12,8 +12,6 @@ class Scan extends BaseController {
 	public function index(){
 
 	}
-	
-
 
 	/**
 	 * Affiche un disque
@@ -89,6 +87,7 @@ class Scan extends BaseController {
 	 * Crée le dossier dont le nom est fourni dans la clé folderName du $_POST
 	 */
 	public function createFolder(){
+		if(!DirectoryUtils::existDir($_POST["activeFolder"].DIRECTORY_SEPARATOR.$_POST["folderName"])){
 		if(array_key_exists("folderName", $_POST)){
 			$pathname=$_POST["activeFolder"].DIRECTORY_SEPARATOR.$_POST["folderName"];
 			if(DirectoryUtils::mkdir($pathname)===false){
@@ -98,6 +97,9 @@ class Scan extends BaseController {
 			}
 			Jquery::doJquery("#panelCreateFolder", "hide");
 			echo Jquery::compile();
+		}
+		}else{
+			$this->showMessage("Le dossier ".$_POST["folderName"]." existe déjà", "warning");
 		}
 	}
 

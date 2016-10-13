@@ -4,9 +4,9 @@
 		{% for object in objects %}
 			<tr>
 			<td>{{object.toString()|raw}}</td>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/updateService/"~object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span></a></td>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frmUpdateService/"~object.getId()}}'><span class='glyphicon glyphicon-th-list' aria-hidden='true'></span></a></td>
 			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/tarification/"~object.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span></a></td>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frmUpdate/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
 			<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
 			</tr>
 			
@@ -24,4 +24,4 @@
 		{% endfor %}
 		</tbody>
 </table>
-<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>Ajouter...</a>
+<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/frmAdd"}}'>Ajouter...</a>

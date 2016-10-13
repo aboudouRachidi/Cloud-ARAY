@@ -12,7 +12,7 @@ class Admin extends \BaseController {
 					"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
 					"nbService"	=> $nbService	= DAO::count("service"),
 			);
-		
+			$users = DAO::getAll("utilisateur");
 			$this->loadView("admin/vDefault.html",
 					array(	"newUser"=>$newUser,
 							"newDisk"=>$newDisk,
@@ -20,6 +20,7 @@ class Admin extends \BaseController {
 							"nbDisk"=>$nbDisk,
 							"nbTarif"=>$nbTarif,
 							"nbService"=>$nbService,
+							"users"=>$users,
 					));
 		}else {
 			$this->loadView("main/vLogin.html");
