@@ -1,19 +1,5 @@
 <form method="post" action="Disques/updateDisque">
 <div class="alert alert-info">Disque : {{disque.toString()}}</div>
-	<div class="panel panel-primary">
-		<div class="panel-heading">Renommer disque</div>
-	  <div class="panel-body">
-		<div class="input-group">
-		<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-hdd"></i></span>
-			<input type="text" name="nom" value="{{disque.getNom()}}" class="form-control" placeholder="Entrez le nom de votre disque..." aria-describedby="basic-addon1">
-		</div>
-	  </div>
-		<input type="hidden" name="id" value= "{{disque.getId()}}">
-		<input type="hidden" name="oldName" value= "{{disque.getNom()}}">
-		<input type="hidden" name="idUtilisateur" value= "{{user.getId()}}">
-		<input type="submit" value="Valider" class="btn btn-info col-md-12">
-		<div class="clearfix"></div>
-	</div>
 	
 	<fieldset>
 		<legend>Suppression Service</legend>

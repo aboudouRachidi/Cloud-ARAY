@@ -145,10 +145,10 @@ class Disques extends \_DefaultController {
 							DAO::update($object);
 							$this->messageSuccess("Le disque ".$_POST['oldName']." a été renommé ",5000,true);
 							$this->onUpdate($object);
-							$this->frmUpdateService($object->getId());
+							$this->forward(MyDisques::class);
 						}else{
 							$this->messageDanger("Impossible de renommer le dossier");
-							$this->updateService($object->getId());
+							$this->forward(MyDisques::class);
 						}
 					}catch(\Exception $e){
 						$this->messageDanger("Impossible de modifier l'instance de ".$this->model,"danger");
@@ -165,8 +165,10 @@ class Disques extends \_DefaultController {
 		//$this->loadView("Disque/vTarification.html");
 		$date=date('Y-m-d H:i:s');
 		$disque = $this->getInstance($id);
+		$tarifDisque=$disque->getTarif();
+		
 		$tarifs=DAO::getAll("tarif");
-		$this->loadView("Disque/vDisqueTarif.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date));
+		$this->loadView("Disque/vDisqueTarif.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date,"tarifDisque"=>$tarifDisque));
 	}
 	
 	public function choixTarif(){
@@ -183,7 +185,7 @@ class Disques extends \_DefaultController {
 				$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
 			}
 		}
-		$this->_postUpdateAction($msg);
+		$this->forward(MyDisques::class);
 	}
 	
 	public function frmUpdateService ($id=NULL){

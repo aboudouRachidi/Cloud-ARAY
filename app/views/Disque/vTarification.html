@@ -16,7 +16,11 @@
 		<tbody>
 		{% for tarif in tarifs %}
 			<tr>
+			{%if tarifDisque == tarif%}
+			<td><input type="radio" name="idTarif" value="{{tarif.getId()}}" checked="checked"></td>
+			{%else%}
 			<td><input type="radio" name="idTarif" value="{{tarif.getId()}}"></td>
+			{%endif%}
 			<td>{{tarif.getPrix()}}</td>
 			<td>{{tarif.getQuota()}} {{tarif.getunite()}}</td>
 			<td>{{tarif.getCoutDepassement()}}</td>

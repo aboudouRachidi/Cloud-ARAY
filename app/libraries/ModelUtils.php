@@ -33,8 +33,10 @@ class ModelUtils {
 		$result=null;
 		if(sizeof($dTarifs)>0){
 			foreach ($dTarifs as $dTarif){
-				if($dTarif->getStartDate()>$lastDate)
+				if($dTarif->getStartDate()>$lastDate){
 					$result=$dTarif->getTarif();
+					$lastDate=$dTarif->getStartDate();
+				}
 			}
 		}
 		return $result;

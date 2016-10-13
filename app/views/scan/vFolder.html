@@ -10,6 +10,62 @@
 				<!--
 				//TODO 4.3 implémenter à partir de DisqueController/indexAction
 				-->
+			<div class="panel panel-default">
+				<div class="panel-heading">Caractéristiques du disque</div>
+				<div class="panel-body">
+				   <strong>Nom : </strong>{{disque.getNom()}}  <a href="#" data-toggle="modal" data-target=".rennomer" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>Modifier ... </a>
+				</div>
+				 <!-- List group -->
+				  <ul class="list-group">
+				    <li class="list-group-item">
+				     	<strong>Proprietaire :</strong> {{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom()}})
+				     </li>
+				    <li class="list-group-item">
+					    <strong>Occupation</strong></br>
+					    {{disque.getOccupation()}} {{disque.getUnite()}} ({{disque.Pourcentage()}}%) sur {{disque.getQuota()}} {{disque.getUnite()}} </br>
+					    {%if disque.Pourcentage()>=80 %}
+					    	<div class="btn btn-danger btn-xs">Proche de Saturation</div>
+					    {%endif%}
+				    </li>
+				    <li class="list-group-item">
+				    	<strong>Tarification</strong> </br>
+				    	prix: {{tarif.getPrix()}} Marge de dépassement: {{tarif.getMargeDepassement()}} Coût dépassement: {{tarif.getCoutDepassement()}} </br>
+				    	<a href="disques/Tarification/{{disque.getId()}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>Modifier la tarification ... </a>
+				    </li>
+				    <li class="list-group-item">
+				    <strong>Service</strong></br>
+				    {%for service in services %}
+				    <div class="btn btn-info btn-xs">{{service.getNom()}}</div>
+				    {%endfor%}
+				    </li>
+				  </ul>
+				<a class="btn btn-primary btn-sm col-md-12" href="MyDisques"> <span class="glyphicon glyphicon-folder-open"></span> Fermer et retourner à <strong>Mes disques</strong></a>
+				<!-- Rennomer disque-->
+				<div class="modal fade rennomer" tabindex="-1" role="dialog">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content alert alert-warning text-center">
+				    <form method="post" action="Disques/updateDisque">
+						<div class="panel panel-primary">
+							<div class="panel-heading">Renommer disque</div>
+						  <div class="panel-body">
+							<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-hdd"></i></span>
+								<input type="text" name="nom" value="{{disque.getNom()}}" class="form-control" placeholder="Entrez le nom de votre disque..." aria-describedby="basic-addon1">
+							</div>
+						  </div>
+							<input type="hidden" name="id" value= "{{disque.getId()}}">
+							<input type="hidden" name="oldName" value= "{{disque.getNom()}}">
+							<input type="hidden" name="idUtilisateur" value= "{{utilisateur.getId()}}">
+							<input type="submit" value="Valider" class="btn btn-info col-md-12">
+							<div class="clearfix"></div>
+						</div>
+					</form>
+				    </div>
+				  </div>
+				</div>
+			</div>
+				
+			
 			</div>
 			<div id="ajaxResponse"></div>
 			<div role="tabpanel" class="tab-pane" id="Listing">
