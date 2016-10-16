@@ -9,7 +9,7 @@
 	<div class="panel panel-heading"><i class="glyphicon glyphicon-hdd"></i> Disque</div>
 	<div class="form-group">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1"></span>
+			<span class="input-group-addon" id="basic-addon1">Nom du disque &nbsp;</span>
 			<input type="text" readonly="readonly" name="nom" class="form-control" value="{{nom}}" placeholder="Entrez le nom de votre disque..." required="required" aria-describedby="basic-addon1">
 		</div>
 		<input type="hidden" name="idUtilisateur" value= "{{user.getId()}}">
@@ -17,13 +17,16 @@
 		<input type="hidden" name="nouveau" value= "1">
 	</div>
 	</div>
+	<div class="form-group">
+		<h4>Tarif selectionné</h4>
 	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon1">Prix pour un quota de {{tarif.getQuota()}}{{tarif.getUnite()}}</span>
-		<input type="text" readonly="readonly" class="form-control" placeholder="prix" value="{{tarif.getPrix()}} €" aria-describedby="basic-addon1">
+		<span class="input-group-addon" id="basic-addon1">Quota de {{tarif.getQuota()}}{{tarif.getUnite()}} &nbsp;</span>
+		<input type="text" readonly="readonly" class="form-control" placeholder="prix" value="Prix Unitaire : {{tarif.getPrix()}} €" aria-describedby="basic-addon1">
 		<input type="hidden" name="idTarif"  value="{{tarif.getId()}}">
 	</div>
+	</div>
 	<div class="form-group">
-		<h4 for="exampleSelect1">Services selectionné</h4>
+		<h4>Services selectionné</h4>
 			<ul class="list-group">
 		{% for service in services %}
 			<li class="list-group-item">
@@ -31,7 +34,7 @@
 				{{service.getNom()}}
 			</li>
 			<li class="list-group-item">{{service.getDescription()}}</li>
-			<li class="list-group-item">{{service.getPrix()}}€</li>
+			<li class="list-group-item">Prix Unitaire : {{service.getPrix()}}€</li>
 
 		{% endfor %}			
 			</ul>

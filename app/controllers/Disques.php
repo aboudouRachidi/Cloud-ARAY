@@ -80,7 +80,9 @@ class Disques extends \_DefaultController {
 		$prixTotal = 0;
 		$services = [];
 		$idUtilisateur = Auth::getUser()->getId();
-		if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".$idUtilisateur."'")){
+		$cloud = $GLOBALS["config"]["cloud"];
+		$pathname = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
+		if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".$idUtilisateur."'") && !DirectoryUtils::existDir($pathname)){
 			if(isset($_POST['idTarif'])){
 				$tarif = DAO::getOne("tarif", $_POST['idTarif']);
 			}
@@ -112,7 +114,9 @@ class Disques extends \_DefaultController {
 			$this->messageDanger("Le disque ".$_POST['nom']." existe déjà");
 			$this->frmAdd($_POST['nom']);
 		}
+		
 	}
+	
 	public function frmAdd($nom = NULL){
 		$user=Auth::getUser();
 		$tarifs=DAO::getAll("tarif");
@@ -158,6 +162,38 @@ class Disques extends \_DefaultController {
 				$this->messageDanger("Le disque ".$_POST['nom']." existe déjà");
 				$this->frmUpdateService($object->getId());
 			}
+		}
+	}
+	
+	/**
+	 * Supprime l'instance dont l'id est $id dans la BDD
+	 * @param int $id
+	 */
+	public function delete($id){
+		$disque = DAO::getOne("disque", $id);
+		$cloud = $GLOBALS["config"]["cloud"];
+		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$disque->getNom();
+		var_dump($dir);
+		if(DirectoryUtils::deleteDir($dir)){
+
+			try{
+				$object=DAO::getOne($this->model, $id);
+				if($object!==NULL){
+					DAO::delete($object);
+					$this->messageSuccess($this->model." `{$object->toString()}` supprimé(e)");
+					$this->onDelete($object);
+				}else{
+					$this->messageWarning($this->model." introuvable","warning");
+				}
+			}catch(\Exception $e){
+				$this->messageDanger("Impossible de supprimer l'instance de ".$this->model,"danger");
+			}
+			$this->forward(MyDisques::class);
+					
+		}else{
+			$contact = '<b><a class="btn btn-success btn-sm" href="Messages/contact/'.$disque->getId().'"">Contacter administrateur ?</a><b></div>';
+			$this->messageWarning("Imposible de spprimer le dossier du disque <u>".$disque->toString()."</u> ! ".$contact);
+			$this->forward(MyDisques::class);
 		}
 	}
 	

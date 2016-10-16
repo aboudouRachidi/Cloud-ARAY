@@ -4,7 +4,7 @@ class Admin extends \BaseController {
 
 	public function index() {
 		if(Auth::isAdmin() && Auth::isAuth()){
-			$Count = array(
+			array(
 					"newUser"	=> $newUser		= DAO::count("utilisateur","nouveau = 1"),
 					"newDisk"	=> $newDisk		= DAO::count("disque","nouveau = 1"),
 					"nbUser"	=> $nbUser		= DAO::count("utilisateur"),
@@ -12,7 +12,7 @@ class Admin extends \BaseController {
 					"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
 					"nbService"	=> $nbService	= DAO::count("service"),
 			);
-			$users = DAO::getAll("utilisateur");
+			
 			$this->loadView("admin/vDefault.html",
 					array(	"newUser"=>$newUser,
 							"newDisk"=>$newDisk,
@@ -20,10 +20,20 @@ class Admin extends \BaseController {
 							"nbDisk"=>$nbDisk,
 							"nbTarif"=>$nbTarif,
 							"nbService"=>$nbService,
-							"users"=>$users,
+							
 					));
 		}else {
 			$this->loadView("main/vLogin.html");
 		}
+	}
+	
+	public function users(){
+		$users = DAO::getAll("utilisateur");
+		$this->loadView("user/vUsers.html",array("users"=>$users));
+	}
+	
+	public function disques(){
+		$objects = DAO::getAll("disque");
+		$this->loadView("disque/vObjects.html",array("objects"=>$objects));
 	}
 }

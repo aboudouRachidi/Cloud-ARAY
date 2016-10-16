@@ -25,6 +25,11 @@ class Disque extends Base{
 	 */
 	private $services;
 	
+	/**
+	 * @OneToMany(mappedBy="disque",className="Message")
+	 */
+	private $messages;
+	
 	public function getId() {
 		return $this->id;
 	}
@@ -151,6 +156,14 @@ class Disque extends Base{
 		}
 		return false;
 	}
+	public function getMessages() {
+		return $this->messages;
+	}
+	public function setMessages($messages) {
+		$this->messages = $messages;
+		return $this;
+	}
+	
 	
 	
 }

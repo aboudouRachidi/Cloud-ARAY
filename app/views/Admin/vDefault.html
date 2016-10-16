@@ -1,153 +1,359 @@
 <div class="well well-lg">
 	<div id="main">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Administration</h3>
-			</div>
-		<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-			<li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Utilisateurs</a></li>
-			<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-			<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" id="navbarDrop1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-					Dropdown <span class="caret"></span>
-				</a> 
-				<ul class="dropdown-menu" aria-labelledby="navbarDrop1">
-					<li role="presentation"><a href="#mesDisques" aria-controls="mesDisques" role="tab" data-toggle="tab">Mes disques</a></li>
-					<li class=""><a href="#two">Tous les disques</a></li>
-					<li role="separator" class="divider"></li>
-					<li class=""><a href="#three">...</a></li> 
-				</ul> 
-			</li>
-		</ul>
-
-<!-- Tab panes -->
-	<div class="tab-content">
-		<!-- home administration -->
 		<div role="tabpanel" class="tab-pane fade in active" id="home">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Tableau de bord</h3>
+			<fieldset><legend class="bg-primary text-center">Administration</legend></fieldset>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-primary">
+					  <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge"><?= count($notifs); ?></span></div>
+					  <ul class="list-group">
+							<li class="list-group-item">Aucun message</li>
+					  </ul>
+					</div>
 				</div>
-				<div class="panel-body">
-					<div class="">
-						<!-- Table -->
-						 <table class="table">
-						    <tbody>
-						    	<tr>
-						    		<td>Utilisateur <span class="label label-info">{{newUser}} Nouveaux</span></td>
-						    		<td>
-						    			<a href="Users" data-ajax="Users">
-											<button class="btn btn-primary" type="button">
-											  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbUser}}</span>
-											</button>
-										</a>
-										<a href="Users/frm" data-ajax="Users/frm">
-											<button class="btn btn-default" type="button">
-												<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
-											</button>
-										</a>
-									</td>
-						    	</tr>
-						    	<tr>
-						    		<td>Disques <span class="label label-info">{{newDisk}} Nouveaux</span></td>
-						    		<td>
-						    			<a href="Disques" data-ajax="Disques">
-											<button class="btn btn-primary" type="button">
-											  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbDisk}}</span>
-											</button>
-										</a>
-										<a href="Disques/create" data-ajax="Disques/create">
-											<button class="btn btn-default" type="button">
-												<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
-											</button>
-										</a>
-									</td>
-						    	</tr>
-						    	<tr>
-						    		<td>Tarifs</td>
-						    		<td>
-						    			<a href="Tarifs" data-ajax="Tarifs">
-											<button class="btn btn-primary" type="button">
-											  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbTarif}}</span>
-											</button>
-										</a>
-										<a href="Tarifs/frm" data-ajax="Tarifs/frm">
-											<button class="btn btn-default" type="button">
-												<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
-											</button>
-										</a>
-									</td>
-						    	</tr>
-						    	<tr>
-						    		<td>Services</td>
-						    		<td>
-						    			<a href="Services" data-ajax="Services">
-											<button class="btn btn-primary" type="button">
-											  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbService}}</span>
-											</button>
-										</a>
-										<a href="Services/frm" data-ajax="Services/frm">
-											<button class="btn btn-default" type="button">
-												<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
-											</button>
-										</a>
-									</td>
-						    	</tr>
-						    </tbody>
-						 </table>
+			</div>
+			<div class="panel panel-default">
+			  <!-- List group -->
+				<ul class="list-group">
+					<li class="list-group-item">
+						<div class="col-md-6"><strong><span class="glyphicon glyphicon-user"></span> Utilisateur <span class="label label-info">{{newUser}} Nouveaux</span></strong></div>
+							<div class="col-md-4">
+								<a href="Users" data-ajax="Users">
+									<button class="btn btn-primary" type="button">
+									  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbUser}}</span>
+									</button>
+								</a>
+							
+								<a href="Users/frm" data-ajax="Users/frm">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
+									</button>
+								</a>
+							</div>
+						<div class="clearfix"></div>
+					</li>
+					
+					<li class="list-group-item">
+						<div class="col-md-6"><strong><span class="glyphicon glyphicon-folder-close"></span> Disques <span class="label label-info">{{newDisk}} Nouveaux</span></strong></div>
+							<div class="col-md-4">
+								<a href="Admin/disques" data-ajax="Admin/disques">
+									<button class="btn btn-primary" type="button">
+									  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbDisk}}</span>
+									</button>
+								</a>
+							
+								<a href="Disques/frmAdd" data-ajax="Disques/frmAdd">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
+									</button>
+								</a>
+							</div>
+						<div class="clearfix"></div>
+					</li>
+					<li class="list-group-item">
+						<div class="col-md-6"><strong><span class="glyphicon glyphicon-eur"></span> Tarifs</strong></div>
+							<div class="col-md-4">
+							 	<a href="Tarifs" data-ajax="Tarifs">
+									<button class="btn btn-primary" type="button">
+									  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbTarif}}</span>
+									</button>
+								</a>
+							
+								<a href="Tarifs/frm" data-ajax="Tarifs/frm">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
+									</button>
+								</a>
+							</div>
+						<div class="clearfix"></div>
+					</li>
+					<li class="list-group-item">
+						<div class="col-md-6"><strong><span class="glyphicon glyphicon-gift"></span> Services</strong></div>
+							<div class="col-md-4">
+							 	<a href="Services" data-ajax="Services">
+									<button class="btn btn-primary" type="button">
+									  <span class="glyphicon glyphicon-search"></span> Ouvrir <span class="badge"> {{nbService}}</span>
+									</button>
+								</a>
+						
+								<a href="Services/frm" data-ajax="Services/frm">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-plus-sign"></span> Nouveau...
+									</button>
+								</a>
+							</div>
+						<div class="clearfix"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+<!-- Gestion des differentes fonctionnalités -->
+	<!-- Gestion utilisateur Disques-->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="well well-sm">
+					<div>
+						<fieldset>
+							<legend class="bg-primary text-center"><i class="fa fa-users fa-lg" aria-hidden="true"></i> Gestion utilisateurs</legend>
+							<a class="btn btn-default btn-lg btn-block" href="Users/profil" data-ajax="Users/profil">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								Mon compte
+							</a>
+							<a class="btn btn-default btn-lg btn-block" href="Admin/users" data-ajax="Admin/users">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								Ajouter un utilisateur
+							</a>
+							<a class="btn btn-default btn-lg btn-block" href="Admin/users" data-ajax="Admin/users">
+								<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+								Liste des utilisateurs
+							</a>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="well well-sm">
+					<div>
+						<fieldset>
+							<legend class="bg-primary text-center"><i class="glyphicon glyphicon-folder-close" aria-hidden="true"></i> Gestion Disques</legend>
+							<a class="btn btn-default btn-lg btn-block" href="Disques/frmAdd" data-ajax="Disques/frmAdd">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								Créer un disques
+							</a>					
+							<a class="btn btn-default btn-lg btn-block" href="MyDisques" data-ajax="MyDisques">
+								<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+								Mes disques
+							</a>
+							<a class="btn btn-default btn-lg btn-block" href="Admin/disques" data-ajax="Admin/disques">
+								<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+								Liste des disques
+							</a>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Default Panel
+					</div>
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Default Panel
+					</div>
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- //home administration -->
-		<!--  -->
-		<div role="tabpanel" class="tab-pane fade" id="users">
-		<table class='table table-striped'>
-			<thead><tr><th colspan='3'>Utilisateurs</th></tr></thead>
-				<tbody>
-				{% for user in users %}
-					<tr>
-					<td><a href='{{baseHref~"/vUser/"~user.getId()}}'>{{user.toString()|raw}}</a></td>
-					<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~user.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
-					<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{user.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-					</tr>
-					
-					<!-- Confirmer suppression-->
-					<div class="modal fade delete{{user.getId()}}" tabindex="-1" role="dialog">
-					  <div class="modal-dialog modal-lg" role="document">
-					    <div class="modal-content alert alert-warning text-center">
-								<p>Confirmez-vous la suppression de : <b>{{ user }}</b> ?&nbsp;
-									<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-									<a href='{{baseHref~"/delete/"~user.getId()}}' class="btn btn-danger">Supprimer</a>
-								</p>
-					    </div>
-					  </div>
+	<!-- /Gestion utilisateurs Disques-->
+	
+	
+	<!-- Gestion Services -->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="well well-sm">
+					<div>
+						<fieldset>
+							<legend class="bg-primary text-center"><span class="glyphicon glyphicon-gift"></span> Gestion des Services</legend>
+							<a class="btn btn-default btn-lg btn-block" href="Services/frm" data-ajax="Services/frm">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								Ajouter service(s)
+							</a>
+							<a class="btn btn-default btn-lg btn-block" href="Services" data-ajax="Services">
+								<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+								Liste des services
+							</a>
+						</fieldset>
 					</div>
-				{% endfor %}
-				</tbody>
-		</table>
-		</div>
-		<!--//  -->
-		<!--  -->	
-		<div role="tabpanel" class="tab-pane fade" id="messages">
+				</div>
+			</div>
+		<!-- /Gestion Services -->
 		
-		</div>
-		<!--//  -->
-		<!--  -->
-		<div role="tabpanel" class="tab-pane fade" id="settings">
+		<!-- Gestion services -->			
+			<div class="col-md-6">
+				<div class="panel panel-default">
 		
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Default Panel
+					</div>
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
+					</div>
+				</div>
+			</div>
 		</div>
-		<!--//  -->
-		<!--  -->
-		<div role="tabpanel" class="tab-pane fade" id="mesDisques">
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-default">
 		
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="well well-sm">
+					<div>
+						<fieldset>
+							<legend class="bg-primary text-center"><span class="glyphicon glyphicon-eur"></span> Gestion des Tarifs</legend>
+							<a class="btn btn-default btn-lg btn-block" href="Tarifs/frm" data-ajax="Tarifs/frm">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								Ajouter tarif(s)
+							</a>
+							<a class="btn btn-default btn-lg btn-block" href="Tarifs/" data-ajax="Tarifs">
+								<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+								Liste des tarifs
+							</a>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Default Panel
+					</div>
+					<div class="panel-body">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+					</div>
+					<div class="panel-footer">
+			 		Panel Footer
+					</div>
+				</div>
+			</div>
+		</div>		
+	<!-- /Gestion Tarifs -->
+
+		
+		
+		<div class="panel panel-default col-md-6">
+			<div class="panel-body">
+				<h2>Recent comments from customers</h2>
+				<ul class="comments-list removeable-list">
+					<li>
+						<div class="comment-head"><a href="#/">Jassica</a> commented on <a href="#/">4 keys to make your business unique</a></div>
+						<div class="comment-text">
+							<p>Thank you for posting such a wonderful content. The writing was outstanding. Subscribed to latest from you as well :)</p>
+						</div>
+						<div class="comment-footer">
+							<button class="btn btn-sm btn-success">APPROVE</button>
+							<button class="btn btn-sm btn-red">DELETE</button>
+						</div>
+						<a href="#/" class="remove"><img src="images/icon-close.png" alt="Remove" title="Remove"></a>
+					</li>
+					<li>
+						<div class="comment-head"><a href="#/">Jassica</a> commented on <a href="#/">4 keys to make your business unique</a></div>
+						<div class="comment-text">
+							<p>Thank you for posting such a wonderful content. The writing was outstanding. Subscribed to latest from you as well :)</p>
+						</div>
+						<div class="comment-footer">
+							<button class="btn btn-sm btn-success">APPROVE</button>
+							<button class="btn btn-sm btn-red">DELETE</button>
+						</div>
+						<a href="#/" class="remove"><img src="images/icon-close.png" alt="Remove" title="Remove"></a>
+					</li>
+					<li>
+						<div class="comment-head"><a href="#/">Jassica</a> commented on <a href="#/">4 keys to make your business unique</a></div>
+						<div class="comment-text">
+							<p>Thank you for posting such a wonderful content. The writing was outstanding. Subscribed to latest from you as well :)</p>
+						</div>
+						<div class="comment-footer">
+							<button class="btn btn-sm btn-success">APPROVE</button>
+							<button class="btn btn-sm btn-red">DELETE</button>
+						</div>
+						<a href="#/" class="remove"><img src="images/icon-close.png" alt="Remove" title="Remove"></a>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<!--//  -->
-	</div>
-</div>
+
+					
+					
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h2>Latest Orders</h2>
+					<ul class="feed-item-list removeable-list">
+						<li>
+							<div class="feed-element">
+								<div class="feed-title">$340 on January 14, 2016</div>
+								<div class="feed-content">
+									<p>2 T-Shirts, 1 Jeans</p>
+								</div>
+								<div class="feed-meta">By Jessica Williamson</div>
+							</div>
+							<div class="feed-footer">
+								<button class="btn btn-sm btn-primary">APPROVE</button>
+								<button class="btn btn-sm btn-red">DELETE</button>
+							</div>
+							<a class="remove" href="#/"><img title="Remove" alt="Remove" src="images/icon-close.png"></a>
+						</li>
+						<li>
+							<div class="feed-element">
+								<div class="feed-title">$340 on January 14, 2016</div>
+								<div class="feed-content">
+									<p>2 T-Shirts, 1 Jeans</p>
+								</div>
+								<div class="feed-meta">By Jessica Williamson</div>
+							</div>
+							<div class="feed-footer">
+								<button class="btn btn-sm btn-primary">APPROVE</button>
+								<button class="btn btn-sm btn-red">DELETE</button>
+							</div>
+							<a class="remove" href="#/"><img title="Remove" alt="Remove" src="images/icon-close.png"></a>
+						</li>
+						<li>
+							<div class="feed-element">
+								<div class="feed-title">$340 on January 14, 2016</div>
+								<div class="feed-content">
+									<p>2 T-Shirts, 1 Jeans</p>
+								</div>
+								<div class="feed-meta">By Jessica Williamson</div>
+							</div>
+							<div class="feed-footer">
+								<button class="btn btn-sm btn-primary">APPROVE</button>
+								<button class="btn btn-sm btn-red">DELETE</button>
+							</div>
+							<a class="remove" href="#/"><img title="Remove" alt="Remove" src="images/icon-close.png"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
 
 		<fieldset>
 			<legend>Interface provisoire de test</legend>

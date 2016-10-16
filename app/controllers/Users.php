@@ -31,7 +31,7 @@ class Users extends \_DefaultController {
 			$this->_showDisplayedMessage($message);
 		}
 		$users=DAO::getAll($this->model);
-		$this->loadView("user/vObjects.html",array("users"=>$users,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
+		$this->loadView("user/vUsers.html",array("users"=>$users,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
 	
 		}else {
 			$this->onInvalidControl();

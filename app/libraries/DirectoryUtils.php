@@ -129,6 +129,23 @@ class DirectoryUtils {
 		}
 		return $result;
 	}
+	
+	/**
+	 * Supprime le dossier $dir
+	 * @param String $dir Chrmin du dossier à supprimer
+	 * @return boolean
+	 */
+	public static function deleteDir($dir){
+		$result=false;
+		if(realpath($dir)!=false){
+			try{
+				$result=@rmdir(realpath($dir));
+			}catch (\Exception $e){
+				$result=false;
+			}
+		}
+		return $result;
+	}
 
 	/**
 	 * Crée le dossier correspondant à pathname
@@ -139,6 +156,7 @@ class DirectoryUtils {
 		$result=true;
 		try{
 			$result= mkdir($pathname);
+			var_dump($result);
 		}catch (\Exception $e){
 			$result=false;
 		}
