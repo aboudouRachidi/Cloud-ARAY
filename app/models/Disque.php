@@ -103,13 +103,19 @@ class Disque extends Base{
 			$result=ModelUtils::sizeConverter($tarif->getUnite())*$tarif->getQuota();
 		return $result;
 	}
-
+	
+	
+	public function quota(){
+		return $this->getOccupation()."/".DirectoryUtils::formatBytes($this->getQuota());
+	}
+	
 	public function getOccupation(){
-		return round($this->getSize()/$this->getQuota()*100,2);
+		$occupation =DirectoryUtils::formatBytes($this->getSize());
+		return $occupation;
 	}
 	
 	public function pourcentage(){
-		$result=($this->getOccupation()*100)/$this->getQuota();
+		$result=($this->getSize()*100)/$this->getQuota();
 		return round($result);
 	}
 	
