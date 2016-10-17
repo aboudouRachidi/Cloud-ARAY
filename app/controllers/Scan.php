@@ -8,7 +8,7 @@ use micro\orm\DAO;
  * @package cloud.controllers
  */
 class Scan extends BaseController {
-
+	use MessagesTrait;
 	public function index(){
 
 	}
@@ -23,6 +23,11 @@ class Scan extends BaseController {
 		$tarif=$disque->getTarif();
 		$services=DAO::getManyToMany($disque, "services");
 		$diskName=$disque->getNom();
+		if ($disque->Pourcentage()>100)
+		{
+			$this->messageDanger("Quota depassé veuillez changer de tarif ou vider votre disque.");
+			
+		}
 		$this->loadView("scan/vFolder.html",array("disque"=>$disque,"utilisateur"=>$utilisateur,"tarif"=>$tarif,"services"=>$services));
 		Jquery::executeOn("#ckSelectAll", "click","$('.toDelete').prop('checked', $(this).prop('checked'));$('#btDelete').toggle($('.toDelete:checked').length>0)");
 		Jquery::executeOn("#btUpload", "click", "$('#tabsMenu a:last').tab('show');");

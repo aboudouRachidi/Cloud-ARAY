@@ -132,6 +132,7 @@
 					<span>Aucun élément.</span>
 				</div>
 			</div>
+			{% if disque.pourcentage()<=100 %}
 			<div role="tabpanel" class="tab-pane" id="Upload">
 				<form id="upload" method="post" action="scan/upload" enctype="multipart/form-data">
 					<div id="drop">
@@ -145,6 +146,13 @@
 					</ul>
 				</form>
 			</div>
+			{%else%}
+			<div role="tabpanel" class="tab-pane bg-warning" id="Upload">
+			<blockquote>
+			<p> Quota depassé veuillez changer de tarif ou vider votre disque. </p>
+			</blockquote>
+			</div>
+			{%endif%}
 		</div>
 	</div>
 	<input type="hidden" name="rootFolder" id="rootFolder">

@@ -215,10 +215,10 @@ class Disques extends \_DefaultController {
 			RequestUtils::setValuesToObject($DisqueTarif,$_POST);
 			try{
 				DAO::insert($DisqueTarif);
-				$msg=new DisplayedMessage("Instance de ".$this->model." `{$DisqueTarif->toString()}` ajoutée");
+				$this->messageSuccess("Instance de ".$this->model." `{$DisqueTarif->toString()}` ajoutée");
 				$this->onAdd($DisqueTarif);
 			}catch(\Exception $e){
-				$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
+				$this->messageDanger("Impossible d'ajouter l'instance de ".$this->model,"danger");
 			}
 		}
 		$this->forward(MyDisques::class);
