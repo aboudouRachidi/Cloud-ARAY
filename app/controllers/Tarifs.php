@@ -1,9 +1,11 @@
 <?php
 class Tarifs extends \_DefaultController{
 	public function isValid(){
-			return Auth::isAuth();
+			if (Auth::isAdmin() && Auth::isAuth())
+		return true;
 	}
 	public function onInvalidControl(){
+		
 		$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",3000,false);
 		exit();
 	}
