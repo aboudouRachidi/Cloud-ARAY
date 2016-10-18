@@ -1,0 +1,80 @@
+			<div class="well well-sm">
+			<fieldset>
+				<legend class="text-capitalize bg-primary"><span class="glyphicon glyphicon-user"></span> {{user}}</legend>
+			</fieldset>
+			<ul class="list-group">
+			{%if user.getDisques()%}
+		{% for disque in user.getDisques() %}
+				
+					<li class="list-group-item">
+						<div class="col-md-4"><b>{{disque}}</b></div>
+						<div class='col-md-4 text-capitalize'><i>{{tarifs|raw}}</i></div>
+						<div class='col-md-4'>
+						{%if disque.pourcentage()<=10%}
+								<div class="panel-body">
+									<div class="progress">
+									  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+									  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+									     <b style="color:black">{{disque.pourcentage()}}%</b>
+									    
+									  </div>
+									</div>
+								</div>	
+								{%elseif disque.pourcentage()>10 and disque.pourcentage()<=50%}
+								<div class="panel-body">
+									<div class="progress">
+									  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+									  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+									    <b style="color:black">{{disque.pourcentage()}}%</b>
+									    
+									  </div>
+									</div>
+								</div>	
+								{%elseif disque.pourcentage()>50 and disque.pourcentage()<=80%}
+								<div class="panel-body">
+									<div class="progress">
+									  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+									  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+									    <b style="color:black">{{disque.pourcentage()}}%</b>
+									    
+									  </div>
+									</div>
+								</div>	
+								{%elseif disque.pourcentage()>80%}
+								<div class="panel-body">
+									<div class="progress">
+									  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+									  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+									     <b style="color:black">{{disque.pourcentage()}}%</b>
+									    
+									  </div>
+									</div>
+								</div>
+								{%endif%}	
+						</div>
+						<div class="clearfix"></div>
+					</li>
+				
+			
+			<!-- 
+<div class='col-md-2'><a class='btn btn-primary btn-xs' href='Disques/tarification/{{disque.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span></a></div>
+						<div class='col-md-2'><a class='btn btn-primary btn-xs' href='Disques/frmUpdate/{{disque.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></div>
+						<div class='col-md-2'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{disque.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></div>
+			 -->
+			<!-- Confirmer suppression-->
+			<div class="modal fade delete{{disque.getId()}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog modal-lg" role="document">
+			    <div class="modal-content alert alert-warning text-center">
+						<p>Confirmez-vous la suppression de l'objet <b>{{ disque }}</b> ?&nbsp;
+							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+							<a href='{{baseHref~"/delete/"~disque.getId()}}' class="btn btn-danger">Supprimer</a>
+						</p>
+			    </div>
+			  </div>
+			</div>
+		{% endfor %}
+		{%else%}
+			<li class="list-group-item"><blockquote>Aucun disque pour cet utiliateur</blockquote></li>
+		{%endif%}	
+		</ul>
+		</div>

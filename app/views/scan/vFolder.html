@@ -13,12 +13,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Caractéristiques du disque</div>
 				<div class="panel-body">
-				   <strong>Nom : </strong>{{disque.getNom()}}  <a href="#" data-toggle="modal" data-target=".rennomer" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>Modifier ... </a>
+				   <strong>Nom : </strong>{{disque.getNom()}} <a href="#" data-toggle="modal" data-target=".rennomer" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier ... </a>
 				</div>
 				 <!-- List group -->
 				  <ul class="list-group">
 				    <li class="list-group-item">
-				     	<strong>Proprietaire :</strong> {{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom()}})
+				     	<strong>Proprietaire :</strong> <span class="text-capitalize">{{utilisateur.getLogin()}} ({{utilisateur.getPrenom()}} {{utilisateur.getNom()}})</span>
 				     </li>
 				    <li class="list-group-item">
 					    <strong>Occupation</strong> 
@@ -32,8 +32,8 @@
 				    </li>
 				    <li class="list-group-item">
 				    	<strong>Tarification</strong> <br>
-				    	prix: {{tarif.getPrix()}} € Marge de dépassement: {{tarif.getMargeDepassement()}} Coût dépassement: {{tarif.getCoutDepassement()}} €<br>
-				    	<a href="disques/Tarification/{{disque.getId()}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>Modifier la tarification ... </a>
+				    	{{disque.getTarif()|raw}}<br>
+				    	<a href="disques/Tarification/{{disque.getId()}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier la tarification ... </a>
 				    </li>
 				    <li class="list-group-item">
 				    <strong>Service</strong><br>

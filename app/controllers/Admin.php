@@ -29,11 +29,28 @@ class Admin extends \BaseController {
 	
 	public function users(){
 		$users = DAO::getAll("utilisateur");
+		foreach ($users as $user){
+			$disque = DAO::getOneToMany($user, "disques");
+			var_dump($disque);
+		}
+		
 		$this->loadView("user/vUsers.html",array("users"=>$users));
 	}
 	
 	public function disques(){
 		$objects = DAO::getAll("disque");
+		$users=DAO::getAll("Utilisateur");
+		
+		foreach ($users as $user) {
+			$disque = DAO::getOneToMany($user, "disques");
+			
+			if(sizeof($user->getDisques())>0)
+				foreach ($user->getDisques() as $disque){
+				$disque = DAO::getOne("disque", $disque->getId());
+				$tarifs = $disque->getTarif();
+			}
+				$this->loadView("disque/vDisquesUsers.html",array("user"=>$user,"tarifs"=>$tarifs,"disque"=>$disque));
+		}
 		$this->loadView("disque/vObjects.html",array("objects"=>$objects));
 	}
 }

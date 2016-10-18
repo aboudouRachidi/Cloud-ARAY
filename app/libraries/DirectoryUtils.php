@@ -156,7 +156,6 @@ class DirectoryUtils {
 		$result=true;
 		try{
 			$result= mkdir($pathname);
-			var_dump($result);
 		}catch (\Exception $e){
 			$result=false;
 		}

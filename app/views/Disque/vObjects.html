@@ -24,25 +24,5 @@
 		{% endfor %}
 		</tbody>
 </table>
-			<div class="well well">
-		{% for object in objects %}
-				<ul class="list-group">
-					<li class="list-group-item">{{object.toString()|raw}}</li>
-					<li class="list-group-item">{{object.getDisques().getNom()|raw}}</li>
-				</ul>
-			
-		
-			<!-- Confirmer suppression-->
-			<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
-			  <div class="modal-dialog modal-lg" role="document">
-			    <div class="modal-content alert alert-warning text-center">
-						<p>Confirmez-vous la suppression de l'objet <b>{{ object }}</b> ?&nbsp;
-							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-							<a href='{{baseHref~"/delete/"~object.getId()}}' class="btn btn-danger">Supprimer</a>
-						</p>
-			    </div>
-			  </div>
-			</div>
-		{% endfor %}
-		</div>
+
 <a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/frmAdd"}}'>Ajouter...</a>

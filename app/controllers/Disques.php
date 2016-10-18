@@ -173,7 +173,7 @@ class Disques extends \_DefaultController {
 		$disque = DAO::getOne("disque", $id);
 		$cloud = $GLOBALS["config"]["cloud"];
 		$dir = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$disque->getNom();
-		var_dump($dir);
+		
 		if(DirectoryUtils::deleteDir($dir)){
 
 			try{
