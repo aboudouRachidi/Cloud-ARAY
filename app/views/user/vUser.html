@@ -1,92 +1,131 @@
-<div class="container col-md-12">
-	<div class="jumbotron">
- 		<div class="well">
-			<div class="text-right">
-				<a class="btn btn-success">Retour</a>
+<div class="jumbotron">
+	<div class="panel panel-default col-md-3 col-sm-12 col-xs-12">
+		<div class="row panel-body">
+			<div class="text-capitalize">
+				<span class="glyphicon glyphicon-user"></span>
+                         	<strong>{{user.toString()|raw}}</strong>
+			</div>
+			<br>
+			<div>
+                 <span class="glyphicon glyphicon-calendar"></span> {{user.getCreatedAt()|date("d/m/Y H:i:s")}}
+			</div>
+			<br>
+			<div class="profile-userbuttons">
+				<button type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-cog"></i> Parametres</button>
+				<button type="button" class="btn btn-success btn-xs"><i class="fa fa-envelope" aria-hidden="true"></i> Contacter</button>
 			</div>
 			<hr>
-			<div class="panel-default">
-				<div class="panel-heading"><span class="glyphicon glyphicon-user"></span>
-                            	{{user.toString()}}
-                            <span class="pull-right">{{user.getCreatedAt()}}</span>
-                </div>
-					<div class="panel-body">
-						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-											Disques de l'utilisateur ({{user.toString()}})
-										</a>
-									</h4>
-								</div>
-								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-									<div class="panel-body">
-					                    <div class="row">
-					                        <div class="col-md-12">
-					                            {% for disque in disques %}
-													<ul class="list-group">
-														<li class="list-group-item">
-															<span class="glyphicon glyphicon-floppy-disk">
-					                            				{{disque.toString()|raw}}
-					                            			</span>
-					                            			<span class="pull-right">{{disque.getCreatedAt()}}</span>
-														</li>
-														
-													</ul>
-					                            		
-					                            {% endfor %}
-					                     
-					                        </div>
-					                    </div>
-									</div>
-								</div>
+			<div >
+				<ul class="nav">
+					<li class="active">
+						<a href="">
+						<i class="glyphicon glyphicon-home"></i>
+						Page d'accueil </a>
+					</li>
+					<li>
+						<a href="Admin/users">
+						<i class="fa fa-users"></i>
+						Les utilisateurs </a>
+					</li>
+					<li>
+						<a href="Admin/disques" target="_blank">
+						<i class="glyphicon glyphicon-folder-close"></i>
+						Les disques </a>
+					</li>
+					<li>
+						<a href="Services">
+						<i class="glyphicon glyphicon-gift"></i>
+						Les services </a>
+					</li>
+					<li>
+						<a href="Tarifs">
+						<i class="glyphicon glyphicon-eur"></i>
+						Tarifs </a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel panel-default col-md-9 col-sm-12 col-xs-12">
+		<h3>Disque(s) de {{user.getNom()}} {{user.getPrenom()}}</h3>
+	<hr>
+		<div class="panel-body">
+		{%if disques%}
+		{% for disque in disques %}
+		<ul class="list-group">
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-calendar"></span>
+					Date de création : 
+				<span class="pull-right">{{disque.getCreatedAt()|date("d/m/Y H:i:s")}}</span>
+			</li>
+			<li class="list-group-item">
+				<div class="col-md-4"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> <strong>{{disque}}</strong></div>
+				<div class='col-md-4 text-capitalize'><i>{{disque.getTarif()|raw}}</i></div>
+				<div class='col-md-4'>
+					{%if disque.pourcentage()<=10%}
+						<div class="panel-body">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+							  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+							     <b style="color:black">{{disque.pourcentage()}}%</b>
+							    
+							  </div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingTwo">
-									<h4 class="panel-title">
-										<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-											Collapsible Group Item #2
-										</a>
-									</h4>
-								</div>
-								<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-									<div class="panel-body">
-										Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-									</div>
-								</div>
+						</div>	
+						{%elseif disque.pourcentage()>10 and disque.pourcentage()<=50%}
+						<div class="panel-body">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+							  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+							    <b style="color:black">{{disque.pourcentage()}}%</b>
+							    
+							  </div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingThree">
-									<h4 class="panel-title">
-										<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-											Collapsible Group Item #3
-										</a>
-									</h4>
-								</div>
-							<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-							<div class="panel-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						</div>	
+						{%elseif disque.pourcentage()>50 and disque.pourcentage()<=80%}
+						<div class="panel-body">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+							  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+							    <b style="color:black">{{disque.pourcentage()}}%</b>
+							    
+							  </div>
 							</div>
-							</div>
+						</div>	
+						{%elseif disque.pourcentage()>80%}
+						<div class="panel-body">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+							  aria-valuenow="{{disque.getOccupation()}}" aria-valuemin="0" aria-valuemax="{{disque.getQuota()}}" style="width:{{disque.pourcentage()}}%" >
+							     <b style="color:black">{{disque.pourcentage()}}%</b>
+							    
+							  </div>
 							</div>
 						</div>
-					</div>
+						{%endif%}
 				</div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            
-                            <p>...</p>
-                        </div>
-                    </div>
-
-                    <hr>
-
-
-
-                </div>
+				<div class="col-md-8"><span class="glyphicon glyphicon-gift"></span> Services : <strong class="text-success">{{disque.getServices()|join(', ') }}</strong></div>
+				<div class="col-md-4"><a href="#" class="btn btn-warning btn-sm pull-left">Commentaire</a><a href="#" class="btn btn-primary btn-sm pull-right">Ouvrir</a></div>
+				<div class="clearfix"></div>
+			</li>
+		</ul>        		
+		{% endfor %}
+		{% else %}
+		<div class="panel panel-default ">
+		<div class="panel-body bg-info">
+		<blockquote >
+			<p class="text-default">
+				<strong>
+				Aucun disque pour cet utilisateur
+				</strong>
+			</p>
+		</blockquote>
+		</div>
+		</div>
+		{% endif %}               
+		
+		</div>
 	</div>
-</div>
+<div class="clearfix"></div>
+</div> 

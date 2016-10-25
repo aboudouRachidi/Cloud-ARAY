@@ -29,12 +29,18 @@ class Admin extends \BaseController {
 	
 	public function users(){
 		$users = DAO::getAll("utilisateur");
+		
 		foreach ($users as $user){
-			$disque = DAO::getOneToMany($user, "disques");
-			var_dump($disque);
+			$total = 0;
+			$user = DAO::getOne("utilisateur", $user->getId());
+			$disques = DAO::getOneToMany($user,"disques");
+			foreach ($disques as $disque){	
+				$total = $total + $disque->getTarif()->getPrix();
+			}
+			$nbDisque = count($user->getDisques());
+			$this->loadView("user/vAllUsers.html",array("users"=>$user,"nbDisque"=>$nbDisque,"total"=>$total));
 		}
 		
-		$this->loadView("user/vUsers.html",array("users"=>$users));
 	}
 	
 	public function disques(){

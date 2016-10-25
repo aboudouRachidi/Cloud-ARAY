@@ -97,6 +97,10 @@ class Users extends \_DefaultController {
 	public function vUser($id=NULL){
 		$user = $this->getInstance($id);
 		$disques = DAO::getAll("disque","idUtilisateur = ".$user->getId());
+		foreach ($disques as $disque){
+			DAO::getManyToMany($disque, "services");
+		}
+
 		$this->loadView("user/vUser.html",array("user"=>$user,"disques"=>$disques));
 	}
 	

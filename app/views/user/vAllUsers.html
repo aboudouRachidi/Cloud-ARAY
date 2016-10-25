@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+		<div class="col-md-5 text-capitalize">
+			<strong>{{users}}</strong>
+		</div>
+		{%if nbDisque == 0 %}
+		<div class='col-md-5 text-success'>
+			<blockquote>
+				<strong>Aucun disque pour cet utiliateur</strong></blockquote>
+		</div>
+		{%else%}
+		<div class='col-md-5 text-info'>
+			<blockquote>
+				<strong>{{nbDisque}} disque(s)</strong> crées, <strong>Total :</strong> {{total}} €
+			</blockquote>
+		</div>
+		{%endif%}
+		<div class='col-md-2'>
+			<a class='btn btn-primary btn-block' href='Users/vUser/{{users.getId()}}'>
+				<span class='glyphicon glyphicon-search' aria-hidden='true'></span> Ouvrir
+			</a>
+		</div>
+		<div class="clearfix"></div>
+</div>
+</div>
