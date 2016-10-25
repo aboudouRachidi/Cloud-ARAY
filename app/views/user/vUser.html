@@ -106,7 +106,9 @@
 						{%endif%}
 				</div>
 				<div class="col-md-8"><span class="glyphicon glyphicon-gift"></span> Services : <strong class="text-success">{{disque.getServices()|join(', ') }}</strong></div>
-				<div class="col-md-4"><a href="#" class="btn btn-warning btn-sm pull-left">Commentaire</a><a href="#" class="btn btn-primary btn-sm pull-right">Ouvrir</a></div>
+				<div class="col-md-4">
+					<a href="#" class="btn btn-warning btn-sm pull-left">Commentaire</a>
+					<a href="Scan/show/{{disque.getId()}}" class="btn btn-primary btn-sm pull-right"><span class='glyphicon glyphicon-search' aria-hidden='true'></span> Visualiser</a></div>
 				<div class="clearfix"></div>
 			</li>
 		</ul>        		

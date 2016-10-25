@@ -36,15 +36,20 @@ class Admin extends \BaseController {
 			$disques = DAO::getOneToMany($user,"disques");
 			foreach ($disques as $disque){	
 				$total = $total + $disque->getTarif()->getPrix();
+				$disquesServices = DAO::getManyToMany($disque, "services");
+				foreach ($disquesServices as $service){
+					$total = $total + $service->getPrix();
+				}
 			}
 			$nbDisque = count($user->getDisques());
-			$this->loadView("user/vAllUsers.html",array("users"=>$user,"nbDisque"=>$nbDisque,"total"=>$total));
+			
+			$this->loadView("user/vAllUsers.html",array("user"=>$user,"nbDisque"=>$nbDisque,"total"=>$total));
 		}
 		
 	}
 	
 	public function disques(){
-		$objects = DAO::getAll("disque");
+		
 		$users=DAO::getAll("Utilisateur");
 		
 		foreach ($users as $user) {
@@ -57,6 +62,5 @@ class Admin extends \BaseController {
 			}
 				$this->loadView("disque/vDisquesUsers.html",array("user"=>$user,"tarifs"=>$tarifs,"disque"=>$disque));
 		}
-		$this->loadView("disque/vObjects.html",array("objects"=>$objects));
 	}
 }

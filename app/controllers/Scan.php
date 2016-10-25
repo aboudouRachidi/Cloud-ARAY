@@ -18,8 +18,10 @@ class Scan extends BaseController {
 	 * @param int $idDisque
 	 */
 	public function show($idDisque) {
+		if(Auth::isAdmin() || DAO::getOne("disque", "id = '".$idDisque."' AND idUtilisateur ='".Auth::getUser()->getId()."'")){
+		
 		$disque = DAO::getOne("disque", $idDisque);
-		$utilisateur=Auth::getUser();
+		$utilisateur=$disque->getUtilisateur();
 		$tarif=$disque->getTarif();
 		$services=DAO::getManyToMany($disque, "services");
 		$diskName=$disque->getNom();
@@ -37,6 +39,11 @@ class Scan extends BaseController {
 		Jquery::postFormOn("click", "#btCreateFolder", "Scan/createFolder", "frmCreateFolder","#ajaxResponse");
 		Jquery::execute("window.location.hash='';scan('".$diskName."')",true);
 		echo Jquery::compile();
+		
+		}else{
+			$this->messageWarning("Ce disque n'existe pas");
+			$this->forward(MyDisques::class);
+		}
 	}
 
 	public function files($dir="Datas"){

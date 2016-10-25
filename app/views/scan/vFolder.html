@@ -31,12 +31,19 @@
 					    {%endif%}
 				    </li>
 				    <li class="list-group-item">
-				    	<strong>Tarification</strong> <br>
+				    	<div>
+				    		<strong>Tarification</strong>
+				    	</div> <br>
 				    	{{disque.getTarif()|raw}}<br>
 				    	<a href="disques/Tarification/{{disque.getId()}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier la tarification ... </a>
 				    </li>
 				    <li class="list-group-item">
-				    <strong>Service</strong><br>
+				    	<div>
+				    		<strong>Services</strong>
+				    		<a href="disques/frmUpdateService/{{disque.getId()}}" title="Ajouter services" class="btn btn-default btn-xs">
+				    		<span class="glyphicon glyphicon-plus"></span></a>
+				    	</div>
+				    	<br>
 				    {%for service in services %}
 				    <div class="btn btn-info btn-xs">{{service.getNom()}}</div>
 				    {%endfor%}

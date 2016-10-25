@@ -7,7 +7,7 @@
 		{% for disque in user.getDisques() %}
 				
 					<li class="list-group-item">
-						<div class="col-md-4"><b>{{disque}}</b></div>
+						<div class="col-md-2"><b>{{disque}}</b></div>
 						<div class='col-md-4 text-capitalize'><i>{{tarifs|raw}}</i></div>
 						<div class='col-md-4'>
 						{%if disque.pourcentage()<=10%}
@@ -50,28 +50,16 @@
 									  </div>
 									</div>
 								</div>
-								{%endif%}	
+								{%endif%}
 						</div>
+							<div class="col-md-2">
+								<a class='btn btn-primary pull-center btn-block btn-sm' href='Scan/show/{{disque.getId()}}'>
+									<span class='glyphicon glyphicon-search' aria-hidden='true'></span> Ouvrir
+								</a>
+							</div>
 						<div class="clearfix"></div>
 					</li>
 				
-			
-			<!-- 
-<div class='col-md-2'><a class='btn btn-primary btn-xs' href='Disques/tarification/{{disque.getId()}}'><span class='glyphicon glyphicon-eur' aria-hidden='true'></span></a></div>
-						<div class='col-md-2'><a class='btn btn-primary btn-xs' href='Disques/frmUpdate/{{disque.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></div>
-						<div class='col-md-2'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{disque.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></div>
-			 -->
-			<!-- Confirmer suppression-->
-			<div class="modal fade delete{{disque.getId()}}" tabindex="-1" role="dialog">
-			  <div class="modal-dialog modal-lg" role="document">
-			    <div class="modal-content alert alert-warning text-center">
-						<p>Confirmez-vous la suppression de l'objet <b>{{ disque }}</b> ?&nbsp;
-							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-							<a href='{{baseHref~"/delete/"~disque.getId()}}' class="btn btn-danger">Supprimer</a>
-						</p>
-			    </div>
-			  </div>
-			</div>
 		{% endfor %}
 		{%else%}
 			<li class="list-group-item"><blockquote>Aucun disque pour cet utiliateur</blockquote></li>

@@ -1,7 +1,8 @@
+{%if user %}
 <div class="panel panel-default">
   <div class="panel-body">
-		<div class="col-md-5 text-capitalize">
-			<strong>{{users}}</strong>
+		<div class="col-md-5 text-capitalize text-center">
+			<a href='Users/vUser/{{user.getId()}}'><strong>{{user}}</strong></a>
 		</div>
 		{%if nbDisque == 0 %}
 		<div class='col-md-5 text-success'>
@@ -9,17 +10,26 @@
 				<strong>Aucun disque pour cet utiliateur</strong></blockquote>
 		</div>
 		{%else%}
-		<div class='col-md-5 text-info'>
+		<div class='col-md-5'>
 			<blockquote>
-				<strong>{{nbDisque}} disque(s)</strong> crées, <strong>Total :</strong> {{total}} €
+				<div class="text-info"><strong>{{nbDisque}} disque(s)</strong> crées</div>
+				<div class="text-warning"><strong>Prix Total </strong><em>(services inclus) :</em> {{total}} €</div>
 			</blockquote>
 		</div>
 		{%endif%}
 		<div class='col-md-2'>
-			<a class='btn btn-primary btn-block' href='Users/vUser/{{users.getId()}}'>
+		<div>
+			<a class='btn btn-primary btn-block' href='Users/vUser/{{users.getId()}}' data-ajax="Users/vUser/{{user.getId()}}">
 				<span class='glyphicon glyphicon-search' aria-hidden='true'></span> Ouvrir
 			</a>
 		</div>
+		</div>
 		<div class="clearfix"></div>
+	</div>
 </div>
+{%else%}
+<div class='col-md-5 text-success'>
+	<blockquote>
+		<strong>Aucun utiliateur</strong></blockquote>
 </div>
+{%endif%}
