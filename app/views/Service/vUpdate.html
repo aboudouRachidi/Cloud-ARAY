@@ -1,16 +1,26 @@
 <form method="post" action="Services/updateService">
 <fieldset>
-<legend>Ajouter un disque</legend>
-<div class="alert alert-info">Disque : {{service.toString()}}</div>
-<div class="form-group">
-	<input type="hidden" name="id" value="{{service.getId()}}">
-	<input type="text" name="nom" value="{{service.getNom()}}" placeholder="Entrez le nom de votre service..." class="form-control" >
-	<input type="text" name="description" value="{{service.getDescription()}}" placeholder="Entrez la description du service ..." class="form-control" >
-	<input type="text" name="prix" value="{{service.getPrix()}}" placeholder="Entrez le prix du service ..." class="form-control">
+<legend>Modifier service</legend>
+<div class="alert alert-info">Service : {{service.toString()}}</div>
+<div class="form-group col-md-6">
+<input type="hidden" name="id" value="{{service.getId()}}">
+	<label for="nom">Nom :</label>
+		<input type="text" name="nom" value="{{service.getNom()}}" placeholder="Entrez le nom de votre service..." class="form-control" >
+	<label for="Prix">Prix :</label>
+		<input type="text" name="prix" value="{{service.getPrix()}}" placeholder="Entrez le prix du service ..." class="form-control">
 </div>
-<div class="form-group">
-	<input type="submit" value="Valider" class="btn btn-default">
-	<a class="btn btn-default" href="{{config['siteUrl']}}services">Annuler</a>
+<div class="form-group col-md-6">	
+ 	<label for="description">Description :</label>
+ 	 <textarea name="description" placeholder="Entrez la description du service ..." class="form-control" rows="4" >{{service.getDescription()}}</textarea>
+	
+</div>
+<div class="form-group col-md-12">
+	<div class="col-md-6">
+		<input type="submit" value="Valider" class="btn btn-success btn-block">
+	</div>
+	<div class="col-md-6">
+		<a class="btn btn-danger btn-block" href="{{config['siteUrl']}}services">Annuler</a>
+	</div>	
 </div>
 </fieldset>
 </form>

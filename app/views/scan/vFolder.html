@@ -13,7 +13,10 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Caractéristiques du disque</div>
 				<div class="panel-body">
-				   <strong>Nom : </strong>{{disque.getNom()}} <a href="#" data-toggle="modal" data-target=".rennomer" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Modifier ... </a>
+				   <strong>Nom : </strong>
+				   {{disque.getNom()}}
+				   <a href="#" data-toggle="modal" data-target=".rennomer" class="btn btn-default btn-xs">
+				   <span class="glyphicon glyphicon-edit"></span> Modifier ... </a>
 				</div>
 				 <!-- List group -->
 				  <ul class="list-group">
@@ -23,7 +26,7 @@
 				    <li class="list-group-item">
 					    <strong>Occupation</strong> 
 					    	<a title="Actualiser" href="scan/show/{{disque.getId()}}" data-ajax="scan/show/{{disque.getId()}}"><i class="fa fa-refresh" aria-hidden="true"></i></a><br>
-					    <label class="label label-default ">{{disque.Quota()}}({{disque.Pourcentage()}}%)</label><br> <br>
+					    <label class="label label-default ">{{disque.Quota()}} ({{disque.Pourcentage()}}%)</label><br> <br>
 					    {%if disque.Pourcentage()>=80 and disque.Pourcentage()<=100 %}
 					    	<div class="btn btn-danger btn-xs">Proche de Saturation</div>
 					    {%elseif disque.Pourcentage()>100 %}

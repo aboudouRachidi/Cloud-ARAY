@@ -1,6 +1,41 @@
-<form method="Post" action="Tarifs/update">
-	<input type="hidden" id="id" name ="id" value="{{tarif.getId()}}">
-	<input class="form-control" type="text" id="quota" name="quota" placeholder="Quota..." value="{{tarif.getQuota()}}">
-	<input class="form-control" type="text" id="prix" name="prix" placeholder="Prix..." value="{{tarif.getPrix()}}">
-	<input class="btn btn-primary" type="submit" value="valider">
+<form method="Post" action="Tarifs/updateTarif">
+<fieldset>
+<legend>Modifier un tarif</legend>
+<div class="alert alert-info">Tarif : {{tarif.toString()|raw}}</div>
+<div class="form-group col-md-6">
+<input type="hidden" id="id" name ="id" value="{{tarif.getId()}}">
+	<div class="col-md-6">
+	<label for="quota">Quota :</label>
+		<input class="form-control" type="text" required name="quota" placeholder="Quota..." value="{{tarif.getQuota()}}">
+	</div>
+	<div class="col-md-6">
+	<label for="unite">Unité :</label>
+		<select class="form-control" name="unite">
+			<option value="{{tarif.getUnite()}}">{{tarif.getUnite()}}</option>
+			<optgroup label="Autre unite"></optgroup>
+			<option value="o">o</option>
+			<option value="Ko">Ko</option>
+			<option value="Mo">Mo</option>
+			<option value="Go">Go</option>
+			<option value="To">To</option>
+		</select>
+	</div>
+</div>
+<div class="form-group col-md-6">	
+ <label for="prix">Prix :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="prix" placeholder="Prix..." value="{{tarif.getPrix()}}">
+<label for="margeDepassement">Marge de dépassement :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="margeDepassement" placeholder="Marge de dépassement..." value="{{tarif.getMargeDepassement()}}">
+<label for="coutDepassement">Coût de dépassement :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="coutDepassement" placeholder="Coût de dépassement..." value="{{tarif.getCoutDepassement()}}">
+</div>
+<div class="form-group col-md-12">
+	<div class="col-md-6">
+		<input type="submit" value="Valider" class="btn btn-success btn-block">
+	</div>
+	<div class="col-md-6">
+		<a class="btn btn-danger btn-block" href="{{config['siteUrl']}}tarifs">Annuler</a>
+	</div>	
+</div>
+</fieldset>
 </form>

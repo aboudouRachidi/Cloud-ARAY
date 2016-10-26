@@ -1,0 +1,35 @@
+<form method="post" action="Tarifs/addTarif">
+<fieldset>
+<legend>Ajouter un tarif</legend>
+<div class="alert alert-info">Tarif :</div>
+<div class="form-group col-md-6">
+	<label for="quota">Quota :</label>
+		<input class="form-control" type="text" required name="quota" placeholder="Quota..." value="{%if quota%}{{quota}}{%endif%}">
+	<label for="unite">Choisir une unité :</label>
+		<select class="form-control" name="unite">
+			<option value="">-</option>
+			<option value="o">o</option>
+			<option value="Ko">Ko</option>
+			<option value="Mo">Mo</option>
+			<option value="Go">Go</option>
+			<option value="To">To</option>
+		</select>
+</div>
+<div class="form-group col-md-6">	
+ <label for="prix">Prix :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="prix" placeholder="Prix..." value="{%if prix%}{{prix}}{%endif%}">
+<label for="margeDepassement">Marge de dépassement :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="margeDepassement" placeholder="Marge de dépassement..." value="{%if margeDepassement%}{{margeDepassement}}{%endif%}">
+<label for="coutDepassement">Coût de dépassement :</label>
+      <input class="form-control" type="number" step="0.01" min="0" required name="coutDepassement" placeholder="Coût de dépassement..." value="{%if coutDepassement%}{{coutDepassement}}{%endif%}">
+</div>
+<div class="form-group col-md-12">
+	<div class="col-md-6">
+		<input type="submit" value="Valider" class="btn btn-success btn-block">
+	</div>
+	<div class="col-md-6">
+		<a class="btn btn-danger btn-block" href="{{config['siteUrl']}}tarifs">Annuler</a>
+	</div>	
+</div>
+</fieldset>
+</form>
