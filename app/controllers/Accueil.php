@@ -54,7 +54,7 @@ class Accueil extends Controller {
 			$email = $_POST['mail'];
 			$password = $_POST['password'];
 			
-			if($user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".$password."'")){
+			if($user = DAO::getOne("Utilisateur", "mail='".$email."' and password='".hash("sha256", $password)."'")){
 			$_SESSION["user"] = $user;
 			$_SESSION['KCFINDER'] = array(
 					'mail' => $user->getMail(),

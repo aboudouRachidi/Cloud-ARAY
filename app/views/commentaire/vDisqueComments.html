@@ -1,0 +1,72 @@
+<div class="chat-panel panel panel-primary">
+<div class="panel-heading">
+    <i class="fa fa-comments fa-fw"></i> Commentaires du disque {{disque.getNom()}}
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu slidedown">
+            <li>
+                <a href="Commentaires/comments/{{disque.getId()}}">
+                    <i class="fa fa-refresh fa-fw"></i> Refresh
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="MyDisques" data-ajax="MyDisques">
+                    <i class="fa fa-sign-out fa-fw"></i> Retour à mes disques
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /.panel-heading -->
+<div class="panel-body">
+{% if commentaires %}
+{% for commentaire in commentaires %}
+        <div class="col-md-12">
+                <div class="btn-lg">
+                    <strong class="label label-default">
+                    	{{commentaire.getUtilisateur().toString()}}
+					</strong>
+                </div>
+                <blockquote>
+                <div>
+                
+                <textarea style="background:white;resize:vertical;border: none;" class="form-control" rows="3" cols="" readonly="readonly">{{commentaire.getContenu()}}
+                </textarea>
+                </div>
+                <div class="btn-xs">
+                   <small class="text-muted label label-info">
+                        <i class="fa fa-clock-o"></i>
+						{{commentaire.getDate()|date("d/m/Y H:i:s")}}
+					</small>
+                </div>
+                </blockquote>
+        </div>
+        
+{%endfor%} 
+{%else%}
+<blockquote>
+<p>
+	Aucun commentaire pour ce disque
+</p>
+</blockquote>
+</div>
+{%endif%}     
+</div>
+<form action="Commentaires/sentComment" method="POST">
+<!-- /.panel-body -->
+<div class="panel-footer">
+    <div class="input-group">
+        <textarea style="resize:vertical;" name="contenu" rows="2" class="form-control" placeholder="Votre commentaire..."></textarea>
+        <div class="input-group-addon"><input type="submit" value="Envoyer" class="btn btn-warning btn-sm"></div>
+        <span class="input-group-btn">
+        	<input type="hidden" name="date" value="{{date}}" >
+        	<input type="hidden" name="idDisque" value="{{disque.getId()}}">
+        	<input type="hidden" name="idUtilisateur" value= "{{utilisateur.getId()}}">
+        </span>
+    </div>
+</div>
+<!-- /.panel-footer -->
+</form>

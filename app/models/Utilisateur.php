@@ -49,7 +49,7 @@ class Utilisateur extends Base{
 	}
 
 	public function setPassword($password) {
-		$this->password=$password;
+		$this->password=(hash("sha256", $password));
 		return $this;
 	}
 

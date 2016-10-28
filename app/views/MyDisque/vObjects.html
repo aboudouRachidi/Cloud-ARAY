@@ -12,6 +12,11 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<button class="btn label label-info"><i class="glyphicon glyphicon-hdd"></i> {{object.getNom|raw}}<span class="badge"> {{object.quota()}}</span></button>
+					<a href="Commentaires/comments/{{object.getId()}}">
+						<i class="label label-success pull-right">
+							<span class="glyphicon glyphicon-comment"> {{object.getNbcomments()}}</span>
+						</i>
+					</a>
 				</div>	
 					
 				

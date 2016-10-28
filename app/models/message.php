@@ -4,59 +4,73 @@ class Message extends \Base {
 	 * @Id
 	 */
 	private $id;
-	private $date;
+	private $objet;
 	private $contenu;
+	private $date;
+	private $lu;
+	
 	/**
 	 * @ManyToOne
-	 * @JoinColumn(name="idUtilisateur",className="Utilisateur",nullable=false)
+	 * @JoinColumn(name="idExpediteur",className="Utilisateur",nullable=false)
 	 */
-	private $utilisateur;
+	private $expediteur;
 	/**
 	 * @ManyToOne
-	 * @JoinColumn(name="idDisque",className="Disque",nullable=false)
+	 * @JoinColumn(name="idReceveur",className="Utilisateur",nullable=false)
 	 */
-	private $disque;
+	private $receveur;
 	public function getId() {
 		return $this->id;
 	}
 	public function setId($id) {
-		$this->id=$id;
+		$this->id = $id;
 		return $this;
 	}
-	public function getDate() {
-		return $this->date;
+	public function getObjet() {
+		return $this->objet;
 	}
-	public function setDate($date) {
-		$this->date=$date;
+	public function setObjet($objet) {
+		$this->objet = $objet;
 		return $this;
 	}
 	public function getContenu() {
 		return $this->contenu;
 	}
 	public function setContenu($contenu) {
-		$this->contenu=$contenu;
+		$this->contenu = $contenu;
 		return $this;
 	}
-
-	/* (non-PHPdoc)
-	 * @see Base::toString()
-	 */
+	public function getDate() {
+		return $this->date;
+	}
+	public function setDate($date) {
+		$this->date = $date;
+		return $this;
+	}
+	public function getLu() {
+		return $this->lu;
+	}
+	public function setLu($lu) {
+		$this->lu = $lu;
+		return $this;
+	}
+	public function getExpediteur() {
+		return $this->expediteur;
+	}
+	public function setExpediteur($expediteur) {
+		$this->expediteur = $expediteur;
+		return $this;
+	}
+	public function getReceveur() {
+		return $this->receveur;
+	}
+	public function setReceveur($receveur) {
+		$this->receveur = $receveur;
+		return $this;
+	}
+	
 	public function toString() {
-		return "Le message du ".$this->disque.":".$this->utilisateur;
-	}
-	public function getUtilisateur() {
-		return $this->utilisateur;
-	}
-	public function setUtilisateur($utilisateur) {
-		$this->utilisateur = $utilisateur;
-		return $this;
-	}
-	public function getDisque() {
-		return $this->disque;
-	}
-	public function setDisque($disque) {
-		$this->disque = $disque;
-		return $this;
+		return (string) $this->objet;
 	}
 	
 }

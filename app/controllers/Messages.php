@@ -8,36 +8,87 @@ class Messages extends \_DefaultController{
 		return Auth::isAuth();
 	}
 	public function onInvalidControl(){
-		$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",3000,false);
+		$this->messageDanger("Vous devez vous connecté pour afficher cette page !",3000,false);
 		exit();
 	}
-	
+
 	public function __construct(){
 		parent::__construct();
 		$this->title="Messages";
-		$this->model="message";
+		$this->model="Message";
 	}
 
 	public function contact($id=NULL){
+		$users = DAO::getAll("utilisateur","admin = 0");
 		$user=Auth::getUser();
-		$disque = DAO::getOne("disque",$id);
-		$messages = DAO::getOneToMany($disque, "messages");
+		$admins = DAO::getAll("utilisateur","admin = 1");
+		$isAdmin = Auth::isAdmin();
 		$date=date('Y-m-d H:i:s');
-		$this->loadView("message/vContact.html",array("messages"=>$messages,"date"=>$date,"utilisateur"=>$user,"disque"=>$disque));
+		$this->loadView("message/vContact.html",array("date"=>$date,"users"=>$users,"utilisateur"=>$user,"admins"=>$admins,"isAdmin"=>$isAdmin));
 	}
 	
 	public function sentMessage(){
-		$id = $_POST['idDisque'];
-		$disque = DAO::getOne("disque",$id);
-		$message = new Message();
-		RequestUtils::setValuesToObject($message,$_POST);
-		$message->setUtilisateur(Auth::getUser());
-		$message->setDisque($disque);
-		if(DAO::insert($message)){
-			$this->messageSuccess($message->toString()." a été envoyé.");
-			$this->forward(MyDisques::class);
+		if(isset($_POST['receveur'])){
+			$idReceveur = $_POST['receveur'];
+			$receveur = DAO::getOne("utilisateur",$idReceveur);
+			$message = new Message();
+			RequestUtils::setValuesToObject($message,$_POST);
+			$message->setExpediteur(Auth::getUser());
+			$message->setReceveur($receveur);
+			$message->setLu(1);
+			if(DAO::insert($message)){
+				$this->messageSuccess("Le message ".$message->toString()." a été envoyé à ".$receveur,5000,true);
+				$this->forward(Users::class,"profil");
+			}else{
+				$this->messageWarning("Impossible d'envoyer le message ".$message->toString());
+				$this->forward(Users::class,"profil");
+			}
 		}else{
-			$this->messageWarning("Impossible d'inserer le message ".$message->toString());
+			$this->contact();
+			
+		}
+	}
+	
+	public function vMessage($id=NULL){
+		if(Auth::isAuth()){
+			$idReceveur = Auth::getUser()->getId();
+			if(DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
+			$message = $this->getInstance($id);
+			$this->loadView("message/vMessage.html",array("message"=>$message));
+			}else{
+				$this->messageDanger("Message introuvable");
+				$this->forward(Users::class,"profil");
+			}
+		}else {
+			$this->onInvalidControl();
+		}
+	}
+	
+	public function envoyes($id=NULL){
+		if(Auth::isAuth()){
+			$messages = DAO::getAll("message","idExpediteur = '".Auth::getUser()->getId()."'");
+			$this->loadView("message/vMessageEnvoyes.html",array("messages"=>$messages));
+		}else {
+			$this->onInvalidControl();
+		}
+	}
+	public function repondre($id=NULL){
+		$message = $this->getInstance($id);
+		$date=date('Y-m-d H:i:s');
+		$this->loadView("message/vReponse.html",array("date"=>$date,"message"=>$message));
+	}
+	public function vMessageEnvoyes($id=NULL){
+		if(Auth::isAuth()){
+			$idExpediteur = Auth::getUser()->getId();
+			if(DAO::getOne("message", "id = '".$id."' AND idExpediteur = '".$idExpediteur."'")){
+			$message = $this->getInstance($id);
+			$this->loadView("message/vSentMessage.html",array("message"=>$message));
+			}else{
+				$this->messageDanger("Message introuvable");
+				$this->forward(Users::class,"profil");
+			}
+		}else {
+			$this->onInvalidControl();
 		}
 	}
 }

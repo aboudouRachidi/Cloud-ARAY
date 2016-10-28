@@ -2,7 +2,13 @@
 use micro\orm\DAO;
 use micro\utils\RequestUtils;
 class Disques extends \_DefaultController {
-
+	public function isValid(){
+		return Auth::isAuth();
+	}
+	public function onInvalidControl(){
+		$this->messageDanger("Vous devez vous connecté pour afficher cette page !",3000,false);
+		exit();
+	}
 	public function __construct(){
 		parent::__construct();
 		$this->title="Disques";
@@ -28,6 +34,7 @@ class Disques extends \_DefaultController {
 	}
 	
 	public function addDisque ($id=NULL) {
+		if(isset($_POST['submit'])){
 		$nom = $_POST['nom'];
 		if(!isset($_POST['idTarif'])){
 			$this->messageDanger("Veuillez choisir un tarif");
@@ -74,6 +81,9 @@ class Disques extends \_DefaultController {
 			}else{
 					$this->messageWarning("Impossible de créer le dossier du disque ".$disque->toString());
 				}
+		}
+		}else{
+			$this->forward(MyDisques::class);
 		}
 	}
 	public function PaiementDisque(){
@@ -191,7 +201,7 @@ class Disques extends \_DefaultController {
 			$this->forward(MyDisques::class);
 					
 		}else{
-			$contact = '<b><a class="btn btn-success btn-sm" href="Messages/contact/'.$disque->getId().'"">Contacter administrateur ?</a><b></div>';
+			$contact = '<b><a class="btn btn-success btn-sm" href="Commentaires/contact/'.$disque->getId().'"">Contacter administrateur ?</a><b></div>';
 			$this->messageWarning("Imposible de spprimer le dossier du disque <u>".$disque->toString()."</u> ! ".$contact);
 			$this->forward(MyDisques::class);
 		}
@@ -212,10 +222,12 @@ class Disques extends \_DefaultController {
 			$DisqueTarif=new DisqueTarif();
 			$DisqueTarif->setDisque(DAO::getOne("disque", $_POST["idDisque"]));
 			$DisqueTarif->setTarif(DAO::getOne("tarif", $_POST["idTarif"]));
+			$Tarif = DAO::getOne("tarif", $_POST["idTarif"]);
+			$disque = DAO::getOne("disque", $_POST["idDisque"]);
 			RequestUtils::setValuesToObject($DisqueTarif,$_POST);
 			try{
 				DAO::insert($DisqueTarif);
-				$this->messageSuccess("Instance de ".$this->model." `{$DisqueTarif->toString()}` ajoutée");
+				$this->messageSuccess("Le tarif <u>`{$Tarif->toString()}`</u> a été attribué au disque <u>".$disque->toString()."</u>");
 				$this->onAdd($DisqueTarif);
 			}catch(\Exception $e){
 				$this->messageDanger("Impossible d'ajouter l'instance de ".$this->model,"danger");

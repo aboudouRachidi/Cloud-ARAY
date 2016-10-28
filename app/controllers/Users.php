@@ -1,6 +1,7 @@
 <?php
 use micro\orm\DAO;
 use micro\utils\RequestUtils;
+use micro\js\Jquery;
 
 /**
  * Gestion des users
@@ -45,7 +46,7 @@ class Users extends \_DefaultController {
 			exit();
 		}else{
 		
-			$this->messageDanger("Vous devez être connecté pour afficher cette page !",8000,false);
+			$this->messageDanger("Vous devez vous connecté pour afficher cette page !",8000,false);
 			$this->loadView("main/vLogin.html");
 			exit();
 		}
@@ -62,8 +63,35 @@ class Users extends \_DefaultController {
 
 	public function profil(){
 		if(Auth::isAuth()){
+			$idReceveur = Auth::getUser()->getId();
+			$messages = DAO::getAll("message","idReceveur = '".$idReceveur."'");
 			$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
-			$this->loadView("user/vProfil.html",array("user"=>$user));
+			$this->loadView("user/vProfil.html",array("user"=>$user,"messages"=>$messages));
+			
+			echo Jquery::getOn("click", ".n-message", "Messages/Contact","#divResponse");
+			echo Jquery::getOn("click", ".s-message", "Messages/Envoyes","#divResponse");
+			echo Jquery::getOn("click", ".c-updateUser", "Users/frmUpdate","#divResponse");
+			echo Jquery::getOn("click", ".c-updatePass", "Users/frmUpdatePass","#divResponse");
+		}else{
+			$this->onInvalidControl();
+		}
+	}
+	
+	public function frmUpdate($id=NULL){
+		if(Auth::isAuth()){
+			$user=Auth::getUser();
+			$disabled="";
+			$this->loadView("user/vUpdate.html",array("user"=>$user,"disabled"=>$disabled));
+		}else{
+			$this->onInvalidControl();
+		}
+	}
+	
+	public function frmUpdatePass($id=NULL){
+		if(Auth::isAuth()){
+			$user=Auth::getUser();
+			$disabled="";
+			$this->loadView("user/vUpdatePass.html",array("user"=>$user,"disabled"=>$disabled));
 		}else{
 			$this->onInvalidControl();
 		}

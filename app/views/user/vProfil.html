@@ -1,8 +1,8 @@
-<!-- DIV .container -->
-<div class="container">
+
 	<!-- DIV .col-md-4 -->
-	<div class="col-md-4">
-		<div class="jumbotron">
+<div class="panel panel-default col-md-4 col-sm-12 col-xs-12">
+		<div class="row panel-body">
+		<div>
 			<address>
 				<strong><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;
 				 	{{user.getNom()}} {{user.getPrenom()}} ({{user.getLogin()}})
@@ -12,66 +12,85 @@
 			<address>
 				<strong>
 					<abbr title = "E-mail"><i class="glyphicon glyphicon-envelope"></i></abbr>
-						&nbsp;<a href="#">{{user.getMail()}}</a><br>
+						&nbsp;{{user.getMail()}}<br>
 				</strong>
 				<strong>
 					<abbr title = "Tel"><i class="glyphicon glyphicon-earphone"></i></abbr>
 						&nbsp;{{user.getTel()}}
 				</strong>
 			</address>
+			</div>
+			<div class="profile-userbuttons">
+			<a href="Users/frmUpdatePass" class="c-updatePass">
+				<button type="button" class="btn btn-danger btn-xs">
+				<i class="glyphicon glyphicon-cog"></i> Mot de passe</button>
+			</a>
+				<a href="Users/frmUpdate" class="c-updateUser">
+					<button type="button" class="btn btn-success btn-xs">
+						<i class="fa fa-pencil" aria-hidden="true"></i> Modifier profil</button>
+				</a>
+			</div>
+			<hr>
+			<div class="text-center"><h3 class="bg-primary btn-sm">Messages privés</h3></div>
+			<div>
+				<ul class="nav">
+					<li class="">
+						<a href="Users/profil" >
+						<i class="glyphicon glyphicon-envelope"></i>
+						Boîte de reception </a>
+					</li>
+					<li class="">
+						<a href="Messages/Contact" class="n-message">
+						<i class="glyphicon glyphicon-plus"></i>
+						Nouveau message </a>
+					</li>
+					<li>
+						<a href="Messages/Envoyes" class="s-message">
+						<i class="glyphicon glyphicon-send"></i>
+						Message envoyés </a>
+					</li>
+				</ul>
+			</div>
 			<hr>
 				<strong>disque</strong>
 		</div>
-	</div>
 	<!-- DIV .col-md-4 -->
-
-	<!-- DIV .col-md-7 -->
-	<div class="col-md-7">
-		<div class="jumbotron">	
-			<form action="Users/updateProfil" method="POST">
-				<div class="form-group">
-					<label for="nom">Nom : </label>
-					<div class="input-group">
-						<input name="nom" type="text" value="{{user.getNom()}}" class="form-control"  id="InputName" placeholder="Nom" >
-						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-					</div>
-				</div>
-			                
-				<div class="form-group">
-					<label for="prenom">Prenom : </label>
-					<div class="input-group">
-						<input name="prenom" type="text" value="{{user.getPrenom()}}" class="form-control"  id="InputFirstName" placeholder="Prenom" >
-						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-				 	</div>
-				</div>
-	       
-				<div class="form-group">
-					<label for="pseudo">Pseudo : </label>
-					<div class="input-group">
-						<input name="pseudo" type="text" value="{{user.getLogin()}}" class="form-control" disabled id="InputPseudo" placeholder="Pseudo">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-					</div>
-				</div>
-						                
-				<div class="form-group">
-					<label for="mobile">Mobile : </label>
-					<div class="input-group">
-						<input name="tel" type="text" value="{{user.getTel()}}" class="form-control"  id="InputMobile" placeholder="Tel Mobile" >
-						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-					</div>
-				</div>
-				
-				<div>
-					<div class="input-group">
-						<input type="submit" class="btn btn-primary" value="Modifier">
-					</div>
-				</div>
-				<input type="hidden" name="id" value="{{user.getId()}}">
-				<input type="hidden" name="admin" value="{{user.getAdmin()}}">
-				<div class="clearfix"></div>		 
-			</form>
-		</div>
-	</div>
-	<!-- DIV .col-md-7 -->
 </div>
-<!-- DIV /.container -->
+
+	<div class="panel panel-default col-md-8 col-sm-12 col-xs-12">
+	<div class="row panel-body">
+		<div id="divResponse">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Boite de reception</h3>
+			</div>
+		<div class="panel-body">
+		{%if messages %}
+			<ul class="list-group">
+		{% for message in messages %}
+				<li class="list-group-item">
+					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value="{{message.getId()}}"></div>
+					<a href="messages/vMessage/{{message.getId()}}">
+					<div class="col-md-5">{{message.getExpediteur().getMail()}}</div>
+					<div class="col-md-4">{{message.getObjet()}}</div>
+					<div class="col-md-2">{{message.getDate()|date("d/m/Y")}}</div></a>
+					<div class="clearfix"></div>
+				</li>
+		{% endfor %}
+			</ul>
+		{%else%}
+		<blockquote >
+			<p class="text-default">
+				<strong>
+				Aucun message reçu
+				</strong>
+			</p>
+		</blockquote>
+		{%endif%}
+		</div>
+		</div>
+		</div><!-- DIV .response -->
+		</div>
+	<!-- DIV .col-md-8 -->
+</div>
+<div class="clearfix"></div>

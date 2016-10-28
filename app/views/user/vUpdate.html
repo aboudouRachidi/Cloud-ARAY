@@ -1,0 +1,46 @@
+<div class="alert alert-info">Mise à jour profil : {{user.toString()}}</div>
+		<div class="panel panel-default col-md-12">
+		
+			<form action="Users/updateProfil" method="POST">
+				<div class="form-group">
+					<label for="nom">Nom : </label>
+					<div class="input-group">
+						<input name="nom" type="text" value="{{user.getNom()}}" class="form-control"  id="InputName" placeholder="Nom" >
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+					</div>
+				</div>
+			                
+				<div class="form-group">
+					<label for="prenom">Prenom : </label>
+					<div class="input-group">
+						<input name="prenom" type="text" value="{{user.getPrenom()}}" class="form-control"  id="InputFirstName" placeholder="Prenom" >
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+				 	</div>
+				</div>
+	       
+				<div class="form-group">
+					<label for="pseudo">Pseudo : </label>
+					<div class="input-group">
+						<input name="pseudo" type="text" value="{{user.getLogin()}}" class="form-control" disabled id="InputPseudo" placeholder="Pseudo">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+					</div>
+				</div>
+						                
+				<div class="form-group">
+					<label for="mobile">Mobile : </label>
+					<div class="input-group">
+						<input name="tel" type="text" value="{{user.getTel()}}" class="form-control"  id="InputMobile" placeholder="Tel Mobile" >
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+					</div>
+				</div>
+				
+				<div>
+					<div class="input-group">
+						<input type="submit" class="btn btn-primary" value="Modifier">
+					</div>
+				</div>
+				<input type="hidden" name="id" value="{{user.getId()}}">
+				<input type="hidden" name="admin" value="{{user.getAdmin()}}">
+				<div class="clearfix"></div>		 
+			</form>
+		</div>

@@ -1,0 +1,30 @@
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Messages envoyés</h3>
+			</div>
+		<div class="panel-body">
+		{%if messages %}
+			<ul class="list-group">
+		{% for message in messages %}
+				<li class="list-group-item">
+					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value="{{message.getId()}}"></div>
+					<a href="messages/vMessageEnvoyes/{{message.getId()}}">
+					<div class="col-md-5">{{message.getReceveur().getMail()}}</div>
+					<div class="col-md-4">{{message.getObjet()}}</div>
+					<div class="col-md-2">{{message.getDate()|date("d/m/Y")}}</div></a>
+					<div class="clearfix"></div>
+				</li>
+		{% endfor %}
+			</ul>
+		{%else%}
+		<blockquote >
+			<p class="text-default">
+				<strong>
+				Aucun message envoyés
+				</strong>
+			</p>
+		</blockquote>
+		{%endif%}
+		</div>
+		</div>

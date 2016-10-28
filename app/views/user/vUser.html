@@ -12,7 +12,7 @@
 			<br>
 			<div class="profile-userbuttons">
 				<button type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-cog"></i> Parametres</button>
-				<button type="button" class="btn btn-success btn-xs"><i class="fa fa-envelope" aria-hidden="true"></i> Contacter</button>
+				<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope" aria-hidden="true"></i> Contacter</button>
 			</div>
 			<hr>
 			<div >
@@ -131,3 +131,63 @@
 	</div>
 <div class="clearfix"></div>
 </div> 
+
+<!-- Modal contact-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <form action="admin/sentMessage" method="post">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+<div class="panel panel-primary">
+	
+	<div class="panel-body">
+		<div class="row">
+			<div class="form-group col-lg-12 col-md-12 col-sm-12">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">A&nbsp;&nbsp;</span>
+				<input name="receveur" value="{{user.getId()}}" type="hidden"  />
+		        <input class="form-control" value="{{user.toString()}}" readonly="readonly" placeholder="Expediteur" type="text" required />
+		    </div>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+		    	<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i>&nbsp;</span>
+		        	<input class="form-control" name="objet" placeholder="Objet" type="text" required />
+		    	</div>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+			    <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+					<textarea style="resize:vertical;" class="form-control" placeholder="Message..." rows="6" name="contenu" required></textarea>
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+
+</div>
+      </div>
+      <div class="modal-footer">
+			<div class="col-md-6">
+				<a class="btn btn-danger btn-block col-md-4 pull-right" data-dismiss="modal">Retour</a>
+			</div>
+			
+			<div class="col-md-6">
+			<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-send"></span> Envoyer</button>
+				<!-- <input type="submit" value="Envoyer" class="btn btn-success btn-block">  -->
+			</div>
+	
+			<div class="clearfix"></div>
+      </div>
+      	</form>
+    </div>
+  </div>
+</div>

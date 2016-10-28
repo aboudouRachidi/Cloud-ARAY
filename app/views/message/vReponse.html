@@ -1,26 +1,16 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">
-    	<h4 class="panel-title text-center" ><span class="glyphicon glyphicon-info-sign"></span> Messagerie interne.</h4>
+    	<h4 class="panel-title text-center" ><span class="glyphicon glyphicon-info-sign"></span> Repondre au message.</h4>
 	</div>
 	<form action="messages/sentMessage" method="post">
 	<div class="panel-body">
-		<div class="row">
-			<div class="form-group col-lg-6 col-md-6 col-sm-6">
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i>&nbsp;</span>
-			    	<input class="form-control" name="Nom" placeholder="Nom" value="{{utilisateur.getNom()}}" readonly="readonly" type="text"/>
-				</div>
-			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-6">
-				<input class="form-control" name="prenom" value="{{utilisateur.getPrenom()}}" placeholder="Prenom" readonly="readonly" type="text"/>
-			</div>
-		</div>
+
 		<div class="row">
 			<div class="form-group col-lg-12 col-md-12 col-sm-12">
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">De</span>
-				<input name="expediteur" value="{{utilisateur.getId()}}" type="hidden"  />
-		        <input class="form-control" value="{{utilisateur.toString()}}" readonly="readonly" placeholder="Expediteur" type="text" required />
+				<input name="expediteur" value="{{message.getReceveur.getId()}}" type="hidden"  />
+		        <input class="form-control" value="{{message.Receveur()}}" readonly="readonly" placeholder="Expediteur" type="text" required />
 		    </div>
 		    </div>
 		</div>
@@ -28,17 +18,8 @@
 			<div class="form-group col-lg-12 col-md-12 col-sm-12">
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">A&nbsp;&nbsp;</span>
-		        <select class="form-control" name="receveur" required >
-		        	{%if isAdmin %}
-		        	{%for user in users%}
-		        	<option value="{{user.id()}}">{{user.toString()}}</option>
-		        	{%endfor%}
-		        	{%else%}
-		        	{%for admin in admins%}
-		        	<option value="{{admin.id()}}">{{admin.toString()}}</option>
-		        	{%endfor%}
-		        	{%endif%}
-		        </select>
+				<input name="receveur" value="{{message.getExpediteur.getId()}}" type="hidden"  />
+		        <input class="form-control" value="{{message.getExpediteur()}}" readonly="readonly" placeholder="Expediteur" type="text" required />
 		    </div>
 		    </div>
 		</div>
@@ -46,7 +27,7 @@
 		    <div class="form-group col-lg-12 col-md-12 col-sm-12">
 		    	<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i>&nbsp;</span>
-		        	<input class="form-control" name="objet" placeholder="Objet" type="text" required />
+		        	<input class="form-control" name="objet" value="{{message.getObjet()}}" placeholder="Objet" type="text" readonly="readonly" required />
 		    	</div>
 		    </div>
 		</div>
@@ -61,14 +42,11 @@
 	</div> 
 	
 	<div class="panel-footer">
-		<div class="col-md-4">
+		<div class="col-md-6">
 		<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-send"></span> Envoyer</button>
 			<!-- <input type="submit" value="Envoyer" class="btn btn-success btn-block">  -->
 		</div>
-		<div class="col-md-4">
-			<input type="reset" class="btn btn-warning btn-block" value="Effacer message" />
-		</div>
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<a class="btn btn-danger btn-block col-md-4 pull-right" href="{{config['siteUrl']}}Users/profil">Retour</a>
 		</div>
 		<div class="clearfix"></div>

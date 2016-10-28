@@ -8,8 +8,8 @@ class Tarifs extends \_DefaultController{
 		return true;
 	}
 	public function onInvalidControl(){
-		
-		$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",3000,false);
+		$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
+		$this->forward(Accueil::class);
 		exit();
 	}
 	public function __construct(){

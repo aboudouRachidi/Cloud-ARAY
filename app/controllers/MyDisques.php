@@ -16,6 +16,18 @@ class MyDisques extends Controller{
 			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 		}
 	}
+	
+	public function onInvalidControl(){
+		if(Auth::isAuth()){
+			$this->messageDanger("Vous n'êtes pas autorisé à afficher cette page !",8000,false);
+			exit();
+		}else{
+	
+			$this->messageDanger("Vous devez vous connecté pour afficher cette page !",8000,false);
+			$this->loadView("main/vLogin.html");
+			exit();
+		}
+	}
 	public function index($message=Null) {
 		echo Jquery::compile();
 		
@@ -30,6 +42,9 @@ class MyDisques extends Controller{
 			$this->_showDisplayedMessage($message);
 		}
 		$objects=DAO::getAll($this->model, "idUtilisateur='".Auth::getUser()->getId()."'");
+		foreach ($objects as $object):
+			DAO::getOneToMany($object, "commentaires");
+		endforeach;
 		$this->loadView("MyDisque/vObjects.html",array("objects"=>$objects,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref,"utilisateur"=>$utilisateur));
 		
 	}

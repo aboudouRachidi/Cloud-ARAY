@@ -1,0 +1,30 @@
+<div class="alert alert-info">Mise à jour Mot de passe : {{user.toString()}}</div>
+		<div class="panel panel-default col-md-12">
+		
+			<form action="Users/updateProfil" method="POST">
+			                
+				<div class="form-group">
+					<label for="mdp">Nouveau Mot de passe : </label>
+					<div class="input-group">
+						<input name="password" type="password" class="form-control"  id="inputPassword" placeholder="Saisir votre nouveau Mot de passe..." required>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="confirmMdp">Confirmer nouveau mot de passe : </label>
+					<div class="input-group">
+						<input name="confirmPassword" type="password" class="form-control"  id="inputConfirmPassword" placeholder="Confirmer votre nouveau mot de passe..." required>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+					</div>
+				</div>
+				
+				<div>
+					<div class="input-group">
+						<input type="submit" class="btn btn-primary" value="Modifier">
+					</div>
+				</div>
+				<input type="hidden" name="id" value="{{user.getId()}}">
+				<input type="hidden" name="admin" value="{{user.getAdmin()}}">
+				<div class="clearfix"></div>		 
+			</form>
+		</div>
