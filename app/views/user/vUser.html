@@ -12,7 +12,7 @@
 			<br>
 			<div class="profile-userbuttons">
 				<button type="button" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-cog"></i> Parametres</button>
-				<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope" aria-hidden="true"></i> Contacter</button>
+				<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#contact"><i class="fa fa-envelope" aria-hidden="true"></i> Contacter</button>
 			</div>
 			<hr>
 			<div >
@@ -28,7 +28,7 @@
 						Les utilisateurs </a>
 					</li>
 					<li>
-						<a href="Admin/disques" target="_blank">
+						<a href="Admin/disques">
 						<i class="glyphicon glyphicon-folder-close"></i>
 						Les disques </a>
 					</li>
@@ -107,7 +107,7 @@
 				</div>
 				<div class="col-md-8"><span class="glyphicon glyphicon-gift"></span> Services : <strong class="text-success">{{disque.getServices()|join(', ') }}</strong></div>
 				<div class="col-md-4">
-					<a href="#" class="btn btn-warning btn-sm pull-left">Commentaire</a>
+					<a href="Commentaires/comments/{{disque.getId()}}" class="btn btn-warning btn-sm pull-left">Commentaire</a>
 					<a href="Scan/show/{{disque.getId()}}" class="btn btn-primary btn-sm pull-right"><span class='glyphicon glyphicon-search' aria-hidden='true'></span> Visualiser</a></div>
 				<div class="clearfix"></div>
 			</li>
@@ -133,13 +133,15 @@
 </div> 
 
 <!-- Modal contact-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade in" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
     <form action="admin/sentMessage" method="post">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        	<div class="text-center">
+        	<h4 class="modal-title" id="myModalLabel">Nouveau message</h4>
+        	</div>
       </div>
       <div class="modal-body">
 <div class="panel panel-primary">

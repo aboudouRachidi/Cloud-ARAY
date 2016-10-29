@@ -23,7 +23,7 @@ class Commentaires extends \_DefaultController{
 		$user=Auth::getUser();
 		$disque = DAO::getOne("disque",$id);
 		$commentaires = DAO::getOneToMany($disque,"commentaires");
-		if(DAO::getOne("disque", "id = '".$disque->getId()."' AND idUtilisateur = '".$user->getId()."'")){
+		if(Auth::isAdmin() || DAO::getOne("disque", "id = '".$disque->getId()."' AND idUtilisateur = '".$user->getId()."'")){
 			$date=date('Y-m-d H:i:s');
 			$this->loadView("commentaire/vDisqueComments.html",array("commentaires"=>$commentaires,"date"=>$date,"utilisateur"=>$user,"disque"=>$disque));
 		}else {

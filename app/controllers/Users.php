@@ -31,9 +31,9 @@ class Users extends \_DefaultController {
 			$message->setTimerInterval($this->messageTimerInterval);
 			$this->_showDisplayedMessage($message);
 		}
-		$users=DAO::getAll($this->model);
-		$this->loadView("user/vUsers.html",array("users"=>$users,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
-	
+		//$users=DAO::getAll($this->model);
+		//$this->loadView("user/vAllusers.html",array("users"=>$users,"model"=>$this->model,"config"=>$config,"baseHref"=>$baseHref));
+		$this->forward(Admin::class,"users");
 		}else {
 			$this->onInvalidControl();
 		}
@@ -124,12 +124,18 @@ class Users extends \_DefaultController {
 	
 	public function vUser($id=NULL){
 		$user = $this->getInstance($id);
+		
+		if(DAO::getOne("utilisateur", $id) && Auth::isAdmin()){
 		$disques = DAO::getAll("disque","idUtilisateur = ".$user->getId());
 		foreach ($disques as $disque){
 			DAO::getManyToMany($disque, "services");
 		}
 
 		$this->loadView("user/vUser.html",array("user"=>$user,"disques"=>$disques));
+		}else{
+			$this->messageDanger("Utilisateur introuvable");
+			$this->onInvalidControl();
+		}
 	}
 	
 	/* (non-PHPdoc)
