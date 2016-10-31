@@ -64,7 +64,7 @@ class Users extends \_DefaultController {
 	public function profil(){
 		if(Auth::isAuth()){
 			$idReceveur = Auth::getUser()->getId();
-			$messages = DAO::getAll("message","idReceveur = '".$idReceveur."'");
+			$messages = DAO::getAll("message","idReceveur = '".$idReceveur."'ORDER BY date DESC");
 			$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
 			$this->loadView("user/vProfil.html",array("user"=>$user,"messages"=>$messages));
 			

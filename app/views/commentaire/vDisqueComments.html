@@ -1,6 +1,6 @@
 <div class="chat-panel panel panel-primary">
 <div class="panel-heading">
-    <i class="fa fa-comments fa-fw"></i> Commentaires du disque {{disque.getNom()}}
+    <i class="fa fa-comments fa-fw"></i> Commentaires du disque {{disque.toString()}}
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-chevron-down"></i>
@@ -9,6 +9,11 @@
             <li>
                 <a href="Commentaires/comments/{{disque.getId()}}">
                     <i class="fa fa-refresh fa-fw"></i> Refresh
+                </a>
+            </li>
+            <li>
+                <a href="scan/show/{{disque.getId()}}">
+                    <i class="fa fa-search fa-fw"></i> Ouvrir ({{disque.toString()}})
                 </a>
             </li>
             <li class="divider"></li>

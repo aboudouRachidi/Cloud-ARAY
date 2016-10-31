@@ -6,6 +6,8 @@
 <input type="hidden" id="id" name ="id" value="{{tarif.getId()}}">
 	<div class="col-md-6">
 	<label for="quota">Quota :</label>
+		<input type="hidden" name ="oldQuota" value="{{tarif.getQuota()}}">
+		<input type="hidden" name ="oldUnite" value="{{tarif.getUnite()}}">
 		<input class="form-control" type="text" required name="quota" placeholder="Quota..." value="{{tarif.getQuota()}}">
 	</div>
 	<div class="col-md-6">
@@ -20,14 +22,20 @@
 			<option value="To">To</option>
 		</select>
 	</div>
+	 <div class="checkbox col-md-12">
+	    <label>
+	      <input type="checkbox" name="avertir"> Avertir les utilisateurs par message ?
+	    </label>
+	  </div>
 </div>
 <div class="form-group col-md-6">	
  <label for="prix">Prix :</label>
-      <input class="form-control" type="number" step="0.01" min="0" required name="prix" placeholder="Prix..." value="{{tarif.getPrix()}}">
+ 	<input type="hidden" name ="oldPrix" value="{{tarif.getPrix()}}">
+	<input class="form-control" type="number" step="0.01" min="0" required name="prix" placeholder="Prix..." value="{{tarif.getPrix()}}">
 <label for="margeDepassement">Marge de dépassement :</label>
-      <input class="form-control" type="number" step="0.01" min="0" required name="margeDepassement" placeholder="Marge de dépassement..." value="{{tarif.getMargeDepassement()}}">
+    <input class="form-control" type="number" step="0.01" min="0" required name="margeDepassement" placeholder="Marge de dépassement..." value="{{tarif.getMargeDepassement()}}">
 <label for="coutDepassement">Coût de dépassement :</label>
-      <input class="form-control" type="number" step="0.01" min="0" required name="coutDepassement" placeholder="Coût de dépassement..." value="{{tarif.getCoutDepassement()}}">
+    <input class="form-control" type="number" step="0.01" min="0" required name="coutDepassement" placeholder="Coût de dépassement..." value="{{tarif.getCoutDepassement()}}">
 </div>
 <div class="form-group col-md-12">
 	<div class="col-md-6">

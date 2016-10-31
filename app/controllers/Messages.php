@@ -35,7 +35,7 @@ class Messages extends \_DefaultController{
 			RequestUtils::setValuesToObject($message,$_POST);
 			$message->setExpediteur(Auth::getUser());
 			$message->setReceveur($receveur);
-			$message->setLu(1);
+			$message->setLu(0);
 			if(DAO::insert($message)){
 				$this->messageSuccess("Le message ".$message->toString()." a été envoyé à ".$receveur,5000,true);
 				$this->forward(Users::class,"profil");
@@ -49,11 +49,32 @@ class Messages extends \_DefaultController{
 		}
 	}
 	
+	public function updateMessage(){
+		//$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
+		if(RequestUtils::isPost()){
+			$className=$this->model;
+			$object=new $className();
+			$this->setValuesToObject($object);
+			if($_POST["id"]){
+				try{
+					DAO::update($object);
+					$this->messageSuccess("Vos informations ont été mis à jour",5000,true);
+					$this->onUpdate($object);
+					$this->profil();
+				}catch(\Exception $e){
+					$this->messageWarning("Impossible de modifier l'instance de ".$this->model,"danger");
+				}
+			}
+		}
+	
+	}
+	
 	public function vMessage($id=NULL){
 		if(Auth::isAuth()){
 			$idReceveur = Auth::getUser()->getId();
 			if(DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
 			$message = $this->getInstance($id);
+			$message->setLu(1);
 			$this->loadView("message/vMessage.html",array("message"=>$message));
 			}else{
 				$this->messageDanger("Message introuvable");
@@ -66,16 +87,26 @@ class Messages extends \_DefaultController{
 	
 	public function envoyes($id=NULL){
 		if(Auth::isAuth()){
-			$messages = DAO::getAll("message","idExpediteur = '".Auth::getUser()->getId()."'");
+			$messages = DAO::getAll("message","idExpediteur = '".Auth::getUser()->getId()."'ORDER BY date DESC");
 			$this->loadView("message/vMessageEnvoyes.html",array("messages"=>$messages));
 		}else {
 			$this->onInvalidControl();
 		}
 	}
 	public function repondre($id=NULL){
-		$message = $this->getInstance($id);
-		$date=date('Y-m-d H:i:s');
-		$this->loadView("message/vReponse.html",array("date"=>$date,"message"=>$message));
+		if(Auth::isAuth()){
+			$idReceveur = Auth::getUser()->getId();
+			if(DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
+			$message = $this->getInstance($id);
+			$date=date('Y-m-d H:i:s');
+			$this->loadView("message/vReponse.html",array("date"=>$date,"message"=>$message));
+			}else{
+				$this->messageDanger("Message introuvable");
+				$this->forward(Users::class,"profil");
+			}
+		}else {
+			$this->onInvalidControl();
+		}
 	}
 	public function vMessageEnvoyes($id=NULL){
 		if(Auth::isAuth()){

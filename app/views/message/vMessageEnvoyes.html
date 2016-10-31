@@ -1,11 +1,18 @@
 
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">Messages envoyés</h3>
+				<h3 class="panel-title text-uppercase">Messages envoyés</h3>
 			</div>
 		<div class="panel-body">
 		{%if messages %}
 			<ul class="list-group">
+				<li class="list-group-item active">
+					<div class="col-md-1"></div>
+					<div class="col-md-5">Récepteur </div>
+					<div class="col-md-4">Objet</div>
+					<div class="col-md-2">Date</div>
+					<div class="clearfix"></div>
+			</li>
 		{% for message in messages %}
 				<li class="list-group-item">
 					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value="{{message.getId()}}"></div>

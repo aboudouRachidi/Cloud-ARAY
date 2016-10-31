@@ -85,7 +85,7 @@ class Admin extends \BaseController {
 			RequestUtils::setValuesToObject($message,$_POST);
 			$message->setExpediteur(Auth::getUser());
 			$message->setReceveur($receveur);
-			$message->setLu(1);
+			$message->setLu(0);
 			if(DAO::insert($message)){
 				$this->messageSuccess("Le message ".$message->toString()." a été envoyé à ".$receveur,8000,true);
 				$this->users();

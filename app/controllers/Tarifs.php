@@ -72,6 +72,22 @@ class Tarifs extends \_DefaultController{
 	}
 	
 	public function updateTarif(){
+		if(isset($_POST["avertir"])){
+			$users = DAO::getAll("utilisateur","admin = 0");
+			foreach ($users as $user){
+				$receveur = DAO::getOne("utilisateur",$user->getId());
+		
+				$message = new Message();
+		
+				$message->setObjet("Mis à jour tarif ".$_POST['oldPrix'] . " €/".$_POST['oldQuota'].$_POST['oldUnite']);
+				$message->setContenu("Le tarif '".$_POST['oldPrix']." € ' associé au quota '".$_POST['oldQuota'].$_POST['oldUnite']."' a été mis à jour : Prix : ".$_POST['prix']."€ Quota : ".$_POST['quota']." ".$_POST['unite'] ." Marge de dépassement : ".($_POST['margeDepassement'] * 100)."% Coût de dépassement : ".$_POST['coutDepassement']."€.");
+				$message->setExpediteur(Auth::getUser());
+				$message->setReceveur($receveur);
+				$message->setLu(0);
+		
+				DAO::insert($message);
+			}
+		}
 		if(RequestUtils::isPost()){
 			$className=$this->model;
 			$object=new $className();

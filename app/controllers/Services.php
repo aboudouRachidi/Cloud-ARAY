@@ -59,7 +59,22 @@ class Services extends \_DefaultController{
 	}
 	
 	public function updateService(){
-			
+		if(isset($_POST["avertir"])){
+			$users = DAO::getAll("utilisateur","admin = 0");
+			foreach ($users as $user){
+				$receveur = DAO::getOne("utilisateur",$user->getId());
+				
+				$message = new Message();
+				
+				$message->setObjet("Mis à jour service ".$_POST['oldNom']);
+				$message->setContenu("Le sevice '".$_POST['oldNom']."' a été mis à jour : Nom : ".$_POST['nom']." Description : ".$_POST['description']." Prix : ".$_POST['prix'] ."€");
+				$message->setExpediteur(Auth::getUser());
+				$message->setReceveur($receveur);
+				$message->setLu(0);
+				
+				DAO::insert($message);
+			}
+		}
 		if(RequestUtils::isPost()){
 			$Service=$this->model;
 			$service=new $Service();
@@ -67,11 +82,11 @@ class Services extends \_DefaultController{
 			if($_POST["id"]){
 				try{
 					DAO::update($service);
-					$this->messageSuccess("<b>mis à jour</b>",5000,true);
+					$this->messageSuccess("Le service <b>".$_POST['nom']."</b> a été mis à jour",5000,true);
 					$this->onUpdate($service);
 					$this->index();
 				}catch(\Exception $e){
-					$msg=new DisplayedMessage("Impossible de modifier l'instance de ".$this->model,"danger");
+					$this->messageDanger("Impossible de modifier l'instance de ".$this->model,"danger");
 				}
 			}
 		}

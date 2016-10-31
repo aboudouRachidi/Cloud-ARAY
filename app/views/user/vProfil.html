@@ -31,7 +31,7 @@
 				</a>
 			</div>
 			<hr>
-			<div class="text-center"><h3 class="bg-primary btn-sm">Messages privés</h3></div>
+			<div class="text-center"><h2 class="bg-primary btn-sm">Messages privés</h2></div>
 			<div>
 				<ul class="nav">
 					<li class="">
@@ -74,13 +74,20 @@
 	<div class="panel panel-default col-md-8 col-sm-12 col-xs-12">
 	<div class="row panel-body">
 		<div id="divResponse">
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">Boite de reception</h3>
+				<h3 class="panel-title text-uppercase">Boite de reception</h3>
 			</div>
 		<div class="panel-body">
 		{%if messages %}
 			<ul class="list-group">
+				<li class="list-group-item active">
+					<div class="col-md-1"></div>
+					<div class="col-md-5">Expéditeur</div>
+					<div class="col-md-4">Objet</div>
+					<div class="col-md-2">Date</div>
+					<div class="clearfix"></div>
+			</li>
 		{% for message in messages %}
 				<li class="list-group-item">
 					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value="{{message.getId()}}"></div>
