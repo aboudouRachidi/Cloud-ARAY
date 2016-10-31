@@ -1,34 +1,48 @@
-<table class='table table-striped'>
-	<thead>
-		<tr>
-			<th colspan='1'>{{model}}</th>
-			<th colspan='1'>Description</th>
-			<th colspan='1'>Prix</th>
-
-		</tr>
-	</thead>
-		<tbody>
-		{% for object in objects %}
-			<tr>
-			<td width=20%>{{object.getNom()|raw}}</td>
-			<td>{{object.getDescription()|raw}}</td>
-			<td>{{object.getPrix()|raw}}€</td>
-			<td class='td-center'><a class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
-			<td class='td-center'><a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
-			</tr>
-			
-			<!-- Confirmer suppression-->
-			<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
-			  <div class="modal-dialog modal-lg" role="document">
-			    <div class="modal-content alert alert-warning text-center">
-						<p>Confirmez-vous la suppression de l'objet <b>{{ object }}</b> ?&nbsp;
-							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-							<a href='{{baseHref~"/delete/"~object.getId()}}' class="btn btn-danger">Supprimer</a>
-						</p>
-			    </div>
-			  </div>
+<h3>{{model}}</h3>
+<div class="addServive">
+<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>
+<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> Ajouter...</a>
+<div class="clearfix"></div>
+</div>
+{% for object in objects %}
+	<div class="card col-sm-6 col-md-4">
+		<div class="thumbnail">
+			<h4 class="text-center">{{object.getNom()|raw}}</h4>
+    	<hr>
+		<div class="caption">
+			<p class="text-justify">
+				<small class="text-muted">{{object.getDescription()|slice(0, 100)}}
+				<abbr title="{{object.getDescription()|slice(96)}}" class="initialism"><b>...</b></abbr></small></p>
+		</div>
+		<hr>
+		<div>
+			<div>
+				<div class="col-md-4">
+				<a class='btn btn-success btn-xs' href='{{baseHref~"/frm/"~object.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier</a>
+				</div>
+				<div class="col-md-4">
+				<a class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{object.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+				</div>
+				<div class="btn-xs col-md-4">
+					<strong class="bg-info pull-right">{% if object.getPrix() == 0 %}Gratuit{%else%}{{object.getPrix()|raw}} €{%endif%}</strong>
+				</div>
+				<div class="clearfix"></div>
 			</div>
+		</div>
+    </div>
+  </div>
+
+			
+	<!-- Confirmer suppression-->
+	<div class="modal fade delete{{object.getId()}}" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content alert alert-warning text-center">
+			<p>Confirmez-vous la suppression de l'objet <b>{{ object }}</b> ?&nbsp;
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+				<a href='{{baseHref~"/delete/"~object.getId()}}' class="btn btn-danger">Supprimer</a>
+			</p>
+	    </div>
+	  </div>
+	</div>
 		{% endfor %}
-		</tbody>
-</table>
-<a class='btn btn-primary' href='{{config["siteUrl"]~baseHref~"/create"}}'>Ajouter...</a>
+<div class="clearfix"></div>

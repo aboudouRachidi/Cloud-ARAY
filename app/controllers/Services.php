@@ -38,7 +38,7 @@ class Services extends \_DefaultController{
 		$service = new Service();
 		RequestUtils::setValuesToObject($service,$_POST);
 		if(DAO::insert($service)){
-			$this->messageSuccess($service->toString()." créé.");
+			$this->messageSuccess("Le service ".$service->toString()." a été créé.");
 			$this->index();
 		}else{
 			$this->messageWarning("Impossible d'inserer le disque ".$service->toString());
