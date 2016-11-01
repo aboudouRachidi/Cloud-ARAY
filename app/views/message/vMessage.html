@@ -1,3 +1,4 @@
+
 <fieldset>
 <legend class="bg-primary">Message reçu le : {{message.getDate()|date("d/m/Y H:i:s")}}</legend>
 <div class="form-group">
@@ -7,20 +8,26 @@
   <p class="col-sm-2 col-md-12 control-label">&nbsp;&nbsp;A : {{message.getReceveur()}}</p> 
 </div>
 <div class="clearfix"></div>
-<div class="alert alert-info">Objet : {{message.toString()|raw}}</div>
+<div class="alert alert-info">Objet : {{message.getObjet()|raw}}</div>
 <div class="panel panel-primary">
-	<div class="panel-heading bg-primary"><i class="glyphicon glyphicon-envelope"></i> Message :</div>
+<form action="Messages/updateMessage" method="post">
+<input type="hidden" name="lu" value="1">
+<input type="hidden" name="id" value="{{message.getId()}}">
+	<div class="panel-heading bg-primary"><i class="glyphicon glyphicon-envelope"></i> Message : <input type="submit" value="Marquer comme lu" class="btn btn-default btn-xs"> </div>
   <div class="panel-body">
 		<textarea style="background:white;resize:vertical;" class="form-control" readonly="readonly" rows="12">{{message.getContenu}}</textarea>
   </div>
   <div class="panel-footer">
   	<div class="col-md-6">
-	  	<a href="Messages/repondre/{{message.getId()}}" class="btn btn-info btn-xs btn-block">Repondre</a>
+	  	<a href="Messages/repondre/{{message.getId()}}" class="btn btn-info btn-xs btn-block r-message">Repondre</a>
 	</div>
 	<div class="col-md-6">
 	  	<a href="Users/profil" data-ajax="Users/profil" class="btn btn-danger btn-xs btn-block">Retour</a>
 	</div>
 	<div class="clearfix"></div>
   </div>
+</form>
+</div>
+<div id="divResponse">
 </div>
 </fieldset>

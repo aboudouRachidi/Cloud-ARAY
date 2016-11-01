@@ -1,0 +1,194 @@
+<div class="panel panel-primary col-md-4">
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" {% if activeHome %}class="active"{%endif%}><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Utilisateurs</a></li>
+    <li role="presentation" {% if activeDisques %}class="active"{%endif%}><a href="#disques" aria-controls="disques" role="tab" data-toggle="tab">Disques</a></li>
+    <li role="presentation" {% if activeMessages %}class="active"{%endif%}><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+ 	<li role="presentation" {% if activeServices %}class="active"{%endif%}><a href="#services" aria-controls="services" role="tab" data-toggle="tab">Services</a></li>
+    <li role="presentation" {% if activeTarifs %}class="active"{%endif%}><a href="#tarifs" aria-controls="Tarifs" role="tab" data-toggle="tab">Tarifs</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane {% if activeHome %}active{%endif%}" id="home">
+			<div class="panel panel-default col-md-12">
+			<hr>           
+				<form class="form-horizontal" role="form" action="Recherches/resultUsers" method="post">
+                    <div class="form-group">
+                      <label for="filter">Filtrer par </label>
+                      <select name="users" class="form-control">
+                      	<option value="" selected>Selectionner...</option>
+                          <option value="all">Tous les utilisateurs {{nbUser}}</option>
+                          <option value="nouveau">Nouveau {{nbNouveauUser}}</option>
+                      </select>
+                    </div>
+					<div class="form-group">
+						<label for="contain">Saisir Login/Email</label>
+						<input class="form-control" autofocus="autofocus" name="search" placeholder="Ex : eric..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
+					</div>
+					<div class="form-group">
+					<button type="submit" name="submit" class="btn btn-primary btn-block">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						Valider</button>
+					</div>
+				</form>
+			</div>
+		</div>
+    	<div role="tabpanel" class="tab-pane {% if activeDisques %}active{%endif%}" id="disques">
+			<div class="panel panel-default col-md-12">
+			<hr>           
+				<form class="form-horizontal" role="form" action="Recherches/resultDisques" method="post">
+                    <div class="form-group">
+                      <label for="filter">Filtrer par</label>
+                      <select name="disques" class="form-control">
+                      	<option value="" selected>Selectionner...</option>
+                          <option value="all">Tous les disques {{nbDisques}}</option>
+                          <option value="nouveau">Nouveau {{nbNouveauDisques}}</option>
+                      </select>
+                    </div>
+					<div class="form-group">
+						<label for="contain">Saisir nom</label>
+						<input class="form-control" autofocus="autofocus" name="search" placeholder="Ex : System..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
+					</div>
+					<div class="form-group">
+					<button type="submit" name="submit" class="btn btn-primary btn-block">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						Valider</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	    <div role="tabpanel" class="tab-pane {% if activeMessages %}active{%endif%}" id="messages">
+			<div class="panel panel-default col-md-12">
+			<hr>           
+				<form class="form-horizontal" role="form" action="Recherches/resultMessages" method="post">
+                    <div class="form-group">
+                      <label for="filter">Filtrer par</label>
+                      <select name="messages" class="form-control">
+                      	<option value="" selected>Selectionner...</option>
+                          <option value="all">Tous les messages {{nbMessage}}</option>
+                          <option value="nonLu">Non lu</option> 
+                          <option value="lu">lu</option>            
+                      </select>
+                    </div>
+					<div class="form-group">
+						<label for="contain">Saisir un objet</label>
+						<input class="form-control" autofocus="autofocus" name="searchObjet" placeholder="Ex : obje..." type="text" autocomplete="off" value="{% if searchObjet %}{{searchObjet}}{%endif%}"/>
+					</div>
+					<div class="form-group">
+					<div class="col-md-6">
+						<label for="contain">Date debut</label>
+						<input class="form-control" name="dateDebut" type="date" value="{% if search %}{{search}}{%endif%}"/>
+					</div>	
+					<div class="col-md-6">
+						<label for="contain">Date fin</label>
+						<input class="form-control" name="dateFin" type="date" value="{% if search %}{{search}}{%endif%}"/>
+					</div>
+					</div>
+					<div class="form-group">
+					<button type="submit" name="submit" class="btn btn-primary btn-block">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						Valider</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	    <div role="tabpanel" class="tab-pane {% if activeServices %}active{%endif%}" id="services">
+			<div class="panel panel-default col-md-12">
+			<hr>           
+				<form class="form-horizontal" role="form" action="Recherches/resultServices" method="post">
+                    <div class="form-group">
+                      <label for="filter">Filtrer par </label>
+                      <select name="services" class="form-control">
+                      	<option value="" selected>Selectionner...</option>
+                          <option value="all">Tous les services {{nbServices}}</option>
+                          <option value="gratuit">Services gratuit</option>
+                      </select>
+                    </div>
+					<div class="form-group">
+						<label for="contain">Saisir nom</label>
+						<input class="form-control" autofocus="autofocus" name="searchService" placeholder="Ex : back..." type="text" autocomplete="off" value="{% if searchService %}{{searchService}}{%endif%}"/>
+					</div>
+					<div class="form-group">
+					<div class="col-md-6">
+						<label for="contain">Montant Min</label>
+						<input class="form-control" name="montantMin" placeholder="Ex : 0.01" type="number" step="0.01" min="0.00" autocomplete="off" value="{% if montantMin %}{{montantMin}}{%endif%}"/>
+					</div>	
+					<div class="col-md-6">
+						<label for="contain">Montant Max</label>
+						<input class="form-control" name="montantMax" placeholder="Ex : 5.99" type="number" step="0.01" min="0" autocomplete="off" value="{% if montantMax %}{{montantMax}}{%endif%}"/>
+					</div>
+					</div>
+					<div class="form-group">
+					<button type="submit" name="submit" class="btn btn-primary btn-block">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						Valider</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	    <div role="tabpanel" class="tab-pane {% if activeTarifs %}active{%endif%}" id="tarifs">
+			<div class="panel panel-default col-md-12">
+			<hr>           
+				<form class="form-horizontal" role="form" action="Recherches/resultTarifs" method="post">
+                    <div class="form-group">
+                      <label for="filter">Filtrer par </label>
+                      <select name="tarifs" class="form-control">
+                      	<option value="" selected>Selectionner...</option>
+                          <option value="all">Tous les tarifs {{nbTarifs}}</option>
+               
+                      </select>
+                    </div>
+					<div class="form-group">
+						<label for="contain">Saisir montant</label>
+						<input class="form-control" autofocus="autofocus" name="searchMontant" placeholder="Ex : 0.01" type="number" step="0.01" min="0" autocomplete="off" value="{% if searchMontant %}{{searchMontant}}{%endif%}"/>
+					</div>
+					<div class="form-group">
+					<div class="col-md-6">
+						<label for="contain">Quota Min</label>
+						<input class="form-control" name="quotaMin" placeholder="Ex : 1" type="number" step="1" min="0" autocomplete="off" value="{% if quotaMin %}{{quotaMin}}{%endif%}"/>
+					</div>	
+					<div class="col-md-6">
+						<label for="contain">Quota Max</label>
+						<input class="form-control" name="quotaMax" placeholder="Ex : 200" type="number" step="1" min="0" autocomplete="off" value="{% if quotatMax %}{{quotaMax}}{%endif%}"/>
+					</div>
+					</div>
+					<div class="form-group">
+					<button type="submit" name="submit" class="btn btn-primary btn-block">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						Valider</button>
+					</div>
+				</form>
+			</div>
+		</div>
+  </div>
+
+</div>
+</div>
+<div class="panel panel-primary col-md-8">
+<div id="result">
+<ul>
+		{% if results %}
+		{% for result in results %}
+
+				<li class="list-group-item">
+					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value=""></div>
+					<a href="{{controller}}/{{method}}/{{result.getId()}}">
+					<span class="col-md-5">{{result.toString()|raw}}</span>
+					<span class="col-md-4"><button class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~result.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></span>
+					<span class="col-md-2"><button class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{result.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></span>
+					</a>
+					<div class="clearfix"></div>
+				</li>
+				
+		{% endfor %}
+		{%else%}
+		<div class='col-md-5 text-warning'>
+			<blockquote>
+				<strong>Aucun resultat trouvé</strong></blockquote>
+		</div>
+		{%endif%}
+</ul>
+</div>
+</div>

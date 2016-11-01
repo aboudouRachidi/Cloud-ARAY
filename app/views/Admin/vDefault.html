@@ -5,14 +5,31 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-primary">
-					  <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge"><?= count($notifs); ?></span></div>
+					  <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">{{nbNvMessage}}</span></div>
 					  <ul class="list-group">
+					  {%if nvMessage%}
+					  {%for message in nvMessage%}
+					  <li class="list-group-item">
+					  <a href="messages/vMessage/{{message.getId()}}">
+					  	<span class="col-md-6">{{message.getObjet()}}</span>
+					  	<span class="col-md-6">{%if message.getDate()|date("d/m/Y") ==  "now"|date("d/m/Y") %} Aujourd'hui {%else%}{{message.getDate()|date("d/m/Y")}}{%endif%}</span>
+					  </a>
+					  	<div class="clearfix"></div>
+					  {%endfor%}
+					  {%else%}
 							<li class="list-group-item">Aucun message</li>
+					{%endif%}
 					  </ul>
 					</div>
 				</div>
 			</div>
-			<div class="panel panel-default">
+			
+			<div class="panel panel-info">
+			<a href="Recherches">
+			<span class="panel-heading btn-block btn btn-info text-uppercase">
+				<h4><span class="glyphicon glyphicon-search"></span> Recherche</h4>
+			</span>
+			</a>
 			  <!-- List group -->
 				<ul class="list-group">
 					<li class="list-group-item">

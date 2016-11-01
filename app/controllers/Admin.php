@@ -24,6 +24,8 @@ class Admin extends \BaseController {
 					"nbDisk" 	=> $nbDisk		= DAO::count("disque"),
 					"nbTarif"	=> $nbTarif		= DAO::count("tarif"),
 					"nbService"	=> $nbService	= DAO::count("service"),
+					"nbNvMessage" =>$nbNvMessage= DAO::count("message","lu = 0 AND idReceveur ='".Auth::getUser()->getId()."'"),
+					"nvessage" => $nvMessage	= DAO::getAll("message","lu = 0 AND idReceveur ='".Auth::getUser()->getId()."'ORDER BY date desc")
 			);
 			
 			$this->loadView("admin/vDefault.html",
@@ -33,6 +35,8 @@ class Admin extends \BaseController {
 							"nbDisk"=>$nbDisk,
 							"nbTarif"=>$nbTarif,
 							"nbService"=>$nbService,
+							"nbNvMessage"=>$nbNvMessage,
+							"nvMessage"=>$nvMessage,
 							
 					));
 		}else {

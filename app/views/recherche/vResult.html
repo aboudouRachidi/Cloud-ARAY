@@ -1,0 +1,26 @@
+<div class="panel panel-primary">
+<div class="panel-heading"><h4>Liste des utilisateurs</h4></div>
+<ul>
+		{% if results %}
+		{% for result in results %}
+
+				<li class="list-group-item">
+					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value=""></div>
+					<a href="messages/vMessage/{{message.getId()}}">
+					<span class="col-md-5">{{result.toString()|raw}}</span>
+					<span class="col-md-4"><button class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~result.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></span>
+					<span class="col-md-2"><button class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{result.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></span>
+					</a>
+					<div class="clearfix"></div>
+				</li>
+				
+		{% endfor %}
+		{%else%}
+		<div class='col-md-5 text-warning'>
+			<blockquote>
+				<strong>Aucun resultat trouvé</strong></blockquote>
+		</div>
+		<div class="clearfix"></div>
+		{%endif%}	
+</ul>
+</div>

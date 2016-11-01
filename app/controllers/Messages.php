@@ -1,6 +1,7 @@
 <?php
 use micro\orm\DAO;
 use micro\utils\RequestUtils;
+use micro\js\Jquery;
 
 class Messages extends \_DefaultController{
 
@@ -58,11 +59,11 @@ class Messages extends \_DefaultController{
 			if($_POST["id"]){
 				try{
 					DAO::update($object);
-					$this->messageSuccess("Vos informations ont été mis à jour",5000,true);
+					$this->messageSuccess("Message lu",5000,true);
 					$this->onUpdate($object);
-					$this->profil();
+					$this->vMessage($_POST["id"]);
 				}catch(\Exception $e){
-					$this->messageWarning("Impossible de modifier l'instance de ".$this->model,"danger");
+					$this->messageWarning("Une erreur est survenue !");
 				}
 			}
 		}
@@ -72,10 +73,10 @@ class Messages extends \_DefaultController{
 	public function vMessage($id=NULL){
 		if(Auth::isAuth()){
 			$idReceveur = Auth::getUser()->getId();
-			if(DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
+			if(Auth::isAdmin() || DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
 			$message = $this->getInstance($id);
-			$message->setLu(1);
 			$this->loadView("message/vMessage.html",array("message"=>$message));
+			echo Jquery::getOn("click", ".r-message", "Messages/repondre/".$id,"#divResponse");
 			}else{
 				$this->messageDanger("Message introuvable");
 				$this->forward(Users::class,"profil");

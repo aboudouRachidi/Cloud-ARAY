@@ -70,7 +70,9 @@ class Message extends \Base {
 	}
 	
 	public function toString() {
-		return (string) $this->objet;
+		return (string) $this->objet.
+				" <br>- Expéditeur ".$this->expediteur->getLogin()."<br> - Receveur ".$this->receveur->getLogin().
+		"<br> - Date ".$this->date;
 	}
 	
 }
