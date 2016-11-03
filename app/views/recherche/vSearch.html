@@ -13,7 +13,7 @@
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane {% if activeHome %}active{%endif%}" id="home">
 			<div class="panel panel-default col-md-12">
-			<hr>           
+			<h4 class="text-center bg-success btn-info btn-lg">Recherche utilisateur</h4>           
 				<form class="form-horizontal" role="form" action="Recherches/resultUsers" method="post">
                     <div class="form-group">
                       <label for="filter">Filtrer par </label>
@@ -25,7 +25,7 @@
                     </div>
 					<div class="form-group">
 						<label for="contain">Saisir Login/Email</label>
-						<input class="form-control" autofocus="autofocus" name="search" placeholder="Ex : eric..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
+						<input class="form-control" autofocus="autofocus" onfocus="this.value = this.value;" name="search" placeholder="Ex : eric..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
 					</div>
 					<div class="form-group">
 					<button type="submit" name="submit" class="btn btn-primary btn-block">
@@ -37,7 +37,7 @@
 		</div>
     	<div role="tabpanel" class="tab-pane {% if activeDisques %}active{%endif%}" id="disques">
 			<div class="panel panel-default col-md-12">
-			<hr>           
+			<h4 class="text-center bg-success btn-info btn-lg">Recherche disque</h4>       
 				<form class="form-horizontal" role="form" action="Recherches/resultDisques" method="post">
                     <div class="form-group">
                       <label for="filter">Filtrer par</label>
@@ -49,7 +49,7 @@
                     </div>
 					<div class="form-group">
 						<label for="contain">Saisir nom</label>
-						<input class="form-control" autofocus="autofocus" name="search" placeholder="Ex : System..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
+						<input class="form-control" autofocus="autofocus" onfocus="this.value = this.value;" name="search" placeholder="Ex : System..." type="text" autocomplete="off" value="{% if search %}{{search}}{%endif%}"/>
 					</div>
 					<div class="form-group">
 					<button type="submit" name="submit" class="btn btn-primary btn-block">
@@ -61,7 +61,7 @@
 		</div>
 	    <div role="tabpanel" class="tab-pane {% if activeMessages %}active{%endif%}" id="messages">
 			<div class="panel panel-default col-md-12">
-			<hr>           
+			<h4 class="text-center bg-success btn-info btn-lg">Recherche message</h4> 
 				<form class="form-horizontal" role="form" action="Recherches/resultMessages" method="post">
                     <div class="form-group">
                       <label for="filter">Filtrer par</label>
@@ -74,7 +74,7 @@
                     </div>
 					<div class="form-group">
 						<label for="contain">Saisir un objet</label>
-						<input class="form-control" autofocus="autofocus" name="searchObjet" placeholder="Ex : obje..." type="text" autocomplete="off" value="{% if searchObjet %}{{searchObjet}}{%endif%}"/>
+						<input class="form-control" autofocus="autofocus" onfocus="this.value = this.value;" name="searchObjet" placeholder="Ex : obje..." type="text" autocomplete="off" value="{% if searchObjet %}{{searchObjet}}{%endif%}"/>
 					</div>
 					<div class="form-group">
 					<div class="col-md-6">
@@ -96,7 +96,7 @@
 		</div>
 	    <div role="tabpanel" class="tab-pane {% if activeServices %}active{%endif%}" id="services">
 			<div class="panel panel-default col-md-12">
-			<hr>           
+			<h4 class="text-center bg-success btn-info btn-lg">Recherche service</h4> 
 				<form class="form-horizontal" role="form" action="Recherches/resultServices" method="post">
                     <div class="form-group">
                       <label for="filter">Filtrer par </label>
@@ -108,7 +108,7 @@
                     </div>
 					<div class="form-group">
 						<label for="contain">Saisir nom</label>
-						<input class="form-control" autofocus="autofocus" name="searchService" placeholder="Ex : back..." type="text" autocomplete="off" value="{% if searchService %}{{searchService}}{%endif%}"/>
+						<input class="form-control" autofocus="autofocus" onfocus="this.value = this.value;" name="searchService" placeholder="Ex : back..." type="text" autocomplete="off" value="{% if searchService %}{{searchService}}{%endif%}"/>
 					</div>
 					<div class="form-group">
 					<div class="col-md-6">
@@ -130,7 +130,7 @@
 		</div>
 	    <div role="tabpanel" class="tab-pane {% if activeTarifs %}active{%endif%}" id="tarifs">
 			<div class="panel panel-default col-md-12">
-			<hr>           
+			<h4 class="text-center bg-success btn-info btn-lg">Recherche tarif</h4>           
 				<form class="form-horizontal" role="form" action="Recherches/resultTarifs" method="post">
                     <div class="form-group">
                       <label for="filter">Filtrer par </label>
@@ -142,7 +142,7 @@
                     </div>
 					<div class="form-group">
 						<label for="contain">Saisir montant</label>
-						<input class="form-control" autofocus="autofocus" name="searchMontant" placeholder="Ex : 0.01" type="number" step="0.01" min="0" autocomplete="off" value="{% if searchMontant %}{{searchMontant}}{%endif%}"/>
+						<input class="form-control" autofocus="autofocus" onfocus="this.value = this.value;" name="searchMontant" placeholder="Ex : 0.01" type="number" step="0.01" min="0" autocomplete="off" value="{% if searchMontant %}{{searchMontant}}{%endif%}"/>
 					</div>
 					<div class="form-group">
 					<div class="col-md-6">
@@ -167,20 +167,70 @@
 </div>
 </div>
 <div class="panel panel-primary col-md-8">
-<div id="result">
-<ul>
+<form action="Recherches/update{{controller}}" method="post">
+{% if activeInput %}
+<div class="form-group">
+	<input type="submit" class="btn btn-sm btn-warning" value="Marquer comme Vue">
+</div>
+{%endif%}
 		{% if results %}
 		{% for result in results %}
-
-				<li class="list-group-item">
-					<div class="col-md-1"><input class="form-check-input" type="checkbox" name="idMessages[]" value=""></div>
-					<a href="{{controller}}/{{method}}/{{result.getId()}}">
-					<span class="col-md-5">{{result.toString()|raw}}</span>
-					<span class="col-md-4"><button class='btn btn-primary btn-xs' href='{{baseHref~"/frm/"~result.getId()}}'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></span>
-					<span class="col-md-2"><button class='btn btn-warning btn-xs' href='#' data-toggle="modal" data-target=".delete{{result.getId()}}"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></span>
-					</a>
-					<div class="clearfix"></div>
-				</li>
+	<div class="card col-sm-6 col-xs-6 col-md-4">
+	<div class="col-sm-6 col-xs-6 col-md-12 text-center">
+		{% if icon %}
+			<span class='glyphicon glyphicon-{{icon}}' aria-hidden='true'></span>
+		{%endif%}
+	</div>
+	{% if activeInput %}
+	<div class="pull-left">
+	<input type="checkbox" name="id[]" value="{{result.getId()}}">
+	<input type="hidden" name="nouveau" value="0">
+	</div>
+	{%endif%}
+		<div class="thumbnail">
+    	<hr>
+		<div class="caption">
+			<p class="text-justify">
+				{{result.toString()|raw}}
+			</p>
+		</div>
+		<hr>
+		<div>
+			<div class="col-md-12">
+				
+					<a class="btn btn-success btn-xs btn-block" href="{{controller}}/{{method}}/{{result.getId()}}">
+					<span class='glyphicon glyphicon-{{iconAction}}' aria-hidden='true'></span>
+					{{Action}}</a>
+				
+				
+					<a class="btn btn-danger btn-xs btn-block" href="#" data-toggle="modal" data-target=".delete{{result.getId()}}">
+					<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+					Supprimer</a>
+				
+			</div>
+			
+		</div>
+		<div class="clearfix"></div>
+    </div>
+  </div>
+  
+	<!-- Confirmer suppression-->
+	<div class="modal fade delete{{result.getId()}}" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content alert alert-warning text-center">
+			<p>Confirmez-vous la suppression de l'objet <b>{{ result|raw }}</b> ?&nbsp;</p>
+		    <div>
+		    	<div class="col-md-6">
+		    	<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+		    	</div>
+		    	<div class="col-md-6">
+					<a href='{{controller}}/delete/{{result.getId()}}' class="btn btn-danger pull-right">Supprimer</a>
+				</div>
+		    </div>
+		    <div class="clearfix"></div>
+	    </div>
+	  </div>
+	</div>
 				
 		{% endfor %}
 		{%else%}
@@ -189,6 +239,5 @@
 				<strong>Aucun resultat trouvé</strong></blockquote>
 		</div>
 		{%endif%}
-</ul>
-</div>
+</form>
 </div>

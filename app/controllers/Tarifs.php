@@ -79,7 +79,7 @@ class Tarifs extends \_DefaultController{
 		
 				$message = new Message();
 		
-				$message->setObjet("Mis à jour tarif ".$_POST['oldPrix'] . " €/".$_POST['oldQuota'].$_POST['oldUnite']);
+				$message->setObjet("Mis à jour tarif ".$_POST['oldPrix'] . " €");
 				$message->setContenu("Le tarif '".$_POST['oldPrix']." € ' associé au quota '".$_POST['oldQuota'].$_POST['oldUnite']."' a été mis à jour : Prix : ".$_POST['prix']."€ Quota : ".$_POST['quota']." ".$_POST['unite'] ." Marge de dépassement : ".($_POST['margeDepassement'] * 100)."% Coût de dépassement : ".$_POST['coutDepassement']."€.");
 				$message->setExpediteur(Auth::getUser());
 				$message->setReceveur($receveur);

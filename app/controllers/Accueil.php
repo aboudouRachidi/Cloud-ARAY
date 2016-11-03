@@ -11,6 +11,7 @@ use micro\utils\RequestUtils;
  */
 class Accueil extends Controller {
 	use MessagesTrait;
+	use CheckUsers;
 	/**
 	 * Affiche la page par défaut du site
 	 * @see BaseController::index()
@@ -88,42 +89,6 @@ class Accueil extends Controller {
 			}
 		}
 	}
-	/**
-	 * Verifie si le login et l'e-mail ne sont pas utilisé
-	 * @return boolean
-	 */
-	public function checkLogin(){
-		
-		if ($_POST["login"]){
-			if (DAO::getOne("Utilisateur", "login='".$_POST["login"]."' ")){
-				return true;
-			}
-			
-		}
-	}
-	/**
-	 * Verifie si l'addresse e-mail n'est pas deja utilisé
-	 */
-	public function checkMail(){
-		if ($_POST["mail"]){
-			if (DAO::getOne("Utilisateur", "mail='".$_POST["mail"]."' ")){
-				return true;
-			}
-				
-		}
-	}
-	
-	/**
-	 * Verifie si les deux mots de passes sont identiques.
-	 * @return boolean
-	 */
-	public function checkPwd(){
-		if($_POST["password"]==$_POST["confirmPassword"]){
-			return true;
-		}else{
-			return false;
-		}
-	}
 	
 	
 	/**
@@ -136,38 +101,47 @@ class Accueil extends Controller {
 		$login = $_POST['login'];
 		$email = $_POST['mail'];
 		if(RequestUtils::isPost()){
-			
-			if($this->checkMail()==false){
 			if($this->checkLogin()==false){
-			if ($this->checkPwd()==true){
-				$user = new Utilisateur();
-				RequestUtils::setValuesToObject($user,$_POST);
-				
-				if(DAO::insert($user)){
-					$this->loadView("main/vHeader.html");
-					$this->messageSuccess("Le compte de <strong>".$user->toString()."</strong> a été créer ! vous pouvez maitenant vous connecté avec vos identifiants.");
-					$this->loadView("main/vLogin.html",array("email"=>$email));
-					$this->loadView("main/vFooter.html");
+				if($this->checkMail()==false){
+					if ($this->checkPwd()==true){
+						$user = new Utilisateur();
+						RequestUtils::setValuesToObject($user,$_POST);
+						$user->setNouveau(1);
+						if(DAO::insert($user)){
+							$this->loadView("main/vHeader.html");
+							$this->messageSuccess("Le compte de <strong>".$user->toString()."</strong> a été créer ! vous pouvez maitenant vous connecté avec vos identifiants.");
+							$this->loadView("main/vLogin.html",array("email"=>$email));
+							$this->loadView("main/vFooter.html");
+						}else{
+							$this->loadView("main/vHeader.html");
+							$this->messageWarning("Impossible d\'inserer l\'utilisateur ".$user->toString());
+							$this->loadView("main/vLogin.html");
+							$this->loadView("main/vFooter.html");
+						}
+					}else{
+						if(!$isAjax){
+							$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+						}
+						$this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
+						$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
+						Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+						echo Jquery::compile();
+						if(!$isAjax){
+							$this->loadView("main/vFooter.html");
+						}
+					}
 				}else{
-					$this->loadView("main/vHeader.html");
-					$this->messageWarning("Impossible d\'inserer l\'utilisateur ".$user->toString());
-					$this->loadView("main/vLogin.html");
-					$this->loadView("main/vFooter.html");
+					if(!$isAjax){
+						$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+					}
+					$this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
+					$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
+					Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
+					echo Jquery::compile();
+					if(!$isAjax){
+						$this->loadView("main/vFooter.html");
+					}
 				}
-			}else{
-				if(!$isAjax){
-					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
-				}
-				$this->messageDanger("Les deux mots de passes ne conrrespondent pas ...",5000);
-				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
-				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
-				echo Jquery::compile();
-				if(!$isAjax){
-					$this->loadView("main/vFooter.html");
-			}
-				
-			}
-				
 			}else{
 				if(!$isAjax){
 					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
@@ -177,19 +151,9 @@ class Accueil extends Controller {
 				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 				echo Jquery::compile();
 				if(!$isAjax){
-					$this->loadView("main/vFooter.html");}
-			}
-			}else{
-				if(!$isAjax){
-					$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
+					$this->loadView("main/vFooter.html");
 				}
-				$this->messageDanger("Cet adresse e-mail est deja utilisé ...",5000);
-				$this->loadView("main/vLogin.html",array("email"=>$email,"nom"=>$nom,"prenom"=>$prenom,"login"=>$login));
-				Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
-				echo Jquery::compile();
-				if(!$isAjax){
-					$this->loadView("main/vFooter.html");}
-			}	
+			}
 		}
 	}
 	

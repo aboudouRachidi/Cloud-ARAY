@@ -10,7 +10,7 @@ use micro\js\Jquery;
  * @package nas.controllers
  */
 class Users extends \_DefaultController {
-
+use CheckUsers;
 	public function __construct(){
 		parent::__construct();
 		$this->title="Utilisateurs";
@@ -60,7 +60,57 @@ class Users extends \_DefaultController {
 			$this->onInvalidControl();
 		}
 	}
-
+	/**
+	 * Met à jour à partir d'un post une instance de $className<br>
+	 * L'affectation des membres de l'objet par le contenu du POST se fait par appel de la méthode setValuesToObject()
+	 * @see _DefaultController::setValuesToObject()
+	 */
+	public function update(){
+		if(RequestUtils::isPost()){
+			$className=$this->model;
+			$object=new $className();
+			$this->setValuesToObject($object);
+			if($_POST["id"]){
+				$user = DAO::getOne("utilisateur", $_POST['id']);
+				if($this->checkLogin() == false || $_POST['login'] == $user->getLogin()){
+					if($this->checkMail() == false || $_POST['mail'] == $user->getMail()){
+						try{
+							DAO::update($object);
+							$this->messageSuccess($this->model." `{$object->toString()}` mis à jour");
+							$this->onUpdate($object);
+							$this->vUser($_POST['id']);
+						}catch(\Exception $e){
+							$this->messageDanger("Impossible de modifier l'instance de ".$this->model,"danger");
+							$this->index();
+						}
+					}else{
+						$this->messageDanger("Cet adresse mail est déjà utilisé !");
+						$this->frm($_POST['id']);
+					}
+				}else {
+					$this->messageDanger("Ce login existe déjà !");
+					$this->frm($_POST['id']);
+				}
+			}else{
+				if($this->checkLogin() == false){
+					if($this->checkMail() == false){
+						try{
+							DAO::insert($object);
+							$this->messageSuccess("Instance de ".$this->model." `{$object->toString()}` ajoutée");
+							$this->onAdd($object);
+						}catch(\Exception $e){
+							$this->messageDanger("Impossible d'ajouter l'instance de ".$this->model,"danger");
+						}
+					}else{
+						$this->messageDanger("Cet adresse mail est déjà utilisé !");
+					}
+				}else {
+					$this->messageDanger("Ce login existe déjà !");
+				}
+				$this->frm();
+			}
+		}
+	}
 	public function profil(){
 		if(Auth::isAuth()){
 			$idReceveur = Auth::getUser()->getId();

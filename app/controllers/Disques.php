@@ -201,7 +201,7 @@ class Disques extends \_DefaultController {
 			$this->forward(MyDisques::class);
 					
 		}else{
-			$contact = '<b><a class="btn btn-success btn-sm" href="Commentaires/contact/'.$disque->getId().'"">Contacter administrateur ?</a><b></div>';
+			$contact = '<b><a class="btn btn-success btn-sm" href="messages/contact">Contacter administrateur ?</a><b></div>';
 			$this->messageWarning("Imposible de spprimer le dossier du disque <u>".$disque->toString()."</u> ! ".$contact);
 			$this->forward(MyDisques::class);
 		}

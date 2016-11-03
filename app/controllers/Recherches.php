@@ -37,8 +37,9 @@ class Recherches extends \_DefaultController{
 	
 	public function resultUsers($search=NULL){
 		if(isset($_POST['submit'])){
+		$results = DAO::getAll("Utilisateur");
 		$were = "1=1";
-		if(isset($_POST['search'])){
+		if($_POST['search']){
 			$search = $_POST['search'];
 			$were = "login like '%{$search}%' or mail like '%{$search}'";
 			$results = DAO::getAll("Utilisateur",$were);
@@ -51,7 +52,11 @@ class Recherches extends \_DefaultController{
 		}
 		
 		$this->loadView("recherche/vSearch.html",array(
+				"Action"=>"Voir",
+				"iconAction"=>"eye-open",
+				"icon"=>"user",
 				"activeHome"=>"active",
+				"activeInput"=>"true",
 				"controller"=>"Users",
 				"method"=>"vUser",
 				"results"=>$results,
@@ -88,7 +93,11 @@ class Recherches extends \_DefaultController{
 			}
 	
 			$this->loadView("recherche/vSearch.html",array(
+					"Action"=>"Visualiser",
+					"iconAction"=>"search",
+					"icon"=>"folder-close",
 					"activeDisques"=>"active",
+					"activeInput"=>"true",
 					"controller"=>"Scan",
 					"method"=>"show",
 					"results"=>$results,
@@ -133,6 +142,9 @@ class Recherches extends \_DefaultController{
 			}
 	
 			$this->loadView("recherche/vSearch.html",array(
+					"Action"=>"Afficher",
+					"iconAction"=>"eye-open",
+					"icon"=>"envelope",
 					"activeMessages"=>"active",
 					"controller"=>"Messages",
 					"method"=>"vMessage",
@@ -156,6 +168,7 @@ class Recherches extends \_DefaultController{
 	
 	public function resultServices($search=NULL){
 		if(isset($_POST['submit'])){
+			$results = DAO::getAll("Service");
 			$were = "1=1";
 			if($_POST['searchService'] !== ""){
 				$_POST['montantMin']="";
@@ -192,6 +205,9 @@ class Recherches extends \_DefaultController{
 			}
 	
 			$this->loadView("recherche/vSearch.html",array(
+					"Action"=>"Modifier",
+					"iconAction"=>"edit",
+					"icon"=>"gift",
 					"activeServices"=>"active",
 					"controller"=>"Services",
 					"method"=>"frm",
@@ -215,25 +231,30 @@ class Recherches extends \_DefaultController{
 	
 	public function resultTarifs($search=NULL){
 		if(isset($_POST['submit'])){
+
+			$results = DAO::getAll("tarif");
 			$were = "1=1";
-			if(isset($_POST['searchMontant'])){
+			if($_POST['searchMontant'] != ""){
 				$search = $_POST['searchMontant'];
-				$were = "prix = '{$search}'";
+				$were = "prix = {$search}";
 				$results = DAO::getAll("tarif",$were);
 			}
 			if($_POST['tarifs'] == "all"){
 				$results = DAO::getAll("tarif");
 			}
 			if($_POST['quotaMin'] && $_POST['quotaMax'] ){
+				$search ="";
 				$quotatMin = $_POST['quotaMin'];
 				$quotaMax = $_POST['quotaMax'];
-				$were = "quota BETWEEN '{$quotatMin}' AND '{$quotaMax}'";
+				$were = "quota BETWEEN {$quotatMin} AND {$quotaMax}";
 				$results = DAO::getAll("tarif",$were);
 			}elseif($_POST['quotaMin']){
+				$search = "";
 				$quotatMin = $_POST['quotaMin'];
 				$were = "quota = '{$quotatMin}'";
 				$results = DAO::getAll("tarif",$were);
 			}elseif($_POST['quotaMax'] ){
+				$search = "";
 				$quotaMax = $_POST['quotaMax'];
 				$were = "quota ='{$quotaMax}'";
 				$results = DAO::getAll("tarif",$were);
@@ -241,6 +262,9 @@ class Recherches extends \_DefaultController{
 			
 	
 			$this->loadView("recherche/vSearch.html",array(
+					"Action"=>"Modifier",
+					"iconAction"=>"edit",
+					"icon"=>"eur",
 					"activeTarifs"=>"active",
 					"controller"=>"Tarifs",
 					"method"=>"frmUpdate",
@@ -259,15 +283,45 @@ class Recherches extends \_DefaultController{
 			$this->index();
 		}
 	}
-	public function newUsers(){
-		$users = DAO::getAll("Utilisateur","nouveau = 1");
-		$this->loadView("recherche/vResult.html",array("results"=>$users));
+	public function updateUsers(){
+		if(!empty($_POST['id'])) {
+			foreach($_POST['id'] as $id) {
+				$user = DAO::getOne("utilisateur", $id);
+				
+				$user->setNouveau(false);
+				try{
+					DAO::update($user,true);
+					$this->onUpdate($user);
+				}catch(\Exception $e){
+					$this->messageDanger("Echec de l'opération !");
+					$this->index();
+				}
+			}
+			$this->messageSuccess("Opération effectuée avec succès");
+			$this->index();
+		}else {
+			$this->forward(Recherches::class);
+		}
+	}
+	//scan = disque
+	public function updateScan(){
+		if(!empty($_POST['id'])) {
+			foreach($_POST['id'] as $id) {
+				$disque = DAO::getOne("disque", $id);
+				$disque->setNouveau(false);
+				try{
+					DAO::update($disque,true);
+					$this->onUpdate($disque);
+				}catch(\Exception $e){
+					$this->messageDanger("Echec de l'opération !");
+					$this->index();
+				}
+			}
+			$this->messageSuccess("Opération effectuée avec succès");
+			$this->index();
+		}else {
+			$this->forward(Recherches::class);
+		}
 	}
 	
-	public function allUsers(){
-		$users = DAO::getAll("Utilisateur");
-		$this->loadView("recherche/vResult.html",array("results"=>$users));
-	}
-	
-
 }
