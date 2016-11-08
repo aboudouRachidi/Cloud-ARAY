@@ -63,15 +63,7 @@ INSERT INTO `disque` (`id`, `nom`, `idUtilisateur`, `createdAt`, `nouveau`) VALU
 --
 -- Déclencheurs `disque`
 --
-DELIMITER $$
-CREATE TRIGGER `deleteDisque` BEFORE DELETE ON `disque` FOR EACH ROW BEGIN
-	DELETE FROM disque_service WHERE disque_service.idDisque=OLD.id;
-    DELETE FROM disque_tarif WHERE disque_tarif.idDisque=OLD.id;
-    DELETE FROM commentaire WHERE commentaire.idDisque=OLD.id;
-    DELETE FROM facture WHERE facture.idDisque=OLD.id;
-END
-$$
-DELIMITER ;
+
 
 -- --------------------------------------------------------
 
