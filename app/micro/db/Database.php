@@ -74,6 +74,14 @@ class Database {
 	public function setServerName($serverName) {
 		$this->serverName = $serverName;
 	}
+	
+	public function getUser() {
+		return $this->user;
+	}
+	
+	public function setUser($user) {
+		$this->user = $user;
+	}
 
 	/**
 	 * Prépare l'instruction $sql pour son exécution

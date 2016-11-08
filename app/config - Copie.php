@@ -1,0 +1,21 @@
+<?php
+return array(
+		"siteUrl"=>"http://127.0.0.1/Cloud-ARAY/",
+		"documentRoot"=>"Accueil",
+		"database"=>[
+				"dbName"=>"cloud-aray",
+				"serverName"=>"127.0.0.1",
+				"port"=>"3306",
+				"user"=>"root",
+				"password"=>""
+		],
+		"onStartup"=>function($action){
+		},
+		"debug"=>false,
+		"directories"=>["libraries"],
+		"templateEngine"=>'micro\views\engine\Twig',
+		"templateEngineOptions"=>array("cache"=>false),
+		"test"=>false,
+		"cloud"=>array('root'=>'files/',
+				'prefix'=>'srv-')
+);

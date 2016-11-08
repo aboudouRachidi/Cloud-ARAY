@@ -1,6 +1,8 @@
 <?php
 use micro\controllers\Startup;
 use micro\controllers\Autoloader;
+use micro\controllers\Install;
+
 error_reporting(E_ALL);
 
 define('DS', DIRECTORY_SEPARATOR);
@@ -12,4 +14,12 @@ require_once ROOT.'micro/controllers/Autoloader.php';
 require_once ROOT.'./../vendor/autoload.php';
 
 Autoloader::register();
-Startup::run();
+
+if(file_exists(ROOT."install/vInstall.php")){
+	Install::runIndex();
+	
+	
+}else {
+	Startup::run();
+}
+
