@@ -78,14 +78,24 @@ class Install{
 			$messageCreateConf = "Le fichier de configuration existe !";
 		}
 	
-		require_once ROOT."install/vInstall.php";
+		
 		if(isset($_POST['runInstallBdd'])){
-			Install::runInstallBdd();
+			if(empty($_POST['url']) || empty($_POST['base']) || empty($_POST['utilisateur'])){
+				$postErreur = "Vous devez remplir tous les champs marqués par des <em>*</em> ";
+				
+			}else {
+				Install::runInstallBdd();
+			}
 		}
 		if(isset($_POST['runApp'])){
-			Install::runInstallDefault();
+			if(empty($_POST['url']) || empty($_POST['base']) || empty($_POST['utilisateur'])){
+				$postErreur = "Vous devez remplir tous les champs marqués par des <em>*</em> ";
+				
+			}else {
+				Install::runInstallDefault();
+			}
 		}
-		
+		require_once ROOT."install/vInstall.php";
 	}
 	
 	public static function runInstallBdd(){

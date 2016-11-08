@@ -32,16 +32,19 @@
 						</div>
 					</div>
 				</div>
+				<?php if(isset($postErreur)):?>
+				<div class="alert alert-danger"><?=$postErreur?></div>
+				<?php endif;?>
 				<div class="form-group">
-					<label>Url</label>
+					<label>Url <em>*</em></label>
 					<input name="url" class="form-control" type="text" name="url" value="127.0.0.1" autocomplete="off">
 				</div>
 				 <div class="form-group">
-					<label>Base de données</label>
+					<label>Base de données <em>*</em></label>
 					<input name="base" class="form-control" type="text" value="<?=$base?>" autocomplete="off">
 				</div>
 				 <div class="form-group">
-					<label>Nom d'utilisateur</label>
+					<label>Nom d'utilisateur <em>*</em></label>
 					<input name="utilisateur" class="form-control" type="text" value="<?=$utilisateur?>" autocomplete="off">
 				</div>
 				 <div class="form-group">
