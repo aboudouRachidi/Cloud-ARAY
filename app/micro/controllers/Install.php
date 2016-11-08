@@ -194,6 +194,37 @@ class Install{
 	}
 	
 	public static function runInstallDefault(){
+		$base = $_POST['base'];
+		$table = ROOT."database/cloud-arayversionsanstrigger.sql";
+			
+		$sql = "CREATE DATABASE $base";
+		if ($db->query($sql)) {
+		
+			$messageBddCreate = "Base de données créée";
+		
+			$db = new Database("$base");
+			$db->connect();
+			var_dump($db);
+		
+		
+			$templine = '';
+			$lines = file($table);
+			foreach ($lines as $line)
+			{
+				if (substr($line, 0, 2) == '--' || $line == '')
+					continue;
+					$templine .= $line;
+					if (substr(trim($line), -1, 1) == ';')
+					{
+						$db->query($templine) or print('Erreur lors de la requete \'<strong>' . $templine .'<br /><br />');
+						$templine = '';
+					}
+			}
+			$messageFin = "base restaurée";
+			} else {
+			
+				$messageBddCreate = "Erreur lors de la création de la base";
+			}
 		$oldName = ROOT."install/vInstall.php";
 		$newName = ROOT."install/vInstallDefault.php";
 		rename($oldName,$newName);
