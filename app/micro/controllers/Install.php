@@ -221,13 +221,14 @@ class Install{
 					}
 			}
 			$messageFin = "base restaurée";
+			$oldName = ROOT."install/vInstall.php";
+			$newName = ROOT."install/vInstallDefault.php";
+			rename($oldName,$newName);
+			header("Refresh:0");
 			} else {
 			
 				$messageBddCreate = "Erreur lors de la création de la base";
 			}
-		$oldName = ROOT."install/vInstall.php";
-		$newName = ROOT."install/vInstallDefault.php";
-		rename($oldName,$newName);
-		header("Refresh:0");
+
 	}
 }
