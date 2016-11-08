@@ -26,7 +26,8 @@ class Accueil extends Controller {
 			if(Auth::isAdmin()){
 				$this->forward(Admin::class);
 			}else {
-				$this->loadView("main/vDefault.html");
+				
+				$this->loadView("main/vDefault.html",array("nbNvMessage" =>DAO::count("message","lu = 0 AND idReceveur ='".Auth::getUser()->getId()."'"),));
 			}
 	    	Jquery::getOn("click","a[data-ajax]","","#main",array("attr"=>"data-ajax"));
 			echo Jquery::compile();

@@ -18,9 +18,13 @@ class Scan extends BaseController {
 	 * @param int $idDisque
 	 */
 	public function show($idDisque) {
-		if(Auth::isAdmin() || DAO::getOne("disque", "id = '".$idDisque."' AND idUtilisateur ='".Auth::getUser()->getId()."'")){
+		if(Auth::isAdmin() && DAO::getOne("disque", "id = '".$idDisque."'") || DAO::getOne("disque", "id = '".$idDisque."' AND idUtilisateur ='".Auth::getUser()->getId()."'")){
 		
 		$disque = DAO::getOne("disque", $idDisque);
+		if(Auth::isAdmin()){
+			$disque->setNouveau(0);
+			DAO::update($disque);
+		}
 		$utilisateur=$disque->getUtilisateur();
 		$tarif=$disque->getTarif();
 		$services=DAO::getManyToMany($disque, "services");

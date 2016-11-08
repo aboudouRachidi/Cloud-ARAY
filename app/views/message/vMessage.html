@@ -13,7 +13,7 @@
 <form action="Messages/updateMessage" method="post">
 <input type="hidden" name="lu" value="1">
 <input type="hidden" name="id" value="{{message.getId()}}">
-	<div class="panel-heading bg-primary"><i class="glyphicon glyphicon-envelope"></i> Message : <input type="submit" value="Marquer comme lu" class="btn btn-default btn-xs"> </div>
+	<div class="panel-heading bg-primary"><i class="glyphicon glyphicon-envelope"></i> Message : <input type="hidden" value="Marquer comme lu" class="btn btn-default btn-xs"> </div>
   <div class="panel-body">
 		<textarea style="background:white;resize:vertical;" class="form-control" readonly="readonly" rows="12">{{message.getContenu}}</textarea>
   </div>

@@ -138,26 +138,31 @@ class Disques extends \_DefaultController {
 	}
 		
 	public function frmUpdate($id=NULL){
-		$user=Auth::getUser();
-		$disque = $this->getInstance($id);
-		$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
+		if(Auth::isAdmin() && DAO::getOne("disque", "id = '".$id."'") || DAO::getOne("disque"," id = '".$id."' AND idUtilisateur = '".Auth::getUser()->getId()."'")){
+			$disque = $this->getInstance($id);
+			$user=$disque->getUtilisateur();
+			$this->loadView("disque/vUpdate.html",array("user"=>$user,"disque"=>$disque));
+		}else{
+			$this->messageDanger("Disque introuvable");
+		}
 	}
 	
 	public function updateDisque(){
-		
+
 		if(RequestUtils::isPost()){
 			$className=$this->model;
 			$object=new $className();
 			$this->setValuesToObject($object);
-			if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".Auth::getUser()->getId()."'")){
+			if(!DAO::getOne("disque"," nom = '".$_POST['nom']."' AND idUtilisateur = '".$_POST["id"]."'")){
 				if($_POST["id"]){
 					try{
 						$cloud = $GLOBALS["config"]["cloud"];
-						$oldName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['oldName'];
-						$newName = $cloud["root"].$cloud["prefix"].Auth::getUser()->getLogin()."/".$_POST['nom'];
+						$user = DAO::getOne("utilisateur", $_POST['idUtilisateur']);
+						$oldName = $cloud["root"].$cloud["prefix"].$user->getLogin()."/".$_POST['oldName'];
+						$newName = $cloud["root"].$cloud["prefix"].$user->getLogin()."/".$_POST['nom'];
 						if(rename($oldName, $newName)){
 							DAO::update($object);
-							$this->messageSuccess("Le disque ".$_POST['oldName']." a été renommé ",5000,true);
+							$this->messageSuccess("Le disque ".$_POST['oldName'].($user->getLogin())." a été renommé ",5000,true);
 							$this->onUpdate($object);
 							$this->forward(MyDisques::class);
 						}else{
@@ -170,7 +175,7 @@ class Disques extends \_DefaultController {
 				}
 			}else {
 				$this->messageDanger("Le disque ".$_POST['nom']." existe déjà");
-				$this->frmUpdateService($object->getId());
+				$this->frmUpdate($object->getId());
 			}
 		}
 	}
@@ -211,10 +216,15 @@ class Disques extends \_DefaultController {
 		//$this->loadView("Disque/vTarification.html");
 		$date=date('Y-m-d H:i:s');
 		$disque = $this->getInstance($id);
-		$tarifDisque=$disque->getTarif();
-		
-		$tarifs=DAO::getAll("tarif");
-		$this->loadView("Disque/vDisqueTarif.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date,"tarifDisque"=>$tarifDisque));
+		if(Auth::isAdmin() &&DAO::getOne("disque", $id) || DAO::getOne("disque", "id = '".$id."' AND idUtilisateur = '".Auth::getUser()->getId()."'")){
+			$tarifDisque=$disque->getTarif();
+			
+			$tarifs=DAO::getAll("tarif");
+			$this->loadView("Disque/vDisqueTarif.html",array("tarifs"=>$tarifs,"disque"=>$disque,"date"=>$date,"tarifDisque"=>$tarifDisque));
+		}else{
+			$this->messageDanger("Disque introuvable");
+			$this->forward(MyDisques::class);
+		}
 	}
 	
 	public function choixTarif(){
@@ -238,9 +248,14 @@ class Disques extends \_DefaultController {
 	
 	public function frmUpdateService ($id=NULL){
 		$disque = $this->getInstance($id);
-		$disquServices = DAO::getManyToMany($disque, "services");
-		$services=DAO::getAll("service");
-		$this->loadView("Disque/vDisqueService.html",array("services"=>$services,"disqueServices"=>$disquServices,"disque"=>$disque));
+		if(Auth::isAdmin() &&DAO::getOne("disque", $id) || DAO::getOne("disque", "id = '".$id."' AND idUtilisateur = '".Auth::getUser()->getId()."'")){
+			$disquServices = DAO::getManyToMany($disque, "services");
+			$services=DAO::getAll("service");
+			$this->loadView("Disque/vDisqueService.html",array("services"=>$services,"disqueServices"=>$disquServices,"disque"=>$disque));
+		}else{
+			$this->messageDanger("Disque introuvable");
+			$this->forward(MyDisques::class);
+		}
 	}
 	
 	public function ajoutService($idDisk,$idServ){

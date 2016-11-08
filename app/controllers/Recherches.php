@@ -36,6 +36,7 @@ class Recherches extends \_DefaultController{
 	
 	
 	public function resultUsers($search=NULL){
+		$activeInput = 0;
 		if(isset($_POST['submit'])){
 		$results = DAO::getAll("Utilisateur");
 		$were = "1=1";
@@ -49,6 +50,7 @@ class Recherches extends \_DefaultController{
 		}
 		if ($_POST['users'] == "nouveau"){
 			$results = DAO::getAll("Utilisateur","nouveau = 1");
+			$activeInput = 1;
 		}
 		
 		$this->loadView("recherche/vSearch.html",array(
@@ -56,7 +58,7 @@ class Recherches extends \_DefaultController{
 				"iconAction"=>"eye-open",
 				"icon"=>"user",
 				"activeHome"=>"active",
-				"activeInput"=>"true",
+				"activeInput"=>$_POST['users'] == "nouveau",
 				"controller"=>"Users",
 				"method"=>"vUser",
 				"results"=>$results,
@@ -97,7 +99,7 @@ class Recherches extends \_DefaultController{
 					"iconAction"=>"search",
 					"icon"=>"folder-close",
 					"activeDisques"=>"active",
-					"activeInput"=>"true",
+					"activeInput"=>$_POST['disques'] == "nouveau",
 					"controller"=>"Scan",
 					"method"=>"show",
 					"results"=>$results,

@@ -9,7 +9,11 @@
 							<legend class="bg-primary text-center"><span class="glyphicon glyphicon-user"></span> Mon compte</legend>
 							<a class="btn btn-default btn-block" href="Users/profil" data-ajax="Users/profil">
 								<span class="glyphicon glyphicon-search"></span> Voir profil
-								<span class="label label-info"></span>
+								{%if nbNvMessage>0%}
+								<span class="btn btn-success btn-xs">
+								 <span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">{{nbNvMessage}}</span>
+								</span>
+								{%endif%}							
 							</a>
 						</fieldset>
 					</div>

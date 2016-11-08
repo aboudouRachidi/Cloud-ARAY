@@ -176,6 +176,8 @@ use CheckUsers;
 		$user = $this->getInstance($id);
 		
 		if(DAO::getOne("utilisateur", $id) && Auth::isAdmin()){
+			$user->setNouveau(0);
+			DAO::update($user);
 		$disques = DAO::getAll("disque","idUtilisateur = ".$user->getId());
 		foreach ($disques as $disque){
 			DAO::getManyToMany($disque, "services");

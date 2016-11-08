@@ -1,6 +1,10 @@
 			<div class="well well-sm">
 			<fieldset>
-				<legend class="text-capitalize bg-primary"><span class="glyphicon glyphicon-user"></span> {{user}} <a class="btn btn-default btn-xs" href="Users/vUser/{{user.getId()}}">Ouvrir</a></legend>
+				<legend class="text-capitalize bg-primary">
+					<span class="glyphicon glyphicon-user"></span>
+					 {{user}} <a class="btn btn-default btn-xs" href="Users/vUser/{{user.getId()}}">
+					 <span class="glyphicon glyphicon-eye-open"></span></a>
+				</legend>
 			</fieldset>
 			<ul class="list-group">
 			{%if user.getDisques()%}
@@ -55,6 +59,7 @@
 							<div class="col-md-2">
 								<a class='btn btn-primary pull-center btn-block btn-sm' href='Scan/show/{{disque.getId()}}'>
 									<span class='glyphicon glyphicon-search' aria-hidden='true'></span> Ouvrir
+									{%if disque.getNouveau()>0%}<i class="glyphicon glyphicon-flag"></i>{%endif%}
 								</a>
 							</div>
 						<div class="clearfix"></div>

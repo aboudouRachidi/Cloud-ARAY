@@ -38,10 +38,10 @@ class Messages extends \_DefaultController{
 			$message->setReceveur($receveur);
 			$message->setLu(0);
 			if(DAO::insert($message)){
-				$this->messageSuccess("Le message ".$message->toString()." a été envoyé à ".$receveur,5000,true);
+				$this->messageSuccess("Le message ".$message->getObjet()." a été envoyé à ".$receveur,5000,true);
 				$this->forward(Users::class,"profil");
 			}else{
-				$this->messageWarning("Impossible d'envoyer le message ".$message->toString());
+				$this->messageWarning("Impossible d'envoyer le message ".$message->getObjet());
 				$this->forward(Users::class,"profil");
 			}
 		}else{
@@ -53,14 +53,14 @@ class Messages extends \_DefaultController{
 	public function updateMessage(){
 		//$user = DAO::getOne("Utilisateur", "id='".Auth::getUser()->getId()."'");
 		if(RequestUtils::isPost()){
-			$className=$this->model;
-			$object=new $className();
-			$this->setValuesToObject($object);
+			
 			if($_POST["id"]){
+				$message = DAO::getOne("message", $_POST["id"]);
+				$message->setLu(1);
 				try{
-					DAO::update($object);
+					DAO::update($message);
 					$this->messageSuccess("Message lu",5000,true);
-					$this->onUpdate($object);
+					$this->onUpdate($message);
 					$this->vMessage($_POST["id"]);
 				}catch(\Exception $e){
 					$this->messageWarning("Une erreur est survenue !");
@@ -75,6 +75,9 @@ class Messages extends \_DefaultController{
 			$idReceveur = Auth::getUser()->getId();
 			if(Auth::isAdmin() || DAO::getOne("message", "id = '".$id."' AND idReceveur = '".$idReceveur."'")){
 			$message = $this->getInstance($id);
+			$message->setLu(1);
+			DAO::update($message);
+			$this->onUpdate($message);
 			$this->loadView("message/vMessage.html",array("message"=>$message));
 			echo Jquery::getOn("click", ".r-message", "Messages/repondre/".$id,"#divResponse");
 			}else{
