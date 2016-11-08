@@ -195,7 +195,7 @@ class Install{
 	
 	public static function runInstallDefault(){
 		$base = $_POST['base'];
-		$db = new Database("$base");
+		$db = new Database("");
 		$db->connect();
 		$table = ROOT."database/cloud-arayversionsanstrigger.sql";
 			
