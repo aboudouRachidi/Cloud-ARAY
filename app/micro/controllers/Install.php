@@ -157,7 +157,7 @@ class Install{
 				
 				$db = new Database("$base");
 				$db->connect();
-				var_dump($db);
+				//var_dump($db);
 				
 				
 				$templine = '';
@@ -195,6 +195,8 @@ class Install{
 	
 	public static function runInstallDefault(){
 		$base = $_POST['base'];
+		$db = new Database("$base");
+		$db->connect();
 		$table = ROOT."database/cloud-arayversionsanstrigger.sql";
 			
 		$sql = "CREATE DATABASE $base";
