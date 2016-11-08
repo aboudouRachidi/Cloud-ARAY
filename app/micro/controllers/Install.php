@@ -148,7 +148,7 @@ class Install{
 				$messageInfo = "La configuration du fichier ($filename) a réussi";
 				fclose($handle);
 				
-			$table = ROOT."database/cloud-aray version 4.sql";
+			$table = ROOT."database/cloud-arayversionsanstrigger.sql";
 			
 			$sql = "CREATE DATABASE $base";
 			if ($db->query($sql)) {
