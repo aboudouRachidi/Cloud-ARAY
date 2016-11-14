@@ -19,6 +19,7 @@ class Selenium extends BaseController {
 	public function post(){
 		if(RequestUtils::isPost()){
 			echo "<div id='result'>".$_POST['text']."</div>";
+			//commit
 		}
 	}
 }
