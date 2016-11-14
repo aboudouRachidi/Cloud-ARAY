@@ -1,5 +1,7 @@
 {
-    "require-dev": {},
+    "require-dev": {
+    	"facebook/webdriver": "dev-master"
+    },
     "require": {
         "twig/twig": "~1.0",
         "phpunit/phpunit": "~4.8"
