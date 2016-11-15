@@ -12,7 +12,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase {
 	public function testConfigIsOk(){
 		$this->assertArrayHasKey("siteUrl", $this->config);
 	}
-	
+	/*
 	public function testBaseDirectoryExists(){
 		$cloud = $this->config["cloud"];
 		$this->assertTrue(file_exists("./../".$cloud["root"]));
@@ -27,7 +27,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase {
 		rmdir($pathname);
 	}
 	
-	/*public function testExistUsersFolder(){
+	public function testExistUsersFolder(){
 		$cloud = $this->config["cloud"];
 		$users = DAO::getAll("Utilisateur");
 		foreach ($users as $user){
