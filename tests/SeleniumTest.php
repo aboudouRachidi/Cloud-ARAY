@@ -10,7 +10,7 @@ class SeleniumTest extends \AjaxUnitTest{
 		$this->assertTrue($this->elementExists("#frm"));
 		$this->assertTrue($this->elementExists("#text"));
 	}
-	
+	/*
 	public function testPost(){
 		$this->getElementById("text")->sendKeys("okay");
 		$this->getElementById("text")->sendKeys("\xEE\x80\x87");
@@ -23,5 +23,5 @@ class SeleniumTest extends \AjaxUnitTest{
 		$this->getElementById("btSubmit")->sendKeys("\xEE\x80\x87");
 		SeleniumTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
 		$this->assertEquals("test click",$this->getElementById("result")->getText());
-	}
+	}*/
 }
