@@ -27,7 +27,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase {
 		rmdir($pathname);
 	}
 	
-	public function testExistUsersFolder(){
+	/*public function testExistUsersFolder(){
 		$cloud = $this->config["cloud"];
 		$users = DAO::getAll("Utilisateur");
 		foreach ($users as $user){
@@ -36,5 +36,5 @@ class FolderTest extends \PHPUnit_Framework_TestCase {
 			//DirectoryUtils::mkDir($pathname);
 		}
 		
-	}
+	}*/
 }
