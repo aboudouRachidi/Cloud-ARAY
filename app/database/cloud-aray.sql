@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `commentaire` (
   `id` int(11) NOT NULL,
   `contenu` text,
-  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date` datetime DEFAULT 0,
   `idUtilisateur` int(11) NOT NULL,
   `idDisque` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -44,7 +44,7 @@ CREATE TABLE `disque` (
   `id` int(11) NOT NULL,
   `nom` varchar(50) DEFAULT NULL,
   `idUtilisateur` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` datetime NOT NULL DEFAULT 0,
   `nouveau` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -110,7 +110,7 @@ INSERT INTO `disque_service` (`idDisque`, `idService`) VALUES
 CREATE TABLE `disque_tarif` (
   `idDisque` int(11) NOT NULL,
   `idTarif` int(11) NOT NULL,
-  `startDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `startDate` datetime NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -142,7 +142,7 @@ INSERT INTO `disque_tarif` (`idDisque`, `idTarif`, `startDate`) VALUES
 CREATE TABLE `facture` (
   `id` int(11) NOT NULL,
   `total` float NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` datetime NOT NULL DEFAULT 0,
   `reglee` tinyint(1) DEFAULT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `idDisque` int(11) NOT NULL
@@ -204,7 +204,7 @@ CREATE TABLE `message` (
   `id` int(11) NOT NULL,
   `objet` varchar(45) DEFAULT NULL,
   `contenu` text,
-  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date` datetime DEFAULT 0,
   `lu` tinyint(1) DEFAULT NULL,
   `idExpediteur` int(11) NOT NULL,
   `idReceveur` int(11) NOT NULL
@@ -271,7 +271,7 @@ CREATE TABLE `utilisateur` (
   `prenom` varchar(35) DEFAULT NULL,
   `tel` varchar(10) DEFAULT NULL,
   `admin` tinyint(1) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` datetime NOT NULL DEFAULT 0,
   `nouveau` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
