@@ -29,7 +29,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testExistUsersFolder(){
 		$cloud = $this->config["cloud"];
-		$users = DAO::getAll("utilisateur");
+		$users = DAO::getAll("Utilisateur");
 		foreach ($users as $user){
 			$pathname="./../".$cloud["root"]."/".$cloud["prefix"].$user->getLogin();
 			$this->assertFileExists($pathname);
