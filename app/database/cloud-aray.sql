@@ -281,7 +281,7 @@ CREATE TABLE `utilisateur` (
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `Utilisateur` (`id`, `login`, `mail`, `password`, `nom`, `prenom`, `tel`, `admin`, `createdAt`, `nouveau`) VALUES
+INSERT INTO `utilisateur` (`id`, `login`, `mail`, `password`, `nom`, `prenom`, `tel`, `admin`, `createdAt`, `nouveau`) VALUES
 (1, 'eAllman', 'eric.allman@gmail.com', '94716e5905252be105681d723e18caafd8120402019c31cadc227d61bf6bb29e', 'Allman', 'Eric', '0782xxxxxx', 1, '2016-03-28 19:09:32', 0),
 (2, 'jAppelbaum', 'jacob.appelbaum@gmail.com', '9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0', 'Appelbaum', 'Jacob', NULL, 1, '2016-03-14 19:09:32', 0),
 (3, 'kdMitnick', 'kd.mitnick@gmail.com', '84d89877f0d4041efb6bf91a16f0248f2fd573e6af05c19f96bedb9f882f7882', 'Mitnick', 'Kevin David', NULL, 0, '2016-03-28 19:09:32', 0),
