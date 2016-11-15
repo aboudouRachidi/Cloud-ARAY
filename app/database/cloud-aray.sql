@@ -25,6 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `commentaire`
 --
+CREATE DATABASE IF NOT EXISTS `cloud-aray` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `cloud-aray`;
 
 CREATE TABLE `commentaire` (
   `id` int(11) NOT NULL,
