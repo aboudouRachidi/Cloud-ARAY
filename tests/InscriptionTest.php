@@ -6,6 +6,7 @@ class InscriptionTest extends \AjaxUnitTest {
 	public function setUp(){
 		global $config;
 		$this->config = $config;
+		self::get("Accueil/index");
 		DAO::connect($config["database"]["dbName"]);
 	}
 	

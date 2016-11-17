@@ -15,7 +15,7 @@ class ConnexionTest extends \AjaxUnitTest {
 		$this->assertArrayHasKey("siteUrl", $this->config);
 	}
 	public function testDefault(){
-		$this->get("Accueil/index");
+
 		$this->assertPageContainsText("Connexion utilisateur");
 		$this->assertTrue($this->getElementById("frm"));
 		$this->assertTrue($this->getElementById("mail"));
@@ -23,13 +23,14 @@ class ConnexionTest extends \AjaxUnitTest {
 	}
 
 	public function testUserConnect(){
-		$this->get("Accueil/index");
+
 		$this->getElementById("mail")->sendKeys("user@local.fr");
 		$password=$this->getElementById("pwd");
 		$password->sendKeys("azerty");
-		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
+		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 		$btnSubmit=$this->getElementById("connexion");
 		$btnSubmit->click();
+		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 	}
 	
 
