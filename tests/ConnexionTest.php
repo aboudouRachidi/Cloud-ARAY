@@ -15,13 +15,12 @@ class ConnexionTest extends \AjaxUnitTest {
 	public function testDefault(){
 		$this->assertPageContainsText("Connexion utilisateur");
 		$this->assertTrue($this->elementExists("#frm"));
-		$this->assertTrue($this->elementExists("#identifiant"));
+		$this->assertTrue($this->elementExists("#mail"));
 		$this->assertTrue($this->elementExists("#pwd"));
 	}
 
 	public function testUserConnect(){
-		$identifiant=$this->getElementById("identifiant");
-		$identifiant->sendKeys("user@local.fr");
+		$this->getElementById("mail")->sendKeys("user@local.fr");
 		$password=$this->getElementById("pwd");
 		$password->sendKeys("azerty");
 		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
