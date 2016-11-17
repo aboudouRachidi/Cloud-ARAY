@@ -50,7 +50,7 @@ class InscriptionTest extends \AjaxUnitTest {
 		$btnSubmit=$this->getElementById("inscription");
 		$btnSubmit->click();
 		
-		
+		//
 	}
 	
 	
