@@ -12,6 +12,12 @@ class ConnexionTest extends \AjaxUnitTest {
 	public function testConfigIsOk(){
 		$this->assertArrayHasKey("siteUrl", $this->config);
 	}
+	public function testDefault(){
+		$this->assertPageContainsText("Connexion utilisateur");
+		$this->assertTrue($this->elementExists("#frm"));
+		$this->assertTrue($this->elementExists("#identifiant"));
+		$this->assertTrue($this->elementExists("#pwd"));
+	}
 
 	public function testUserConnect(){
 		$identifiant=$this->getElementById("identifiant");

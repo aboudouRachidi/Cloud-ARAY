@@ -5,7 +5,7 @@
 		<h3>Connexion utilisateur</h3>
 			<p>Veuillez vous connecter s'il vous plaît.</p>
 			<div class="jumbotron">
-				<form action="Accueil/connect" method="POST">
+				<form action="Accueil/connect" method="POST" id='frm'>
 					<div class="form-group">
 						<label for="identifiant">E-mail :<span>*</span></label>
 						<input name="mail" type="email" value="{% if email is defined %}{{email}}{% endif %}" placeholder="Email" id="identifiant" class="form-control"> 
