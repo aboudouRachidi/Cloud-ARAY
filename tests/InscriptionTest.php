@@ -13,19 +13,31 @@ class InscriptionTest extends \AjaxUnitTest {
 		$this->assertArrayHasKey("siteUrl", $this->config);
 	}
 	
+	public function testDefault(){
+		$this->assertPageContainsText("Inscription utilisateur");
+		$this->assertTrue($this->elementExists("#frm"));
+		$this->assertTrue($this->elementExists("#inputNom"));
+		$this->assertTrue($this->elementExists("#inputPrenom"));
+		$this->assertTrue($this->elementExists("#inputLogin"));
+		$this->assertTrue($this->elementExists("#inputEmail"));
+		$this->assertTrue($this->elementExists("#inputPassword"));
+		$this->assertTrue($this->elementExists("#InputConfirmPassword"));
+	}
+	
+	
 	public function testUserInscription(){
 		
-		$nom=$this->getElementById("nom");
-		$nom->sendKeys("dupont");
+		$inputNom=$this->getElementById("inputNom");
+		$inputNom->sendKeys("dupont");
 		
-		$prenom=$this->getElementById("prenom");
-		$prenom->sendKeys("harry");
+		$inputPrenom=$this->getElementById("inputPrenom");
+		$inputPrenom->sendKeys("harry");
 		
-		$login=$this->getElementById("login");
-		$login->sendKeys("hdupont");
+		$inputLogin=$this->getElementById("inputLogin");
+		$inputLogin->sendKeys("hdupont");
 				
-		$email=$this->getElementById("email");
-		$email->sendKeys("harry.dupont@test.fr");
+		$inputEmail=$this->getElementById("inputEmail");
+		$inputEmail->sendKeys("harry.dupont@test.fr");
 		
 		$inputPassword=$this->getElementById("inputPassword");
 		$inputPassword->sendKeys("azerty");
