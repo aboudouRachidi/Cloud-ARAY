@@ -23,7 +23,7 @@ class InscriptionTest extends \AjaxUnitTest {
 		$this->assertTrue($this->elementExists("#password"));
 		$this->assertTrue($this->elementExists("#confirmPassword"));
 	}
-	
+	//
 	
 	public function testUserInscription(){
 		
