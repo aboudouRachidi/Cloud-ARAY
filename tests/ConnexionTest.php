@@ -14,14 +14,13 @@ class ConnexionTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testUserConnect(){
-		$this->get("Accueil/index");
-		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
 		$identifiant=$this->getElementById("identifiant");
 		$identifiant->sendKeys("user@local.fr");
-		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
 		$password=$this->getElementById("pwd");
 		$password->sendKeys("azerty");
 		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
+		$btnSubmit=$this->getElementById("connexion");
+		$btnSubmit->click();
 	}
 	
 
