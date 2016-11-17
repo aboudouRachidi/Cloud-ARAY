@@ -1,7 +1,7 @@
 <?php
 use micro\orm\DAO;
 
-class ConnexionTest extends \PHPUnit_Framework_TestCase {
+class ConnexionTest extends \AjaxUnitTest {
 	private $config;
 	public function setUp(){
 		global $config;
