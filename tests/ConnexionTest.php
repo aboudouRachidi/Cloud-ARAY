@@ -14,9 +14,9 @@ class ConnexionTest extends \AjaxUnitTest {
 	}
 	public function testDefault(){
 		$this->assertPageContainsText("Connexion utilisateur");
-		$this->assertTrue($this->elementExists("#frm"));
-		$this->assertTrue($this->elementExists("#mail"));
-		$this->assertTrue($this->elementExists("#pwd"));
+		$this->assertTrue($this->getElementById("frm"));
+		$this->assertTrue($this->getElementById("mail"));
+		$this->assertTrue($this->getElementById("pwd"));
 	}
 
 	public function testUserConnect(){
