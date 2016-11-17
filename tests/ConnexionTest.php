@@ -6,7 +6,8 @@ class ConnexionTest extends \AjaxUnitTest {
 	public function setUp(){
 		global $config;
 		$this->config = $config;
-		$this->get("/");
+		//$this->get("/");
+		self::get("/");
 		DAO::connect($config["database"]["dbName"]);
 	}
 	
