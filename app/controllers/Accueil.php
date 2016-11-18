@@ -11,7 +11,7 @@ use micro\utils\RequestUtils;
  */
 class Accueil extends Controller {
 	use MessagesTrait;
-	use CheckUsers;
+	use checkUsers;
 	/**
 	 * Affiche la page par défaut du site
 	 * @see BaseController::index()

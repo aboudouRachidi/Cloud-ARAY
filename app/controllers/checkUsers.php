@@ -1,7 +1,7 @@
 <?php
 use micro\orm\DAO;
 
-trait CheckUsers{
+trait checkUsers{
 	/**
 	 * Verifie si le login et l'e-mail ne sont pas utilisé
 	 * @return boolean

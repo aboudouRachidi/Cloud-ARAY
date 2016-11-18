@@ -10,7 +10,7 @@ use micro\js\Jquery;
  * @package nas.controllers
  */
 class Users extends \_DefaultController {
-use CheckUsers;
+use checkUsers;
 	public function __construct(){
 		parent::__construct();
 		$this->title="Utilisateurs";
