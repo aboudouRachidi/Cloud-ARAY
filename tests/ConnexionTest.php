@@ -23,7 +23,7 @@ class ConnexionTest extends \AjaxUnitTest {
 	}
 
 	public function testUserConnect(){
-
+//
 		$this->getElementById("mail")->sendKeys("user@local.fr");
 		$password=$this->getElementById("pwd");
 		$password->sendKeys("azerty");
