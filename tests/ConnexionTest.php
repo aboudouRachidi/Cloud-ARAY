@@ -30,6 +30,7 @@ class ConnexionTest extends \AjaxUnitTest {
 		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 		$btnSubmit=$this->getElementById("connexion");
 		$btnSubmit->click();
+		$this->assertPageContainsText("Disques");
 		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 	}
 	
