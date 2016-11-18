@@ -47,10 +47,11 @@ class InscriptionTest extends \AjaxUnitTest {
 		$inputConfirmPassword->sendKeys("azerty");
 		
 		//-----
-		InscriptionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
+		
 		$btnSubmit=$this->getElementById("inscription");
 		$btnSubmit->click();
-		$this->assertNotNull(DAO::getOne("Utilisateur","login='hdupont'" ));
+		InscriptionTest::$webDriver->manage()->timeouts()->implicitlyWait(15);
+		$this->assertNotNull(DAO::getOne("Utilisateur","login='hdupont'"));
 		
 		//
 	}
