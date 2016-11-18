@@ -4,7 +4,7 @@ php:
   - 5.6
   - 7.0
 addons:
-  firefox: "49.0"
+  firefox: "50.0"
 before_script:
  - mysql < app/database/cloud-aray.sql -u root
  - wget http://getcomposer.org/composer.phar
