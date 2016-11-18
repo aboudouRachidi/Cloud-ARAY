@@ -13,3 +13,10 @@ class ConnexionTest extends \AjaxUnitTest {
 	
 	public function testConfigIsOk(){
 		$this->assertArrayHasKey("siteUrl", $this->config);
+	}
+		
+	public function testDefault(){
+	
+	}
+	
+}
