@@ -50,7 +50,7 @@ class InscriptionTest extends \AjaxUnitTest {
 		InscriptionTest::$webDriver->manage()->timeouts()->implicitlyWait(5);
 		$btnSubmit=$this->getElementById("inscription");
 		$btnSubmit->click();
-		$this->assertNotNull(DAO::getOne("utilisateur","login='hdupont'" ));
+		$this->assertNotNull(DAO::getOne("Utilisateur","login='hdupont'" ));
 		
 		//
 	}
