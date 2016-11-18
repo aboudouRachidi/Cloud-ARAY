@@ -16,13 +16,13 @@ class InscriptionTest extends \AjaxUnitTest {
 	
 	public function testDefault(){
 		$this->assertPageContainsText("Inscription utilisateur");
-		$this->assertTrue($this->getElementById("frm2"));
-		$this->assertTrue($this->getElementById("inputNom"));
-		$this->assertTrue($this->getElementById("#inputPrenom"));
-		$this->assertTrue($this->getElementById("inputLogin"));
-		$this->assertTrue($this->getElementById("inputEmail"));
-		$this->assertTrue($this->getElementById("inputPassword"));
-		$this->assertTrue($this->$this->getElementById("inputConfirmPassword"));
+		$this->assertNotNull($this->getElementById("frm2"));
+		$this->assertNotNull($this->getElementById("inputNom"));
+		$this->assertNotNull($this->getElementById("inputPrenom"));
+		$this->assertNotNull($this->getElementById("inputLogin"));
+		$this->assertNotNull($this->getElementById("inputEmail"));
+		$this->assertNotNull($this->getElementById("inputPassword"));
+		$this->assertNotNull($this->getElementById("inputConfirmPassword"));
 	}
 	//
 	
