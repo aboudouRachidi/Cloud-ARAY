@@ -27,10 +27,9 @@ class ConnexionTest extends \AjaxUnitTest {
 		$this->getElementById("mail")->sendKeys("user@local.fr");
 		$password=$this->getElementById("pwd");
 		$password->sendKeys("azerty");
-		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 		$btnSubmit=$this->getElementById("connexion");
 		$btnSubmit->click();
-		$this->assertPageContainsText("Déconnexion");
+		$this->assertPageContainsText("Disques");
 		ConnexionTest::$webDriver->manage()->timeouts()->implicitlyWait(10);
 	}
 	
