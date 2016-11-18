@@ -14,6 +14,10 @@ class DeconnexionTest extends \AjaxUnitTest {
 		$this->assertArrayHasKey("siteUrl", $this->config);
 	}
 	
+	public function testDefault(){
+		$this->assertNotNull($this->getElementById("deco"));
+	}
+	
 	public function testUserDisconnect(){
 		//
 		$this->getElementById("mail")->sendKeys("user@local.fr");
