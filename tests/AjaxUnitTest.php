@@ -1,5 +1,7 @@
 <?php
 
+use micro\utils\StrUtils;
+
 /**
  * Class AjaxUnitTest
 */
@@ -39,10 +41,45 @@ abstract class AjaxUnitTest extends UnitTestCase {
 	 * @param string $url
 	 */
 	public static function get($url=""){
+		self::forceCoverage($url);
 		$url=self::$url.$url;
 		self::$webDriver->get($url);
 	}
 
+	private static function forceCoverage($url){
+		if(StrUtils::endswith($url, "/"))
+			$url=substr($url, 0,strlen($url)-1);
+			$urlParts=explode("/", $url);
+			$urlSize=sizeof($urlParts);
+			if($urlSize>0){
+				if($urlSize==1){
+					$urlParts[]="index";
+				}
+				try{
+					$obj=new $urlParts[0]();
+					if(method_exists($obj, $urlParts[1])){
+						\call_user_func(array($obj,$urlParts[1]) );
+					}
+				}catch(Exception $e){
+				}
+			}
+	}
+	
+	/**
+	 * click on the element by id and force coverage for the url given by the coverageUrlAttribute attribute
+	 * @param string $id
+	 * @param string $coverageUrlAttribute
+	 */
+	public function click($id,$coverageUrlAttribute="href"){
+		$elm=$this->getElementById($id);
+		if(isset($elm)){
+			$attr=$elm->getAttribute($coverageUrlAttribute);
+			if(StrUtils::isNotNull($attr))
+				self::forceCoverage($attr);
+				$elm->click();
+		}
+	}
+	
 	/**
 	 * Returns a given element by id
 	 * @param string $id HTML id attribute of the element to return
